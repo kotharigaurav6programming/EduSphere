@@ -1,0 +1,77 @@
+import mongoose from "mongoose";
+const employeeSchema = mongoose.Schema({
+    enrollId:{
+        type:String,
+        required:true
+    },
+    name:{
+        type:String,
+        required:true
+    },
+    email:{
+        type:String,
+        required:true,
+        unique:true
+    },
+    password:{
+        type:String,
+        required:true
+    },
+    gender:{
+        type:String,
+        required:true
+    },
+    date:{
+        type:Date,
+        required:true
+    },
+    contact:{
+        type:String,
+        required:true
+    },
+    address:{
+        type:String,
+        required:true
+    },
+    qualification:{
+        type:String,
+        required:true
+    },
+    experience:{
+        type:String,
+        required:true
+    },
+    type:{
+        type:String,
+        required:true
+    },
+    expertise:{
+        type:String,
+        required:true
+    },
+    profile:{
+        type:String,
+        required:true
+    },
+    joiningDate:{
+        type:Date,
+        required:true
+    },
+    profilePic:{
+        type:String,
+        required:true
+    },
+    status:{
+        type:Boolean,
+        default:true
+    },
+    emailVerify:{
+        type:String,
+        default:"Not Verified"
+    },
+    adminVerify:{
+        type:String,
+        default:"Not Verified"
+    }
+});
+export default mongoose.model('employeeSchema',employeeSchema,'employee');
