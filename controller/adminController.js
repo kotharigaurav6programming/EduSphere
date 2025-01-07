@@ -1,4 +1,4 @@
-// created by aditya
+// created by not aditya created by raj 
 
 
 import adminSchema from "../model/adminSchema.js";
