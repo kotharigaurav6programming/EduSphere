@@ -8,7 +8,7 @@ function mailer(email,callback){
         }
     });
     const mailOption = {
-        from : 'jsexample63@gmail.com',
+        from : process.env.EMAIL,
         to : email,
         subject:'Verification Mail',
         html:"Hello "+email+"<br>This is a verification mail from <b>EduSphere Central India's Most trusted Organization</b>. You need to verify yourself by clicking on the below link. <br><a href='http://localhost:5000/verifyEmail?email="+email+"'>Click Here to Verify</a>"
