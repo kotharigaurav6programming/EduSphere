@@ -27,17 +27,16 @@ export const employeeRegistrationController = async(request,response)=>{
 
                 mailer.mailer(request.body.email,async(result)=>{
                     if(result){
-                        console.log("info in employeecontroller : ",result);
+                        // console.log("info in employeecontroller : ",result);
                         const res = await employeeSchema.create(employeeObj);
                         if(res){
-                            // console.log("Registration Successfull");
-                            response.render("employeeLogin.ejs");                
+                            response.render("employeeLogin.ejs",{message:message.REGISTRATION_SUCCESSFULL+" | "+message.MAIL_SENT});                
                         }else{
                             response.render("employeeRegistration.ejs",{message:message.SOMETHING_WENT_WRONG,status:status.SERVER_ERROR});                
                         }
-    
                     }else{
-                        console.log("error in employeecontroller : ",result);
+                        // console.log("error in employeecontroller : ",result);
+                        response.render("employeeRegistration.ejs",{message:message.SOMETHING_WENT_WRONG,status:status.SERVER_ERROR});                
                     }                    
                 });
             }   
@@ -45,5 +44,27 @@ export const employeeRegistrationController = async(request,response)=>{
     }catch(error){
         console.log(error);
         response.render("notfound.ejs",{message:message.SERVER_ERROR,status:status.SERVER_ERROR});        
+    }
+}
+
+export const employeeVerifyEmailController = async(request,response)=>{
+    try{
+        const email = request.query.email;
+        const status = {
+            $set:{
+                emailVerify : "Verified"
+            }
+        }
+        const result = await employeeSchema.updateOne({email:email},status);
+        console.log("result : ",result);
+        if(result){
+            response.render("employeeLogin.ejs",{message:message.ADMIN_VERIFICATION_REQUIRED,status:status.SUCCESS});
+        }else{
+
+        }
+        
+    }catch(error){
+        console.log("Error in employeeVerifyEmailController : ",error);
+        
     }
 }

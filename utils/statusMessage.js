@@ -11,5 +11,7 @@ export const message = {
     REGISTRATION_SUCCESSFULL : "Registration Successfull",
     SOMETHING_WENT_WRONG : "Something Went Wrong",
     NOT_MATCHED : "Email or Password Not Matched",
-    FILE_NOT_UPLOADED:"File not uploaded"
+    FILE_NOT_UPLOADED:"File not uploaded",
+    MAIL_SENT:"Mail Sent Please Verify",
+    ADMIN_VERIFICATION_REQUIRED:"Email Verified | Please Wait for 24 Hours for Admin Approval"
 }

@@ -11,7 +11,7 @@ function mailer(email,callback){
         from : process.env.EMAIL,
         to : email,
         subject:'Verification Mail',
-        html:"Hello "+email+"<br>This is a verification mail from <b>EduSphere Central India's Most trusted Organization</b>. You need to verify yourself by clicking on the below link. <br><a href='http://localhost:5000/verifyEmail?email="+email+"'>Click Here to Verify</a>"
+        html:`Hello ${email}<br>This is a verification mail from <b>EduSphere Central India's Most trusted Organization</b>. You need to verify yourself by clicking on the below link. <br><a href='${process.env.BACKEND_URL}employee/verifyEmail?email=${email}'>Click Here to Verify</a>`
     }
 
     transport.sendMail(mailOption,(error,info)=>{
