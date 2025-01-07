@@ -1,3 +1,6 @@
+// created by aditya
+
+
 import adminSchema from "../model/adminSchema.js";
 // import swal from 'sweetalert';
 import jwt from 'jsonwebtoken';
