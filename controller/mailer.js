@@ -3,9 +3,8 @@ function mailer(email,callback){
     const transport = nodemailer.createTransport({
         service:'gmail',
         auth:{
-            user : 'jsexample63@gmail.com',
-            pass : 'uthg kqza igrl gjtl'
-            // pass:'gauravkothari786'
+            user : process.env.EMAIL,
+            pass : process.env.PASSWORD        
         }
     });
     const mailOption = {
