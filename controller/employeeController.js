@@ -4,6 +4,9 @@ import employeeSchema from '../model/employeeSchema.js';
 import uuid4 from 'uuid4';
 import {message,status} from '../utils/statusMessage.js'
 import mailer from './mailer.js';
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+const EMPLOYEE_SECRET_KEY = process.env.EMPLOYEE_SECRET_KEY;
 export const employeeRegistrationController = async(request,response)=>{
     try{
         const uuid = uuid4();
@@ -24,7 +27,7 @@ export const employeeRegistrationController = async(request,response)=>{
                 const employeeObj = request.body;
                 employeeObj.enrollId = uuid;
                 employeeObj.profilePic = fileName;
-
+                employeeObj.password = await bcrypt.hash(request.body.password,10); 
                 mailer.mailer(request.body.email,async(result)=>{
                     if(result){
                         // console.log("info in employeecontroller : ",result);
@@ -66,5 +69,36 @@ export const employeeVerifyEmailController = async(request,response)=>{
     }catch(error){
         console.log("Error in employeeVerifyEmailController : ",error);
         
+    }
+}
+
+export const employeeLoginController = async(request,response)=>{
+    try{
+        const {email,password} = request.body;
+        const employeeObj = await employeeSchema.findOne({email:email});
+        const existingPassword = employeeObj.password;
+        const passResult = await bcrypt.compare(password,existingPassword);
+        if(passResult){
+            if(employeeObj.status){
+                var employeePayload = {email : email};
+                var expireTime = {
+                    expiresIn:'1d'
+                }
+                const token = jwt.sign(employeePayload,EMPLOYEE_SECRET_KEY,expireTime);
+                response.cookie('employee_cookie',token,{httpOnly:true});
+                if(!token)
+                    response.render("notfound.ejs",{message:message.SOMETHING_WENT_WRONG,status:status.UN_AUTHORIZE});
+                else{
+                    response.render("employeeHome.ejs",{status : status.SUCCESS,message:message.LOGIN_SUCCESSFULL});
+                }    
+            }else{
+                response.render("employeeLogin.ejs",{message:message.ACCOUNT_DEACTIVATED,status:status.SUCCESS});
+            }
+        }else{
+            response.render("employeeLogin.ejs",{message:message.NOT_MATCHED,status:status.UN_AUTHORIZE});
+        }
+    }catch(error){
+        console.log("Error in Login Controller : ",error);
+        response.render("employeeLogin.ejs",{message:message.SOMETHING_WENT_WRONG,status:status.SERVER_ERROR});        
     }
 }

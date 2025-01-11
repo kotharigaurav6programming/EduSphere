@@ -1,5 +1,5 @@
 import express from 'express';
-import { adminLoginController } from '../controller/adminController.js';
+import { adminLoginController,adminEmployeeListController,adminVerifyEmployeeController } from '../controller/adminController.js';
 import {fileURLToPath} from 'url';
 import jwt from 'jsonwebtoken';
 import path from 'path';
@@ -40,5 +40,6 @@ adminRouter.post('/adminLogin',adminLoginController);
 adminRouter.get('/adminHome',authenticateJWT,(request,response)=>{
     response.render("adminHome.ejs",{adminEmail:request.adminPayload.email,status:status.SUCCESS});
 });
-
+adminRouter.get('/adminEmployeeList',authenticateJWT,adminEmployeeListController);
+adminRouter.get('/adminVerifyEmployee',authenticateJWT,adminVerifyEmployeeController);
 export default adminRouter;

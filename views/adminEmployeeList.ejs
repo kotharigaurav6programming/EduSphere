@@ -42,88 +42,68 @@
     
     <header class="site-navbar py-4 js-sticky-header site-navbar-target" role="banner">
       
-      <div class="container-fluid">
-        <div class="d-flex align-items-center">
-          <div class="site-logo mr-auto w-25"><a href="index.html">EduSphere</a></div>
-
-          <div class="mx-auto text-center">
-            <nav class="site-navigation position-relative text-right" role="navigation">
-              <ul class="site-menu main-menu js-clone-nav mx-auto d-none d-lg-block  m-0 p-0">
-                <li><a href="#home-section" class="nav-link">Home</a></li>
-                <li><a href="#courses-section" class="nav-link">Courses</a></li>
-                <li><a href="#programs-section" class="nav-link">Programs</a></li>
-                <li><a href="/employee/employeeLogin" class="nav-link">Employee</a></li>
-              </ul>
-            </nav>
-          </div>
-
-          <div class="ml-auto w-25">
-            <nav class="site-navigation position-relative text-right" role="navigation">
-              <ul class="site-menu main-menu site-menu-dark js-clone-nav mr-auto d-none d-lg-block m-0 p-0">
-                <li class="cta"><a href="#contact-section" class="nav-link"><span>Contact Us</span></a></li>
-              </ul>
-            </nav>
-            <a href="#" class="d-inline-block d-lg-none site-menu-toggle js-menu-toggle text-black float-right"><span class="icon-menu h3"></span></a>
-          </div>
-        </div>
-      </div>
-      
-    </header>
-
-    <div class="intro-section" id="home-section">
-      
-      <div class="slide-1" style="background-image: url('images/hero_1.jpg');" data-stellar-background-ratio="0.5">
-        <div class="container">
-          <div class="row align-items-center">
-            <div class="col-12" style="height:500px;">
-              <div class="row align-items-center">
-                <div class="col-lg-6 mb-4">
-                  <h1  data-aos="fade-up" data-aos-delay="100">EduSphere | Employee Panel</h1>
-                  <p class="mb-4"  data-aos="fade-up" data-aos-delay="200">Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime ipsa nulla sed quis rerum amet natus quas necessitatibus.</p>
-                  <p data-aos="fade-up" data-aos-delay="300">
-                    <a href="/employee/employeeRegistration" class="btn btn-primary py-3 px-5 btn-pill">Yet Not Register ?  Register Here</a></p>
-
-                </div>
-
-                <div class="col-lg-5 ml-auto" data-aos="fade-up" data-aos-delay="500">
-                  <form action="/employee/employeeLogin" method="post" class="form-box">
-                    <h3 class="h4 text-black mb-4">Employee Login Form</h3>
-                    <span style="color:green"><%=message%></span>
-                    <div class="form-group">
-                      <input 
-                        type="text" 
-                        class="form-control" 
-                        placeholder="Email Addresss"
-                        name="email"
-                        id="email"
-                        required
-                      />
-                    </div>
-                    <div class="form-group">
-                        <input 
-                        type="password" 
-                        class="form-control" 
-                        placeholder="Enter Password"
-                        name="password"
-                        id="password"
-                        required
-                      />
-                    </div>
-                    <div class="form-group">
-                      <input 
-                        type="submit" 
-                        class="btn btn-primary btn-pill" 
-                        value="Click to Login"
-                      />
-                    </div>
-                  </form>
-
-                </div>
-              </div>
+        <div class="container-fluid">
+          <div class="d-flex align-items-center">
+            <div class="site-logo mr-auto"><a href="index.html">EduSphere</a></div>
+            <div>
+              <nav class="site-navigation position-relative text-right" role="navigation">
+                <%-include('./adminHomeHeader.js')%>
+              </nav>
+             <a href="#" class="d-inline-block d-lg-none site-menu-toggle js-menu-toggle text-black float-right">
+              <span class="icon-menu h3"></span></a>
+  
             </div>
-            
           </div>
         </div>
+        
+      </header>
+  
+
+    <div class="site-section" id="programs-section" style="margin-top: -1px;">
+      <br>
+        <div class="container">
+        <div class="row mb-5 justify-content-center">
+          <div class="col-lg-12 text-center"  data-aos="fade-up" data-aos-delay="">
+            <br>
+            <h2>Employee List</h2>
+            <span style="color:green"><%=message%></span>
+            <table class="table" style="font-size: 12px;">
+                <thead>
+                  <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Contact</th>
+                    <th scope="col">Qualification</th>
+                    <th scope="col">Experience</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Profile</th>
+                    <th scope="col">Joining Date</th>
+                    <th scope="col">EmailVerify</th>
+                    <th scope="col">AdminVerify</th>
+                </tr>
+                </thead>
+                <tbody>
+                  <%employeeList.forEach((employee,index)=>{%>
+                      <tr>
+                        <td><%=employee.name%></td>
+                        <td><%=employee.email%></td>
+                        <td><%=employee.contact%></td>
+                        <td><%=employee.qualification%></td>
+                        <td><%=employee.experience%></td>
+                        <td><%=employee.type%></td>
+                        <td><%=employee.profile%></td>
+                        <td><%=new Date(employee.joiningDate).toISOString().split("T")[0]%></td>
+                        <td><%=employee.emailVerify%></td>
+                        <td><a href="/admin/adminVerifyEmployee?enrollId=<%=employee.enrollId%>"><%=employee.adminVerify%></a></td>
+                      </tr>
+                  <%})%>
+                </tbody>
+              </table>
+
+          </div>
+        </div>
+      
+
       </div>
     </div>
 

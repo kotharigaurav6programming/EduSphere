@@ -1,7 +1,7 @@
 import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { employeeRegistrationController,employeeVerifyEmailController } from '../controller/employeeController.js';
+import { employeeRegistrationController,employeeVerifyEmailController,employeeLoginController } from '../controller/employeeController.js';
 var employeeRouter = express.Router();
 
 const __filename = fileURLToPath(import.meta.url);
@@ -17,4 +17,6 @@ employeeRouter.get("/employeeRegistration",(request,response)=>{
 });
 employeeRouter.post("/employeeRegistration",employeeRegistrationController);
 employeeRouter.get("/verifyEmail",employeeVerifyEmailController);
+employeeRouter.post('/employeeLogin',employeeLoginController);
+
 export default employeeRouter;

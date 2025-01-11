@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import { status,message } from "../utils/statusMessage.js";
 import bcrypt from 'bcrypt';
+import employeeSchema from "../model/employeeSchema.js";
 dotenv.config();
 const ADMIN_SECRET_KEY = process.env.ADMIN_SECRET_KEY;
 
@@ -32,6 +33,49 @@ export const adminLoginController = async(request,response)=>{
             response.render("adminLogin.ejs",{message:message.NOT_MATCHED,status:status.UN_AUTHORIZE});
         }
     }catch(error){
+        console.log("Error in Login Controller : ",error);
+        response.render("adminLogin.ejs",{message:message.SOMETHING_WENT_WRONG,status:status.SERVER_ERROR});        
+    }
+}
 
+export const adminEmployeeListController = async(request,response)=>{
+    try{
+        const result = await employeeSchema.find();
+        // console.log(result);
+        if(result.length!=0){
+            response.render("adminEmployeeList.ejs",{employeeList:result,message:"",status:status.SUCCESS});
+        }else{
+            response.render("adminEmployeeList.ejs",{employeeList:result,message:message.NO_RECORD_FOUND,status:status.SUCCESS});
+        }
+    }catch(error){
+        console.log("Error in adminEmployeeListController : ",error);
+        response.render("adminHome.ejs",{message:message.SOMETHING_WENT_WRONG,status:status.SERVER_ERROR});
+    }
+}
+
+export const adminVerifyEmployeeController = async(request,response)=>{
+    try{
+        const enrollId = request.query.enrollId;
+        const status = {
+            $set:{
+                adminVerify:"Verified"
+            }
+        }
+        const result = await employeeSchema.updateOne({enrollId:enrollId},status);
+        const employeeList = await employeeSchema.find();
+        console.log(result);
+        if(result.modifiedCount==1){
+            response.render("adminEmployeeList.ejs",{employeeList:employeeList,message:message.UPDATE_SUCCESSFULLY,status:status.SUCCESS});
+        }else{
+
+            const employeeObj = await employeeSchema.findOne({enrollId:enrollId});
+            if(employeeObj.adminVerify=="Verified")
+                response.render("adminEmployeeList.ejs",{employeeList:employeeList,message:message.ALREADY_VERIFIED,status:status.SUCCESS});
+            else
+                response.render("adminEmployeeList.ejs",{employeeList:employeeList,message:message.UPDATE_ERROR,status:status.SUCCESS});
+        }
+    }catch(error){
+        console.log("Error in adminVerifyEmployeeController : ",error);
+        response.render("adminHome.ejs",{message:message.SOMETHING_WENT_WRONG,status:status.SERVER_ERROR});
     }
 }

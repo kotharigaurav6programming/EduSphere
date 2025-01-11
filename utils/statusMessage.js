@@ -13,5 +13,11 @@ export const message = {
     NOT_MATCHED : "Email or Password Not Matched",
     FILE_NOT_UPLOADED:"File not uploaded",
     MAIL_SENT:"Mail Sent Please Verify",
-    ADMIN_VERIFICATION_REQUIRED:"Email Verified | Please Wait for 24 Hours for Admin Approval"
+    ADMIN_VERIFICATION_REQUIRED:"Email Verified | Please Wait for 24 Hours for Admin Approval",
+    DATA_RECEIVED_SUCCESSFULLY:"Data Received Successfully",
+    NO_RECORD_FOUND:"No Record Found",
+    UPDATE_ERROR:"Error while Verifying",
+    UPDATE_SUCCESSFULLY:"Employee Verification Successfull",
+    ALREADY_VERIFIED:"Already Verified",
+    ACCOUNT_DEACTIVATED:"Account De-Activated | Contact Admin to Re-Activate"
 }
