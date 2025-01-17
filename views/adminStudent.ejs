@@ -39,7 +39,7 @@
       <div class="site-mobile-menu-body"></div>
     </div>
    
-    
+
     <header class="site-navbar py-4 js-sticky-header site-navbar-target" role="banner">
       
         <div class="container-fluid">
@@ -57,59 +57,50 @@
         </div>
         
       </header>
-  
 
-    <div class="site-section" id="programs-section" style="margin-top: -1px;">
-      <br>
-        <div class="container">
+    
+    <div class="site-section" id="teachers-section" style="margin-top: -1px;">
+      <div class="container">
+
         <div class="row mb-5 justify-content-center">
-          <div class="col-lg-12 text-center"  data-aos="fade-up" data-aos-delay="">
-            <br>
-            <h2>Employee List</h2>
-            <br>
-            <span style="color:green"><%=message%></span>
-            <table class="table" style="font-size: 12px;">
-                <thead>
-                  <tr>
-                    <th scope="col">Name</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Contact</th>
-                    <th scope="col">Qualification</th>
-                    <th scope="col">Experience</th>
-                    <th scope="col">Type</th>
-                    <th scope="col">Profile</th>
-                    <th scope="col">Joining Date</th>
-                    <th scope="col">EmailVerify</th>
-                    <th scope="col">AdminVerify</th>
-                </tr>
-                </thead>
-                <tbody>
-                  <%employeeList.forEach((employee,index)=>{%>
-                      <tr>
-                        <td><%=employee.name%></td>
-                        <td><%=employee.email%></td>
-                        <td><%=employee.contact%></td>
-                        <td><%=employee.qualification%></td>
-                        <td><%=employee.experience%></td>
-                        <td><%=employee.type%></td>
-                        <td><%=employee.profile%></td>
-                        <td><%=new Date(employee.joiningDate).toISOString().split("T")[0]%></td>
-                        <td><%=employee.emailVerify%></td>
-                        <td><a href="/admin/adminVerifyEmployee?enrollId=<%=employee.enrollId%>"><%=employee.adminVerify%></a></td>
-                      </tr>
-                  <%})%>
-                </tbody>
-              </table>
-
+          <div class="col-lg-7 mb-5 text-center"  data-aos="fade-up" data-aos-delay="">
+            <br><br>
+            <h2>Our Students</h2>
           </div>
         </div>
-      
 
+        <div class="row">
+
+          <div class="col-md-6 col-lg-6 mb-6" data-aos="fade-up" data-aos-delay="100">
+            <div class="teacher text-center" style="background-color: #7971ea;">
+              <a href="/admin/enquiryStudentList">
+              <img src="images/enquiry.jpg" alt="Image" class="img-fluid w-50 rounded-circle mx-auto mb-4">
+              <div class="py-2">
+                <h2 class="text-white">Enquired Students</h2>
+                <!-- <p class="position">Physics Teacher</p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro eius suscipit delectus enim iusto tempora, adipisci at provident.</p> -->
+              </div>
+              </a>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-lg-6 mb-6" data-aos="fade-up" data-aos-delay="300">
+            <div class="teacher text-center" style="background-color: #7971ea;">
+              <a href="/admin/existingStudentList">
+              <img src="images/existing.jpg" alt="Image" class="img-fluid w-50 rounded-circle mx-auto mb-4">
+              <div class="py-2">
+                <h2 class="text-white">Existing Student</h2>
+                <!-- <p class="position">Physics Teacher</p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro eius suscipit delectus enim iusto tempora, adipisci at provident.</p> -->
+              </div>
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
-    
-     
+  
     <footer class="footer-section bg-white">
       <div class="container">
         <div class="row">

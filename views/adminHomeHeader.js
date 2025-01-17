@@ -2,8 +2,8 @@
     <li><a href="#home-section" class="nav-link">Home</a></li>
     <li><a href="#courses-section" class="nav-link">Courses</a></li>
     <li><a href="/admin/adminEmployeeList" class="nav-link">Employees</a></li>
-    <li><a href="#teachers-section" class="nav-link">Students</a></li>
-    <li><a href="#teachers-section" class="nav-link">Batches</a></li>
-    <li><a href="#teachers-section" class="nav-link">UpdatePassword</a></li>
-    <li><a href="#teachers-section" class="nav-link">Logout</a></li>
+    <li><a href="/admin/adminStudent" class="nav-link">Students</a></li>
+    <li><a href="" class="nav-link">Batches</a></li>
+    <li><a href="" class="nav-link">UpdatePassword</a></li>
+    <li><a href="" class="nav-link">Logout</a></li>
 </ul>

@@ -15,6 +15,18 @@ const studentEnquirySchema = mongoose.Schema({
     subject:{
         type:String,
         required:true
+    },
+    enquiryDate:{
+        type:String,
+        default:new Date().toLocaleDateString()
+    },
+    remark:{
+        type:String,
+        default:"No Remark Yet"
+    },
+    syllabusStatus:{
+        type:String,
+        default:"No Mail Sent"
     }
 });
 

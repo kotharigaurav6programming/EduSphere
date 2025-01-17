@@ -19,5 +19,9 @@ export const message = {
     UPDATE_ERROR:"Error while Verifying",
     UPDATE_SUCCESSFULLY:"Employee Verification Successfull",
     ALREADY_VERIFIED:"Already Verified",
-    ACCOUNT_DEACTIVATED:"Account De-Activated | Contact Admin to Re-Activate"
+    ACCOUNT_DEACTIVATED:"Account De-Activated | Contact Admin to Re-Activate",
+    ENQUIRY_REMARK : "Remark Added",
+    UPLOAD_STATUS : "File Uploaded Successfully",
+    MAIL_SENT_SYLLABUS:"Syllabus Sent in Mail",
+    MAIL_NOT_SENT:"Error While sending Syllabus in mail",
 }

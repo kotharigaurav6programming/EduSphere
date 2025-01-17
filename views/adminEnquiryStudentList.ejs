@@ -65,38 +65,55 @@
         <div class="row mb-5 justify-content-center">
           <div class="col-lg-12 text-center"  data-aos="fade-up" data-aos-delay="">
             <br>
-            <h2>Employee List</h2>
+            <h3>Enquired Student List</h3>
             <br>
             <span style="color:green"><%=message%></span>
-            <table class="table" style="font-size: 12px;">
+            <table class="table" style="font-size: 14px;">
                 <thead>
                   <tr>
-                    <th scope="col">Name</th>
+                    <th scope="col">S.No</th>
                     <th scope="col">Email</th>
                     <th scope="col">Contact</th>
-                    <th scope="col">Qualification</th>
-                    <th scope="col">Experience</th>
-                    <th scope="col">Type</th>
-                    <th scope="col">Profile</th>
-                    <th scope="col">Joining Date</th>
-                    <th scope="col">EmailVerify</th>
-                    <th scope="col">AdminVerify</th>
+                    <th scope="col">Enquired Date</th>
+                    <th scope="col">Enquired About</th>
+                    <th scope="col">Remark</th>
+                    <th scope="col">Action</th>
+                    <th scope="col">Mail</th>
+                    <th scope="col">Mail Status</th>
                 </tr>
                 </thead>
                 <tbody>
-                  <%employeeList.forEach((employee,index)=>{%>
+                  <%enquiryStudentList.forEach((enqStudent,index)=>{%>
                       <tr>
-                        <td><%=employee.name%></td>
-                        <td><%=employee.email%></td>
-                        <td><%=employee.contact%></td>
-                        <td><%=employee.qualification%></td>
-                        <td><%=employee.experience%></td>
-                        <td><%=employee.type%></td>
-                        <td><%=employee.profile%></td>
-                        <td><%=new Date(employee.joiningDate).toISOString().split("T")[0]%></td>
-                        <td><%=employee.emailVerify%></td>
-                        <td><a href="/admin/adminVerifyEmployee?enrollId=<%=employee.enrollId%>"><%=employee.adminVerify%></a></td>
-                      </tr>
+                        <td><%=index+1%></td>
+                        <td><%=enqStudent.email%></td>
+                        <td><%=enqStudent.contact%></td>
+                        <td><%=enqStudent.enquiryDate%></td>
+                        <td><%=enqStudent.subject%></td>
+                        <td style="width: 10%;"><%=enqStudent.remark%></td>
+                        <td>
+                            <form action="/admin/addEnqStudRemark" method="post">
+                                <input type="hidden" name="id" id="id" value="<%=enqStudent.id%>">
+                                <input required name="remark" id="remark" class="form-control" style="outline-color: #7971ea;" placeholder="Enter Remark">
+                                <input class="btn btn-primary btn-pill p-1" type="submit" value="Add Remark" style="color:white;background-color: #7971ea; border-width: 0px;">
+                            </form>
+                        </td>
+                        <td>
+                          <form action="/admin/adminSendSyllabus" method="post" enctype="multipart/form-data"> 
+                            <input type="hidden" name="email" id="email" value="<%=enqStudent.email%>">
+                            <div class="form-group mb-4">
+                              <select required name="syllabus" id="syllabus" class="form-control">
+                                <option value="">Select Subject</option>
+                                <%syllabusList.forEach((obj)=>{ %> 
+                                  <option value="<%=obj.syllabus%>"><%=obj.syllabus%></option>
+                                <%})%>
+                              </select>
+                              <button class="btn btn-primary btn-pill p-1">Mail Syllabus</button>
+                            </div>
+                          </form>
+                        </td>
+                        <td><%=enqStudent.syllabusStatus%></td>
+                    </tr>
                   <%})%>
                 </tbody>
               </table>

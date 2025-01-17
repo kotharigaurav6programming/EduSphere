@@ -2,11 +2,21 @@ import adminSchema from "../model/adminSchema.js";
 // import swal from 'sweetalert';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
+import path from 'path';
+import uuid4 from 'uuid4';
 import { status,message } from "../utils/statusMessage.js";
 import bcrypt from 'bcrypt';
 import employeeSchema from "../model/employeeSchema.js";
+import studentEnquirySchema from "../model/studentEnquirySchema.js";
+import { fileURLToPath } from "url";
+import { log } from "console";
+import uploadSyllabusSchema from "../model/uploadSyllabusSchema.js";
+import mailer_syllabus from "./mailer_syllabus.js";
+
 dotenv.config();
 const ADMIN_SECRET_KEY = process.env.ADMIN_SECRET_KEY;
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 export const adminLoginController = async(request,response)=>{
     try{
@@ -79,3 +89,96 @@ export const adminVerifyEmployeeController = async(request,response)=>{
         response.render("adminHome.ejs",{message:message.SOMETHING_WENT_WRONG,status:status.SERVER_ERROR});
     }
 }
+
+export const adminEnquiryStudentListController = async(request,response)=>{
+    try{
+        const result = await studentEnquirySchema.find();
+        const syllabusList = await uploadSyllabusSchema.find();
+        // console.log(result);
+        if(result.length!=0){
+            response.render("adminEnquiryStudentList.ejs",{enquiryStudentList:result,syllabusList:syllabusList,message:"",status:status.SUCCESS});
+        }else{
+            response.render("adminEnquiryStudentList.ejs",{enquiryStudentList:result,syllabusList:syllabusList,message:message.NO_RECORD_FOUND,status:status.SUCCESS});
+        }
+    }catch(error){
+        console.log("Error in adminEnquiryStudentListController : ",error);
+        response.render("adminHome.ejs",{message:message.SOMETHING_WENT_WRONG,status:status.SERVER_ERROR});
+    }
+}
+export const adminAddStudRemarkController = async(request,response)=>{
+    try{
+        const id = request.body.id; 
+        const remark = request.body.remark;
+        const status = {
+            $set:{
+                remark:remark
+            }
+        }
+        const result = await studentEnquirySchema.updateOne({id:id},status);
+        const studentResult = await studentEnquirySchema.find();
+        const syllabusList = await uploadSyllabusSchema.find();
+        
+        // console.log(result);
+            response.render("adminEnquiryStudentList.ejs",{enquiryStudentList:studentResult,syllabusList:syllabusList,message:message.ENQUIRY_REMARK,status:status.SUCCESS});
+            
+    }catch(error){
+        console.log("Error in adminEnquiryStudentListController : ",error);
+        response.render("adminHome.ejs",{message:message.SOMETHING_WENT_WRONG,status:status.SERVER_ERROR});
+    }
+}
+
+export const adminUploadSyllabusController = async(request,response)=>{
+    try{
+        // console.log("-----------------",request.body);
+        const filename = request.files.syllabus;
+        // console.log(request.files);
+        const fileName = new Date().getTime()+filename.name;
+        // console.log(__dirname.replace("\\controller","/public/syllabus/"));
+        const filePath = path.join(__dirname.replace("\\controller","/public/syllabus/")+fileName);
+        filename.mv(filePath,async(error)=>{
+            try{
+                request.body.syllabusId = uuid4();
+                request.body.syllabus = fileName;
+                const result = await uploadSyllabusSchema.create(request.body);
+                console.log(result);
+                response.render("adminHome.ejs",{message:message.UPLOAD_STATUS,status:status.SUCCESS});
+            }catch(error){
+                console.log(error);
+                response.render("adminHome.ejs",{message:message.FILE_NOT_UPLOADED,status:status.SUCCESS});
+            }
+        })
+    }catch(error){
+        console.log(error);
+        response.render("adminHome.ejs",{message:message.SERVER_ERROR,status:status.SERVER_ERROR});
+    }
+}
+
+export const adminSendSyllabusController = async(request,response)=>{
+    try{
+        const studentEmail = request.body.email;
+        const syllabusFileName = request.body.syllabus;
+        const enquiryStudentList = await studentEnquirySchema.find();
+        const syllabusList = await uploadSyllabusSchema.find();
+        console.log(syllabusFileName);
+        mailer_syllabus.mailer(studentEmail,syllabusFileName,async(info)=>{
+            if(info){
+                console.log("main sent with syllabus");
+                const result = await studentEnquirySchema.updateOne({email:studentEmail},{$set:{syllabusStatus:"Mail Sent"}});
+                const enquiryStudentListUpdate = await studentEnquirySchema.find();
+                // console.log("mail syllabus status : ",result);
+                // if(result.modifiedCount==1){
+                    response.render("adminEnquiryStudentList.ejs",{enquiryStudentList:enquiryStudentListUpdate,syllabusList:syllabusList,message:message.MAIL_SENT_SYLLABUS,status:status.SUCCESS});
+                // }
+                // else{
+                //     console.log("----------- already send----- : ",result.modifiedCount);
+                // }
+            }else{
+            console.log("=------------- : ",info);
+            response.render("adminEnquiryStudentList.ejs",{enquiryStudentList:enquiryStudentList,syllabusList:syllabusList,message:message.MAIL_NOT_SENT,status:status.SUCCESS});
+        }            
+        });
+    }catch(error){
+        response.render("adminHome.ejs",{message:message.SOMETHING_WENT_WRONG,status:status.SERVER_ERROR});       
+    }
+}
+// needs to print email id on every page {email:request.payload.email} like this
