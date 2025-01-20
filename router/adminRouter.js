@@ -1,5 +1,5 @@
 import express from 'express';
-import { adminLoginController,adminEmployeeListController,adminVerifyEmployeeController,adminEnquiryStudentListController,adminAddStudRemarkController,adminUploadSyllabusController,adminSendSyllabusController } from '../controller/adminController.js';
+import { adminLoginController,adminEmployeeListController,adminVerifyEmployeeController,adminEnquiryStudentListController,adminAddStudRemarkController,adminUploadSyllabusController,adminSendSyllabusController,adminAddCourseController,adminViewCoursesController } from '../controller/adminController.js';
 import {fileURLToPath} from 'url';
 import jwt from 'jsonwebtoken';
 import path from 'path';
@@ -49,5 +49,14 @@ adminRouter.get('/adminStudent',authenticateJWT,(request,response)=>{
 });
 adminRouter.post('/adminUploadSyllabus',authenticateJWT,adminUploadSyllabusController);
 adminRouter.post('/adminSendSyllabus',authenticateJWT,adminSendSyllabusController)
+adminRouter.post('/adminAddCourse',authenticateJWT,adminAddCourseController);
+adminRouter.get('/adminViewCourses',authenticateJWT,adminViewCoursesController);
+adminRouter.get('/adminCourses',authenticateJWT,(request,response)=>{
+    response.render("adminCourses.ejs");
+});
+adminRouter.get('/uploadSyllabus',authenticateJWT,(request,response)=>{
+    response.render("adminUploadSyllabus.ejs");
+});
+
 export default adminRouter;
 

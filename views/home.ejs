@@ -141,10 +141,14 @@
                     <div class="form-group mb-4">
                       <select name="subject" id="subject" class="form-control">
                         <option value="">Select Subject</option>
-                        <option value="Mern Stack">Mern Stack</option>
+                        <!-- <option value="Mern Stack">Mern Stack</option>
                         <option value="Python with AI/ML">Python with AI/ML</option>
                         <option value="Java Programming Language">Java Programming Language</option>
-                        <option value="C | C++ Language">C | C++ Language</option>
+                        <option value="C | C++ Language">C | C++ Language</option> -->
+                     
+                        <% result.forEach((course)=>{ %>
+                          <option value="<%=course.courseName%>"><%=course.courseName%></option>  
+                        <% }) %>
                       </select>
 
                     </div>

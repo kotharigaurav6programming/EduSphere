@@ -12,7 +12,7 @@ import { fileURLToPath } from "url";
 import { log } from "console";
 import uploadSyllabusSchema from "../model/uploadSyllabusSchema.js";
 import mailer_syllabus from "./mailer_syllabus.js";
-
+import courseSchema from '../model/courseSchema.js';
 dotenv.config();
 const ADMIN_SECRET_KEY = process.env.ADMIN_SECRET_KEY;
 const __filename = fileURLToPath(import.meta.url);
@@ -181,4 +181,35 @@ export const adminSendSyllabusController = async(request,response)=>{
         response.render("adminHome.ejs",{message:message.SOMETHING_WENT_WRONG,status:status.SERVER_ERROR});       
     }
 }
+
+export const adminAddCourseController = async(request,response)=>{
+    try{
+        request.body.courseId = uuid4();
+        const result = await courseSchema.create(request.body);
+        console.log("Add course result : ",result);
+        if(result){
+            response.render("adminHome.ejs",{message:message.COURSE_ADDED,status:status.SUCCESS});
+        }else{
+            response.render("adminHome.ejs",{message:message.COURSE_NOT_ADDED,status:status.SUCCESS});
+        }
+    }catch(error){
+        response.render("notfound.ejs",{message:message.SOMETHING_WENT_WRONG,status:status.SERVER_ERROR});
+    }
+}
+
+export const adminViewCoursesController = async(request,response)=>{
+    try{
+        const result = await courseSchema.find();
+        // console.log(result);
+        if(result.length!=0){
+            response.render("adminViewCoursesList.ejs",{courseList:result,message:"",status:status.SUCCESS});
+        }else{
+            response.render("adminViewCoursesList.ejs",{courseList:result,message:message.NO_RECORD_FOUND,status:status.SUCCESS});
+        }
+    }catch(error){
+        console.log("Error in adminViewCoursesListController : ",error);
+        response.render("adminHome.ejs",{message:message.SOMETHING_WENT_WRONG,status:status.SERVER_ERROR});
+    }
+}
+
 // needs to print email id on every page {email:request.payload.email} like this

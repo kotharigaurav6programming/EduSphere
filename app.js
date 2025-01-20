@@ -10,6 +10,7 @@ import studentEnquiryRouter from './router/studentEnquiryRouter.js';
 import employeeRouter from './router/employeeRouter.js';
 import mongoose from "mongoose";
 import { url } from './connection/dbConfig.js';
+import courseSchema from './model/courseSchema.js';
 
 mongoose.connect(url,{
     useNewUrlParser:true,
@@ -35,9 +36,16 @@ app.use(express.static(__dirname+'/public'));
 app.use(express.urlencoded({extended:true}));
 app.use(express.json());
 
-app.get("/",(request,response)=>{
-    response.render("home.ejs");
+app.get("/",async (request,response)=>{
+    try{
+        const result = await courseSchema.find();
+        console.log(result);
+        response.render("home.ejs",{result:result});
+    }catch(error){
+
+    }
 });
+
 app.get("/adminLogin",(request,response)=>{
     response.render("adminLogin.ejs",{message:"",status:""});
 });

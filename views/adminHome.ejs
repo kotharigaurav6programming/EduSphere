@@ -126,12 +126,34 @@
           </div>
         </div>
         <div class="row mb-5 align-items-center">
-          <div class="col-lg-7 mb-5 order-1 order-lg-2" data-aos="fade-up" data-aos-delay="100">
+          <div class="col-lg-2 mb-5 order-1 order-lg-2" data-aos="fade-up" data-aos-delay="100">
+            
+            <form action="/admin/adminViewCourses">
+              <div class="form-group">
+                <input type="submit" class="btn btn-primary btn-pill" value="View Courses">
+              </div>
+            </form>
+            <form action="">
+              <div class="form-group">
+                <input type="submit" class="btn btn-primary btn-pill" value="View Detailed Syllabus">
+              </div>
+            </form>
+            <form action="">
+              <div class="form-group">
+                <input type="submit" class="btn btn-primary btn-pill" value="Add Detailed Syllabus">
+              </div>
+            </form>
+
+
+          </div>
+          <div class="col-lg-5 mb-5 order-1 order-lg-2" data-aos="fade-up" data-aos-delay="100">
             <img src="images/undraw_teaching.svg" alt="Image" class="img-fluid">
           </div>
-          <div class="col-lg-4 mr-auto order-2 order-lg-1" data-aos="fade-up" data-aos-delay="200">
+
+          <div class="col-lg-5 mr-auto order-2 order-lg-1" data-aos="fade-up" data-aos-delay="200">
             <div>
-              <form action="/admin/adminUploadSyllabus" method="post" class="form-box" enctype="multipart/form-data">
+              <!-- Admin Add Course -->
+              <form action="/admin/adminAddCourse" method="post" class="form-box">
                 <h3 class="h4 text-black mb-4">Add Course</h3>
                 <div class="form-group">
                   <input type="text" placeholder="Course Name" name="courseName" id="courseName" class="form-control">
@@ -159,12 +181,6 @@
                 
                 <div class="form-group">
                   <input type="submit" class="btn btn-primary btn-pill" value="Add Course">
-                </div>
-              </form>
-
-              <form action="">
-                <div class="form-group">
-                  <input type="submit" class="btn btn-primary btn-pill" value="Add Detailed Syllabus">
                 </div>
               </form>
             </div>

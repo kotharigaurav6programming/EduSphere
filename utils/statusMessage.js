@@ -24,4 +24,6 @@ export const message = {
     UPLOAD_STATUS : "File Uploaded Successfully",
     MAIL_SENT_SYLLABUS:"Syllabus Sent in Mail",
     MAIL_NOT_SENT:"Error While sending Syllabus in mail",
+    COURSE_ADDED:"Course Added Successfully",
+    COURSE_NOT_ADDED:"Error while Adding Course",
 }
