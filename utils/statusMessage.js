@@ -26,4 +26,5 @@ export const message = {
     MAIL_NOT_SENT:"Error While sending Syllabus in mail",
     COURSE_ADDED:"Course Added Successfully",
     COURSE_NOT_ADDED:"Error while Adding Course",
+    COURSE_ALREADY_EXIST:"Course Already Exist Please try with Another Name",
 }

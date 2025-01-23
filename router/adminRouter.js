@@ -1,9 +1,10 @@
 import express from 'express';
-import { adminLoginController,adminEmployeeListController,adminVerifyEmployeeController,adminEnquiryStudentListController,adminAddStudRemarkController,adminUploadSyllabusController,adminSendSyllabusController,adminAddCourseController,adminViewCoursesController } from '../controller/adminController.js';
+import { adminLoginController,adminEmployeeListController,adminVerifyEmployeeController,adminEnquiryStudentListController,adminAddStudRemarkController,adminUploadSyllabusController,adminSendSyllabusController,adminAddCourseController,adminViewCoursesController,adminCourseListController } from '../controller/adminController.js';
 import {fileURLToPath} from 'url';
 import jwt from 'jsonwebtoken';
 import path from 'path';
 import { status,message } from '../utils/statusMessage.js';
+import courseSchema from '../model/courseSchema.js';
 // import dotenv from 'dotenv';
 // dotenv.config();
 
@@ -52,11 +53,18 @@ adminRouter.post('/adminSendSyllabus',authenticateJWT,adminSendSyllabusControlle
 adminRouter.post('/adminAddCourse',authenticateJWT,adminAddCourseController);
 adminRouter.get('/adminViewCourses',authenticateJWT,adminViewCoursesController);
 adminRouter.get('/adminCourses',authenticateJWT,(request,response)=>{
-    response.render("adminCourses.ejs");
+    response.render("adminCourses.ejs",{message:"",status:""});
 });
-adminRouter.get('/uploadSyllabus',authenticateJWT,(request,response)=>{
-    response.render("adminUploadSyllabus.ejs");
+adminRouter.get('/uploadSyllabus',authenticateJWT,async(request,response)=>{
+    try{
+            const result = await courseSchema.find();
+            console.log(result);
+            response.render("adminUploadSyllabus.ejs",{message:"",status:"",result:result});
+        }catch(error){
+            response.render("notfound.ejs",{message:message.SERVER_ERROR,status:status.SERVER_ERROR});
+        }
 });
+adminRouter.get('/adminCourseList',authenticateJWT,adminCourseListController);
 
 export default adminRouter;
 

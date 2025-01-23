@@ -11,6 +11,7 @@ import employeeRouter from './router/employeeRouter.js';
 import mongoose from "mongoose";
 import { url } from './connection/dbConfig.js';
 import courseSchema from './model/courseSchema.js';
+import { message, status } from './utils/statusMessage.js';
 
 mongoose.connect(url,{
     useNewUrlParser:true,
@@ -42,7 +43,7 @@ app.get("/",async (request,response)=>{
         console.log(result);
         response.render("home.ejs",{result:result});
     }catch(error){
-
+        response.render("notfound.ejs",{message:message.SERVER_ERROR,status:status.SERVER_ERROR});
     }
 });
 

@@ -129,6 +129,7 @@ export const adminAddStudRemarkController = async(request,response)=>{
 
 export const adminUploadSyllabusController = async(request,response)=>{
     try{
+        const result = await courseSchema.find();
         // console.log("-----------------",request.body);
         const filename = request.files.syllabus;
         // console.log(request.files);
@@ -139,12 +140,12 @@ export const adminUploadSyllabusController = async(request,response)=>{
             try{
                 request.body.syllabusId = uuid4();
                 request.body.syllabus = fileName;
-                const result = await uploadSyllabusSchema.create(request.body);
-                console.log(result);
-                response.render("adminHome.ejs",{message:message.UPLOAD_STATUS,status:status.SUCCESS});
+                const resultNew = await uploadSyllabusSchema.create(request.body);
+                console.log(resultNew);
+                response.render("adminUploadSyllabus.ejs",{result:result,message:message.UPLOAD_STATUS,status:status.SUCCESS});
             }catch(error){
                 console.log(error);
-                response.render("adminHome.ejs",{message:message.FILE_NOT_UPLOADED,status:status.SUCCESS});
+                response.render("adminUploadSyllabus.ejs",{result:result,message:message.FILE_NOT_UPLOADED,status:status.SUCCESS});
             }
         })
     }catch(error){
@@ -188,12 +189,17 @@ export const adminAddCourseController = async(request,response)=>{
         const result = await courseSchema.create(request.body);
         console.log("Add course result : ",result);
         if(result){
-            response.render("adminHome.ejs",{message:message.COURSE_ADDED,status:status.SUCCESS});
+            response.render("adminCourses.ejs",{message:message.COURSE_ADDED,status:status.SUCCESS});
         }else{
-            response.render("adminHome.ejs",{message:message.COURSE_NOT_ADDED,status:status.SUCCESS});
+            response.render("adminCourses.ejs",{message:message.COURSE_NOT_ADDED,status:status.SUCCESS});
         }
     }catch(error){
-        response.render("notfound.ejs",{message:message.SOMETHING_WENT_WRONG,status:status.SERVER_ERROR});
+        // console.log("--------------",error.code);
+        if(error.code==11000){
+            response.render("adminCourses.ejs",{message:message.COURSE_ALREADY_EXIST,status:status.SUCCESS});
+        }else{
+            response.render("notfound.ejs",{message:message,status:status.SERVER_ERROR});
+        }
     }
 }
 
@@ -211,5 +217,21 @@ export const adminViewCoursesController = async(request,response)=>{
         response.render("adminHome.ejs",{message:message.SOMETHING_WENT_WRONG,status:status.SERVER_ERROR});
     }
 }
+
+export const adminCourseListController = async(request,response)=>{
+    try{
+        const result = await courseSchema.find();
+        // console.log(result);
+        if(result.length!=0){
+            response.render("adminCourseList.ejs",{courseList:result,message:"",status:status.SUCCESS});
+        }else{
+            response.render("adminCourseList.ejs",{courseList:result,message:message.NO_RECORD_FOUND,status:status.SUCCESS});
+        }
+    }catch(error){
+        console.log("Error in adminCourseListController : ",error);
+        response.render("adminHome.ejs",{message:message.SOMETHING_WENT_WRONG,status:status.SERVER_ERROR});
+    }
+}
+
 
 // needs to print email id on every page {email:request.payload.email} like this
