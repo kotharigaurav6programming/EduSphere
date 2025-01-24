@@ -13,6 +13,7 @@ import { log } from "console";
 import uploadSyllabusSchema from "../model/uploadSyllabusSchema.js";
 import mailer_syllabus from "./mailer_syllabus.js";
 import courseSchema from '../model/courseSchema.js';
+import detailedSyllabusSchema from "../model/detailedSyllabusSchema.js";
 dotenv.config();
 const ADMIN_SECRET_KEY = process.env.ADMIN_SECRET_KEY;
 const __filename = fileURLToPath(import.meta.url);
@@ -233,5 +234,32 @@ export const adminCourseListController = async(request,response)=>{
     }
 }
 
+export const adminAddDetailedSyllabusController = async (request,response)=>{
+    try{
+        // console.log("JSON STRING : ",request.query.course);
+        // console.log("JAVASCRIPT OBJECT : ",JSON.parse(request.query.course));
+        const courseObj = JSON.parse(request.query.course);
+        response.render("adminAddDetailedSyllabus.ejs",{courseObj,message:"",status:""});
+    }catch(error){
+        response.render("adminCourseList.ejs",{message:"",status:""});
+    }
+}
 
+export const adminDetailedSyllabusController = async(request,response)=>{
+    try{
+        request.body.detailedSyllabusId = uuid4();
+        // console.log("------------------------> ",request.body);
+        //const detailedObjWRTCourseId = await detailedSyllabusSchema.find({courseId:request.body.courseId});
+        // if(detailedObjWRTCourseId){
+
+        // }else{
+
+        // }
+        const result = await detailedSyllabusSchema.create(request.body);
+        console.log("res : ",result);
+        
+    }catch(error){
+
+    }
+}
 // needs to print email id on every page {email:request.payload.email} like this

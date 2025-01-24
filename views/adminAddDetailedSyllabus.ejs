@@ -65,40 +65,124 @@
         <div class="row mb-5 justify-content-center">
           <div class="col-lg-12 text-center"  data-aos="fade-up" data-aos-delay="">
             <br>
-            <h2>Course List</h2>
+            <h4>Detailed Syllabus</h4>
             <br>
             <span style="color:green"><%=message%></span>
-            <table class="table" style="font-size: 12px;">
+            <table class="table" style="font-size: 14px;">
                 <thead>
                   <tr>
-                    <th scope="col">S.No</th>
                     <th scope="col">CourseId</th>
                     <th scope="col">Name</th>
                     <th scope="col">Type</th>
                     <th scope="col">Duration</th>
                     <th scope="col">Fees</th>
-                    <th scope="col" colspan="2">Action</th>
-                    <th scope="col">Detailed Syllabus</th>
                 </tr>
                 </thead>
                 <tbody>
-                  <%courseList.forEach((course,index)=>{%>
                       <tr>
-                        <td><%=(index+1)%></td>
-                        <td><%=course.courseId%></td>
-                        <td><%=course.courseName%></td>
-                        <td><%=course.courseType%></td>
-                        <td><%=course.courseDuration%></td>
-                        <td><%=course.courseFees%></td>
-                        <td><a class="btn btn-primary py-1 px-2 btn-pill" href="">Update</a></td>
-                        <td><a class="btn btn-primary py-1 px-2 btn-pill" href="">Delete</a></td>
-                        <td><a class="btn btn-primary py-1 px-2 btn-pill" href="/admin/adminAddDetailedSyllabus?course=<%=JSON.stringify(course)%>">Add</a></td>
+                        <td><%=courseObj.courseId%></td>
+                        <td><%=courseObj.courseName%></td>
+                        <td><%=courseObj.courseType%></td>
+                        <td><%=courseObj.courseDuration%></td>
+                        <td><%=courseObj.courseFees%></td>
                       </tr>
-                  <%})%>
                 </tbody>
               </table>
 
           </div>
+          <!-- Dynamic field code starts -->
+          <div class="container mt-4" data-aos="fade-up">
+            <h4>Add Topics</h4>
+            <form id="topicsForm" action="/admin/adminDetailedSyllabus" method="post">
+                <input type="hidden" id="courseId" name="courseId" value="<%=courseObj.courseId%>">
+                <div id="topicsContainer">
+                <!-- Dynamic Fields will be added here -->
+                <div class="row g-3 align-items-center mb-3">
+                  <div class="col-md-6">
+                    <label for="mainTopic-0" class="form-label">Main Topic</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="mainTopic-0"
+                      name="mainTopic[]"
+                      placeholder="Enter main topic"
+                    >
+                  </div>
+                  <div class="col-md-6">
+                    <label for="subTopic-0" class="form-label">Sub Topic</label>
+                    <textarea
+                      class="form-control"
+                      id="subTopic-0"
+                      name="subTopic[]"
+                      rows="2"
+                      placeholder="Enter sub topic"
+                    ></textarea>
+                  </div>
+                </div>
+              </div>
+              <button type="button" id="addTopicButton" class="btn btn-primary py-3 px-5 btn-pill">
+                <i class="bi bi-plus-circle"></i> Add Another Topic
+              </button>
+              <button class="btn btn-primary py-3 px-5 btn-pill">
+                 Submit Detailed Course
+              </button>
+            </form>
+        
+           
+          </div>
+          <script>
+            let topicIndex = 1; // Start at 1 for additional dynamic fields
+        
+            document.getElementById("addTopicButton").addEventListener("click", function () {
+              // Get the container for dynamic fields
+              const topicsContainer = document.getElementById("topicsContainer");
+        
+              // Create a new row for main topic and subtopic
+              const newRow = document.createElement("div");
+              newRow.className = "row g-3 align-items-center mb-3";
+        
+              // Main Topic Field
+              const mainTopicDiv = document.createElement("div");
+              mainTopicDiv.className = "col-md-6";
+              mainTopicDiv.innerHTML = `
+                <label for="mainTopic-${topicIndex}" class="form-label">Main Topic</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="mainTopic-${topicIndex}"
+                  name="mainTopic[]"
+                  placeholder="Enter main topic"
+                >
+              `;
+        
+              // Sub Topic Field
+              const subTopicDiv = document.createElement("div");
+              subTopicDiv.className = "col-md-6";
+              subTopicDiv.innerHTML = `
+                <label for="subTopic-${topicIndex}" class="form-label">Sub Topic</label>
+                <textarea
+                  class="form-control"
+                  id="subTopic-${topicIndex}"
+                  name="subTopic[]"
+                  rows="2"
+                  placeholder="Enter sub topic"
+                ></textarea>
+              `;
+        
+              // Append fields to the row
+              newRow.appendChild(mainTopicDiv);
+              newRow.appendChild(subTopicDiv);
+        
+              // Append the row to the container
+              topicsContainer.appendChild(newRow);
+        
+              // Increment topic index
+              topicIndex++;
+            });
+          
+          </script>
+        
+          <!-- Dynamic field code ends -->
         </div>
       
 
