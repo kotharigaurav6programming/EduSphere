@@ -27,4 +27,6 @@ export const message = {
     COURSE_ADDED:"Course Added Successfully",
     COURSE_NOT_ADDED:"Error while Adding Course",
     COURSE_ALREADY_EXIST:"Course Already Exist Please try with Another Name",
+    DETAILED_SYLLABUS_MODIFIED:"Detailed Syllabus Modified",
+    DETAILED_SYLLABUS_ADDED:"Detailed Syllabus Added",
 }

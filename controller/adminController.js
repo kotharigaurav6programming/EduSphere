@@ -239,27 +239,47 @@ export const adminAddDetailedSyllabusController = async (request,response)=>{
         // console.log("JSON STRING : ",request.query.course);
         // console.log("JAVASCRIPT OBJECT : ",JSON.parse(request.query.course));
         const courseObj = JSON.parse(request.query.course);
-        response.render("adminAddDetailedSyllabus.ejs",{courseObj,message:"",status:""});
+        const courseId = courseObj.courseId;
+        const existingDetailedObject = await detailedSyllabusSchema.findOne({courseId});
+        // console.log("existingDetailedObject : ",existingDetailedObject);
+        var flag = false;
+        if(existingDetailedObject){
+            flag=true;
+            response.render("adminAddDetailedSyllabus.ejs",{flag,courseObj,message:"Course Have Detailed Syllabus | Changes done and add will replace Previous Content",status:""});
+        }
+        else{
+            response.render("adminAddDetailedSyllabus.ejs",{flag,courseObj,message:"",status:""});
+        }
     }catch(error){
+        console.log("error in admin add detailed syllabus controller : ",error);
         response.render("adminCourseList.ejs",{message:"",status:""});
     }
 }
 
 export const adminDetailedSyllabusController = async(request,response)=>{
     try{
-        request.body.detailedSyllabusId = uuid4();
-        // console.log("------------------------> ",request.body);
-        //const detailedObjWRTCourseId = await detailedSyllabusSchema.find({courseId:request.body.courseId});
-        // if(detailedObjWRTCourseId){
+        const courseObj = JSON.parse(request.body.courseObj);
+        const courseId = courseObj.courseId;
+        request.body.courseId=courseId;
 
-        // }else{
-
-        // }
-        const result = await detailedSyllabusSchema.create(request.body);
-        console.log("res : ",result);
-        
+        const existingDetailedObject = await detailedSyllabusSchema.findOne({courseId});
+        console.log("existingDetailedObject : ",existingDetailedObject);
+        var flag = true;
+        var msg;
+        if(existingDetailedObject){
+            msg = message.DETAILED_SYLLABUS_MODIFIED;
+            const res = await detailedSyllabusSchema.updateOne({courseId},{$set:request.body});
+            console.log("modify : ",res);
+        }else{
+            msg=message.DETAILED_SYLLABUS_ADDED;
+            request.body.detailedSyllabusId = uuid4();
+            const res = await detailedSyllabusSchema.create(request.body);
+            console.log("add : ",res);
+        }
+        response.render('adminAddDetailedSyllabus',{flag,courseObj,message:msg,status:status.SUCCESS});        
     }catch(error){
-
+        console.log("adminDetailedSyllabusController : ",error);
+        response.render("adminCourseList.ejs",{message:"",status:""});
     }
 }
 // needs to print email id on every page {email:request.payload.email} like this

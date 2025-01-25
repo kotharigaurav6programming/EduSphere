@@ -1,5 +1,7 @@
 import uuid4 from "uuid4";
 import studentEnquirySchema from "../model/studentEnquirySchema.js";
+import courseSchema from "../model/courseSchema.js";
+import detailedSyllabusSchema from "../model/detailedSyllabusSchema.js";
 
 export const studentEnquiry = async(request,response)=>{
     try{
@@ -15,8 +17,10 @@ export const studentEnquiry = async(request,response)=>{
         }
         const result = await studentEnquirySchema.create(enquiryObj);
         // console.log("result : ",result);
+        const courseObj = await courseSchema.findOne({courseName:request.body.subject});
+        const detailedSyllabusObj = await detailedSyllabusSchema.findOne({courseId:courseObj.courseId});
         if(result){
-            response.render("studentECContent.ejs");
+            response.render("studentECContent.ejs",{detailedSyllabusObj});
         }
     }catch(error){
 

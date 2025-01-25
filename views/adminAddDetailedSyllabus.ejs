@@ -66,8 +66,7 @@
           <div class="col-lg-12 text-center"  data-aos="fade-up" data-aos-delay="">
             <br>
             <h4>Detailed Syllabus</h4>
-            <br>
-            <span style="color:green"><%=message%></span>
+            <span style="color:crimson"><%=message%></span>
             <table class="table" style="font-size: 14px;">
                 <thead>
                   <tr>
@@ -94,11 +93,11 @@
           <div class="container mt-4" data-aos="fade-up">
             <h4>Add Topics</h4>
             <form id="topicsForm" action="/admin/adminDetailedSyllabus" method="post">
-                <input type="hidden" id="courseId" name="courseId" value="<%=courseObj.courseId%>">
-                <div id="topicsContainer">
+              <input type="hidden" id="courseObj" name="courseObj" value="<%=JSON.stringify(courseObj)%>">
+              <div id="topicsContainer">
                 <!-- Dynamic Fields will be added here -->
-                <div class="row g-3 align-items-center mb-3">
-                  <div class="col-md-6">
+                <div class="row g-3 align-items-center mb-3 topic-row">
+                  <div class="col-md-5">
                     <label for="mainTopic-0" class="form-label">Main Topic</label>
                     <input
                       type="text"
@@ -106,9 +105,10 @@
                       id="mainTopic-0"
                       name="mainTopic[]"
                       placeholder="Enter main topic"
+                      required
                     >
                   </div>
-                  <div class="col-md-6">
+                  <div class="col-md-5">
                     <label for="subTopic-0" class="form-label">Sub Topic</label>
                     <textarea
                       class="form-control"
@@ -116,34 +116,40 @@
                       name="subTopic[]"
                       rows="2"
                       placeholder="Enter sub topic"
+                      required
                     ></textarea>
+                  </div>
+                  <div class="col-md-2 d-flex align-items-center">
+                    <button type="button" class="btn btn-danger remove-topic-button py-2 px-3">X</button>
                   </div>
                 </div>
               </div>
-              <button type="button" id="addTopicButton" class="btn btn-primary py-3 px-5 btn-pill">
-                <i class="bi bi-plus-circle"></i> Add Another Topic
+              <button type="button" id="addTopicButton" class="btn btn-primary py-2 px-3 btn-pill">
+                <i class="bi bi-plus-circle"></i> Add More
               </button>
-              <button class="btn btn-primary py-3 px-5 btn-pill">
-                 Submit Detailed Course
-              </button>
+              <% if(flag) { %>
+                <button class="btn btn-danger py-2 px-3 btn-pill">Modify</button>
+              <% } else { %>
+                <button class="btn btn-primary py-2 px-3 btn-pill">Add</button>
+              <% } %>
+              <button type="reset" class="btn btn-primary py-2 px-3 btn-pill">Reset</button>
             </form>
-        
-           
           </div>
+          
           <script>
             let topicIndex = 1; // Start at 1 for additional dynamic fields
-        
+          
             document.getElementById("addTopicButton").addEventListener("click", function () {
               // Get the container for dynamic fields
               const topicsContainer = document.getElementById("topicsContainer");
-        
+          
               // Create a new row for main topic and subtopic
               const newRow = document.createElement("div");
-              newRow.className = "row g-3 align-items-center mb-3";
-        
+              newRow.className = "row g-3 align-items-center mb-3 topic-row";
+          
               // Main Topic Field
               const mainTopicDiv = document.createElement("div");
-              mainTopicDiv.className = "col-md-6";
+              mainTopicDiv.className = "col-md-5";
               mainTopicDiv.innerHTML = `
                 <label for="mainTopic-${topicIndex}" class="form-label">Main Topic</label>
                 <input
@@ -152,12 +158,13 @@
                   id="mainTopic-${topicIndex}"
                   name="mainTopic[]"
                   placeholder="Enter main topic"
+                  required
                 >
               `;
-        
+          
               // Sub Topic Field
               const subTopicDiv = document.createElement("div");
-              subTopicDiv.className = "col-md-6";
+              subTopicDiv.className = "col-md-5";
               subTopicDiv.innerHTML = `
                 <label for="subTopic-${topicIndex}" class="form-label">Sub Topic</label>
                 <textarea
@@ -166,22 +173,40 @@
                   name="subTopic[]"
                   rows="2"
                   placeholder="Enter sub topic"
+                  required
                 ></textarea>
               `;
-        
+          
+              // Remove Button
+              const removeButtonDiv = document.createElement("div");
+              removeButtonDiv.className = "col-md-2 d-flex align-items-center";
+              removeButtonDiv.innerHTML = `
+                <button type="button" class="btn btn-danger remove-topic-button py-2 px-3">X</button>
+              `;
+          
               // Append fields to the row
               newRow.appendChild(mainTopicDiv);
               newRow.appendChild(subTopicDiv);
-        
+              newRow.appendChild(removeButtonDiv);
+          
               // Append the row to the container
               topicsContainer.appendChild(newRow);
-        
+          
               // Increment topic index
               topicIndex++;
             });
           
+            // Event delegation to handle removing rows
+            document.getElementById("topicsContainer").addEventListener("click", function (e) {
+              if (e.target && e.target.classList.contains("remove-topic-button")) {
+                const row = e.target.closest(".topic-row");
+                if (row) {
+                  row.remove();
+                }
+              }
+            });
           </script>
-        
+          
           <!-- Dynamic field code ends -->
         </div>
       

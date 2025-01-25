@@ -91,8 +91,8 @@
                         <td><%=course.courseDuration%></td>
                         <td><%=course.courseFees%></td>
                         <td><a class="btn btn-primary py-1 px-2 btn-pill" href="">Update</a></td>
-                        <td><a class="btn btn-primary py-1 px-2 btn-pill" href="">Delete</a></td>
-                        <td><a class="btn btn-primary py-1 px-2 btn-pill" href="/admin/adminAddDetailedSyllabus?course=<%=JSON.stringify(course)%>">Add</a></td>
+                        <td><a class="btn btn-danger py-1 px-2 btn-pill" href="">Delete</a></td>
+                        <td><a class="btn btn-success text-white py-1 px-2 btn-pill" href="/admin/adminAddDetailedSyllabus?course=<%=JSON.stringify(course)%>">Add</a></td>
                       </tr>
                   <%})%>
                 </tbody>
