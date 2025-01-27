@@ -127,6 +127,27 @@ export const adminAddStudRemarkController = async(request,response)=>{
         response.render("adminHome.ejs",{message:message.SOMETHING_WENT_WRONG,status:status.SERVER_ERROR});
     }
 }
+// code to check whether uploaded syllabus available or not starts
+export const checkUploadSyllabusAvailability = async(request,response)=>{
+    try{
+        const subject = request.body.subject;
+        const uploadSyllabusObj = await uploadSyllabusSchema.findOne({subject:subject});
+        var flag = true;
+        var msg;
+        if(uploadSyllabusObj){
+            msg = "Syllabus for the Subject is Already Uploaded | Do you want to Replace with New One ? "
+            response.render("adminUploadSyllabus.ejs",{flag,message:msg,status:status.SUCCESS});
+        }else{
+            flag=false;
+            response.render("adminUploadSyllabus.ejs",{flag,message:"",status:status.SUCCESS});
+        }
+
+    }catch(error){
+        console.log("Error in checkUploadSyllabusAvailability : ",error);
+
+    }
+}
+// code to check whether uploaded syllabus available or not ends
 
 export const adminUploadSyllabusController = async(request,response)=>{
     try{
@@ -143,10 +164,10 @@ export const adminUploadSyllabusController = async(request,response)=>{
                 request.body.syllabus = fileName;
                 const resultNew = await uploadSyllabusSchema.create(request.body);
                 console.log(resultNew);
-                response.render("adminUploadSyllabus.ejs",{result:result,message:message.UPLOAD_STATUS,status:status.SUCCESS});
+                response.render("adminUploadSyllabus.ejs",{flag:true,result:result,message:message.UPLOAD_STATUS,status:status.SUCCESS});
             }catch(error){
                 console.log(error);
-                response.render("adminUploadSyllabus.ejs",{result:result,message:message.FILE_NOT_UPLOADED,status:status.SUCCESS});
+                response.render("adminUploadSyllabus.ejs",{flag:true,result:result,message:message.FILE_NOT_UPLOADED,status:status.SUCCESS});
             }
         })
     }catch(error){

@@ -59,7 +59,7 @@ adminRouter.get('/uploadSyllabus',authenticateJWT,async(request,response)=>{
     try{
             const result = await courseSchema.find();
             console.log(result);
-            response.render("adminUploadSyllabus.ejs",{message:"",status:"",result:result});
+            response.render("adminUploadSyllabus.ejs",{flag:false,message:"",status:"",result:result});
         }catch(error){
             response.render("notfound.ejs",{message:message.SERVER_ERROR,status:status.SERVER_ERROR});
         }
