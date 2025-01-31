@@ -29,4 +29,5 @@ export const message = {
     COURSE_ALREADY_EXIST:"Course Already Exist Please try with Another Name",
     DETAILED_SYLLABUS_MODIFIED:"Detailed Syllabus Modified",
     DETAILED_SYLLABUS_ADDED:"Detailed Syllabus Added",
+    COURSE_AVAILABLE:"Course Already Available | Go to Update Section",
 }

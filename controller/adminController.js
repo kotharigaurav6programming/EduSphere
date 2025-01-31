@@ -2,6 +2,8 @@ import adminSchema from "../model/adminSchema.js";
 // import swal from 'sweetalert';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
+import xlsx from 'xlsx';
+import fs from 'fs';
 import path from 'path';
 import uuid4 from 'uuid4';
 import { status,message } from "../utils/statusMessage.js";
@@ -128,25 +130,26 @@ export const adminAddStudRemarkController = async(request,response)=>{
     }
 }
 // code to check whether uploaded syllabus available or not starts
-export const checkUploadSyllabusAvailability = async(request,response)=>{
-    try{
-        const subject = request.body.subject;
-        const uploadSyllabusObj = await uploadSyllabusSchema.findOne({subject:subject});
-        var flag = true;
-        var msg;
-        if(uploadSyllabusObj){
-            msg = "Syllabus for the Subject is Already Uploaded | Do you want to Replace with New One ? "
-            response.render("adminUploadSyllabus.ejs",{flag,message:msg,status:status.SUCCESS});
-        }else{
-            flag=false;
-            response.render("adminUploadSyllabus.ejs",{flag,message:"",status:status.SUCCESS});
-        }
+// export const checkUploadSyllabusAvailability = async(request,response)=>{
+//     try{
+//         const subject = request.body.subject;
+//         const uploadSyllabusObj = await uploadSyllabusSchema.findOne({subject:subject});
+//         var flag = true;
+//         var msg;
+//         if(uploadSyllabusObj){
+//             msg = "Syllabus for the Subject is Already Uploaded | Do you want to Replace with New One ? "
+//             response.render("adminUploadSyllabus.ejs",{message:msg,status:status.SUCCESS});
+//         }else{
+//             flag=false;
+//             response.render("adminUploadSyllabus.ejs",{message:"",status:status.SUCCESS});
+//         }
 
-    }catch(error){
-        console.log("Error in checkUploadSyllabusAvailability : ",error);
-
-    }
-}
+//     }catch(error){
+//         console.log("Error in checkUploadSyllabusAvailability : ",error);
+//         response.render("adminHome.ejs",{message:message.SOMETHING_WENT_WRONG,status:status.SERVER_ERROR});
+  
+//     }
+// }
 // code to check whether uploaded syllabus available or not ends
 
 export const adminUploadSyllabusController = async(request,response)=>{
@@ -162,12 +165,16 @@ export const adminUploadSyllabusController = async(request,response)=>{
             try{
                 request.body.syllabusId = uuid4();
                 request.body.syllabus = fileName;
-                const resultNew = await uploadSyllabusSchema.create(request.body);
-                console.log(resultNew);
-                response.render("adminUploadSyllabus.ejs",{flag:true,result:result,message:message.UPLOAD_STATUS,status:status.SUCCESS});
+                const res = await uploadSyllabusSchema.findOne({subject:request.body.subject});
+                if(res){
+                    response.render("adminUploadSyllabus.ejs",{result:result,message:message.COURSE_AVAILABLE,status:status.SUCCESS});
+                }else{
+                    const resultNew = await uploadSyllabusSchema.create(request.body);
+                    response.render("adminUploadSyllabus.ejs",{result:result,message:message.UPLOAD_STATUS,status:status.SUCCESS});   
+                }
             }catch(error){
                 console.log(error);
-                response.render("adminUploadSyllabus.ejs",{flag:true,result:result,message:message.FILE_NOT_UPLOADED,status:status.SUCCESS});
+                response.render("adminUploadSyllabus.ejs",{result:result,message:message.FILE_NOT_UPLOADED,status:status.SUCCESS});
             }
         })
     }catch(error){
@@ -179,6 +186,7 @@ export const adminUploadSyllabusController = async(request,response)=>{
 export const adminSendSyllabusController = async(request,response)=>{
     try{
         const studentEmail = request.body.email;
+        const enquiryTime = request.body.enquiryTime;
         const syllabusFileName = request.body.syllabus;
         const enquiryStudentList = await studentEnquirySchema.find();
         const syllabusList = await uploadSyllabusSchema.find();
@@ -186,7 +194,13 @@ export const adminSendSyllabusController = async(request,response)=>{
         mailer_syllabus.mailer(studentEmail,syllabusFileName,async(info)=>{
             if(info){
                 console.log("main sent with syllabus");
-                const result = await studentEnquirySchema.updateOne({email:studentEmail},{$set:{syllabusStatus:"Mail Sent"}});
+                const selectionCriteria = {
+                                            $and:[
+                                                    {email:studentEmail},
+                                                    {enquiryTime:enquiryTime}
+                                                ]
+                                        };
+                const result = await studentEnquirySchema.updateOne(selectionCriteria,{$set:{syllabusStatus:"Mail Sent"}});
                 const enquiryStudentListUpdate = await studentEnquirySchema.find();
                 // console.log("mail syllabus status : ",result);
                 // if(result.modifiedCount==1){
@@ -303,4 +317,76 @@ export const adminDetailedSyllabusController = async(request,response)=>{
         response.render("adminCourseList.ejs",{message:"",status:""});
     }
 }
+
+
+  export const downloadExcelController = async (request, response) => {
+    try {
+        const enquiryStudentList = await studentEnquirySchema.find();
+        const syllabusList = await uploadSyllabusSchema.find();
+       
+      const { fromDate, toDate } = request.query;
+  
+      if (!fromDate || !toDate) {
+        return response.status(400).send('Please provide both from and to dates.');
+      }
+  
+      const sampleData = await studentEnquirySchema.find();
+  
+      // Helper function to parse 'dd/MM/yyyy' to a JavaScript Date object
+      function parseDate(dateString) {
+        const [day, month, year] = dateString.split('/').map(Number);
+        return new Date(year, month - 1, day);
+      }
+  
+      // Filter data based on date range
+      const filteredData = sampleData.filter(item => {
+        const enquiredDate = parseDate(item.enquiryDate);
+        return enquiredDate >= new Date(fromDate) && enquiredDate <= new Date(toDate);
+      });
+  
+      if (filteredData.length === 0) {
+        response.render("adminEnquiryStudentList.ejs",{enquiryStudentList:enquiryStudentList,syllabusList:syllabusList,message:'No data available for the selected date range.',status:status.SUCCESS});
+      }
+  
+      // Format data and headers
+      const formattedData = filteredData.map((item,index) => ({
+        SNO : index+1,
+        Email: item.email || 'N/A',
+        Contact: item.contact || 'N/A',
+        EnquiryDate: item.enquiryDate || 'N/A',
+        Subject : item.subject || 'N/A'
+      }));
+      console.log(formattedData);
+      
+      // Define headers explicitly
+      const headers = ['SNO','Email', 'Contact', 'EnquiryDate', 'Subject'];
+  
+      // Create a new workbook and worksheet with headers
+      const workbook = xlsx.utils.book_new();
+      const worksheet = xlsx.utils.json_to_sheet(formattedData, { header: headers });
+  
+      // Append the worksheet to the workbook
+      xlsx.utils.book_append_sheet(workbook, worksheet, "FilteredData");
+  
+      // Define the file path
+      const filePath = path.join(__dirname, 'filtered_data.xlsx');
+  
+      // Write the Excel file to the server temporarily
+      xlsx.writeFile(workbook, filePath);
+  
+      // Send the file for download
+      response.download(filePath, 'filtered_data.xlsx', (err) => {
+        if (err) {
+          console.error("Error downloading the file:", err);
+        } else {
+          console.log('Download successfully');
+          fs.unlinkSync(filePath); // Clean up the file after download
+        }
+      });
+    } catch (error) {
+      console.log("Error in excel:", error);
+      response.status(500).send('Internal Server Error');
+    }
+  };
+
 // needs to print email id on every page {email:request.payload.email} like this

@@ -20,6 +20,11 @@ const studentEnquirySchema = mongoose.Schema({
         type:String,
         default:new Date().toLocaleDateString()
     },
+    enquiryTime:{
+        type:String,
+      //  default:new Date().getTime()
+        default: () => new Date().getTime().toString()
+    },
     remark:{
         type:String,
         default:"No Remark Yet"

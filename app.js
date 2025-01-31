@@ -12,6 +12,8 @@ import mongoose from "mongoose";
 import { url } from './connection/dbConfig.js';
 import courseSchema from './model/courseSchema.js';
 import { message, status } from './utils/statusMessage.js';
+import uploadSyllabusSchema from './model/uploadSyllabusSchema.js';
+import detailedSyllabusSchema from './model/detailedSyllabusSchema.js';
 
 mongoose.connect(url,{
     useNewUrlParser:true,
@@ -39,9 +41,15 @@ app.use(express.json());
 
 app.get("/",async (request,response)=>{
     try{
-        const result = await courseSchema.find();
-        console.log(result);
-        response.render("home.ejs",{result:result});
+        const courseArrObj = await courseSchema.find();
+        const detailedSyllabusArrObj = await detailedSyllabusSchema.find();
+        const res = courseArrObj.filter((obj)=>{
+            return detailedSyllabusArrObj.find((detailedObj)=>{
+                return detailedObj.courseId == obj.courseId;
+            });
+        });
+        console.log(res);
+        response.render("home.ejs",{result:res});
     }catch(error){
         response.render("notfound.ejs",{message:message.SERVER_ERROR,status:status.SERVER_ERROR});
     }

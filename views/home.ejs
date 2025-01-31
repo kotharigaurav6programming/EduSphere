@@ -1,61 +1,157 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>EduSphere</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    
-    
-    <link href="https://fonts.googleapis.com/css?family=Muli:300,400,700,900" rel="stylesheet">
-    <link rel="stylesheet" href="fonts/icomoon/style.css">
 
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/jquery-ui.css">
-    <link rel="stylesheet" href="css/owl.carousel.min.css">
-    <link rel="stylesheet" href="css/owl.theme.default.min.css">
-    <link rel="stylesheet" href="css/owl.theme.default.min.css">
+<head>
+  <title>EduSphere</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <link rel="stylesheet" href="css/jquery.fancybox.min.css">
 
-    <link rel="stylesheet" href="css/bootstrap-datepicker.css">
+  <link href="https://fonts.googleapis.com/css?family=Muli:300,400,700,900" rel="stylesheet">
+  <link rel="stylesheet" href="fonts/icomoon/style.css">
 
-    <link rel="stylesheet" href="fonts/flaticon/font/flaticon.css">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/jquery-ui.css">
+  <link rel="stylesheet" href="css/owl.carousel.min.css">
+  <link rel="stylesheet" href="css/owl.theme.default.min.css">
+  <link rel="stylesheet" href="css/owl.theme.default.min.css">
 
-    <link rel="stylesheet" href="css/aos.css">
+  <link rel="stylesheet" href="css/jquery.fancybox.min.css">
 
-    <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/bootstrap-datepicker.css">
 
-    <style>
-      #output {
-          font-family: Arial, sans-serif;
-          font-size: 50px;
-          white-space: pre-wrap;
-          text-shadow: 1px 2px 1px black;
-          color: white;
-          font-weight: bolder;
+  <link rel="stylesheet" href="fonts/flaticon/font/flaticon.css">
+
+  <link rel="stylesheet" href="css/aos.css">
+
+  <link rel="stylesheet" href="css/style.css">
+
+  <style>
+    #output {
+      font-family: Arial, sans-serif;
+      font-size: 50px;
+      white-space: pre-wrap;
+      text-shadow: 1px 2px 1px black;
+      color: white;
+      font-weight: bolder;
+    }
+
+    .fade-in {
+      display: inline-block;
+      opacity: 0;
+      animation: fadeIn 0.5s forwards;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
       }
 
-      .fade-in {
-          display: inline-block;
-          opacity: 0;
-          animation: fadeIn 0.5s forwards;
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    #animate {
+      animation-name: displayAnimate;
+      animation-duration: 1s;
+      animation-iteration-count: infinite;
+    }
+
+    @keyframes displayAnimate {
+      from {
+        color: red;
       }
 
-      @keyframes fadeIn {
-          from {
-              opacity: 0;
-              transform: translateY(-10px);
+      to {
+        color: whitesmoke;
+      }
+    }
+
+    #animateBtn {
+      animation-name: displayAnimateBtn;
+      animation-duration: 1s;
+      animation-iteration-count: infinite;
+    }
+
+    @keyframes displayAnimateBtn {
+      from {
+        background-color: crimson;
+      }
+
+      to {
+        background-color: #7971ea;
+      }
+    }
+
+    /* canvas logic starts */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* body {
+      background-color: #000;
+      height: 100vh;
+      overflow: hidden;
+      cursor: none;
+    } */
+
+    /* canvas {
+      display: block;
+    } */
+    /*  */
+    /* Allow body to scroll */
+    body {
+      /* background-color: #000; */
+      height: auto;
+      overflow: visible;
+      /* cursor: none; */
+    }
+
+    /* Keep canvas fixed without blocking scroll */
+    canvas {
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: -1;
+      width: 100vw;
+      height: 100vh;
+      cursor: none;
+    }
+
+    /* canvas logic ends */
+
+              /* glimpse image height starts */
+              .gallery-image {
+            width: 100%; /* Full width */
+            aspect-ratio: 16/9; /* Maintain aspect ratio */
+            object-fit: cover; /* Ensure the image covers its container */
           }
-          to {
-              opacity: 1;
-              transform: translateY(0);
+        
+          @media (max-width: 768px) {
+            .gallery-image {
+              aspect-ratio: 4/3;
+            }
           }
-      }
+        
+          @media (max-width: 576px) {
+            .gallery-image {
+              aspect-ratio: 1/1;
+            }
+          }
+        /* glimpse image height ends */
+
   </style>
 
-  </head>
-  <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
-  
+</head>
+
+<body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
+
   <div class="site-wrap">
 
     <div class="site-mobile-menu site-navbar-target">
@@ -66,10 +162,10 @@
       </div>
       <div class="site-mobile-menu-body"></div>
     </div>
-   
-    
+
+
     <header class="site-navbar py-4 js-sticky-header site-navbar-target" role="banner">
-      
+
       <div class="container-fluid">
         <div class="d-flex align-items-center">
           <div class="site-logo mr-auto w-25"><a href="index.html">EduSphere</a></div>
@@ -91,84 +187,76 @@
                 <li class="cta"><a href="#contact-section" class="nav-link"><span>Contact Us</span></a></li>
               </ul>
             </nav>
-            <a href="#" class="d-inline-block d-lg-none site-menu-toggle js-menu-toggle text-black float-right"><span class="icon-menu h3"></span></a>
+            <a href="#" class="d-inline-block d-lg-none site-menu-toggle js-menu-toggle text-black float-right"><span
+                class="icon-menu h3"></span></a>
           </div>
         </div>
       </div>
-      
+
     </header>
 
     <div class="intro-section" id="home-section">
-      
-      <div class="slide-1" style="background-image: url('images/hero_1.jpg');" data-stellar-background-ratio="0.5">
-        <div class="container">
-          <div class="row align-items-center">
-            <div class="col-12" style="height:500px;">
-              <div class="row align-items-center">
-                <div class="col-lg-6 mb-4">
-                  
-                  <h1  data-aos="fade-up" data-aos-delay="100">EduSphere</h1>
-                  <h1  data-aos="fade-up" data-aos-delay="100" id="output"></h1>
 
-                  <p class="mb-4"  data-aos="fade-up" data-aos-delay="200">Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime ipsa nulla sed quis rerum amet natus quas necessitatibus.</p>
-                  <p data-aos="fade-up" data-aos-delay="300"><a href="#" class="btn btn-primary py-3 px-5 btn-pill">Admission Now</a></p>
+      <!-- canvas div starts -->
+      <div class="intro-section" id="home-section">
+        <div class="slide-1" style="background-image: url('images/hero_1.jpg');" data-stellar-background-ratio="0.5">
+          <div class="container" style="position: relative; cursor:none;">
+            <canvas id="particleCanvas"
+              style="position: absolute; top: 0; left: 0; z-index: 0; pointer-events: none;"></canvas>
+            <div class="row align-items-center">
+              <div class="col-12" style="height: 500px; position: relative;">
+                <div class="row align-items-center" style="position: relative; z-index: 1;">
+                  <div class="col-lg-6 mb-4">
+                    <h1 data-aos="fade-up" data-aos-delay="100">EduSphere</h1>
+                    <h1 data-aos="fade-up" data-aos-delay="100" id="output"></h1>
+                    <p class="mb-4" data-aos="fade-up" data-aos-delay="200">
+                      Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime ipsa nulla sed quis rerum amet
+                      natus quas necessitatibus.
+                    </p>
+                    <p data-aos="fade-up" data-aos-delay="300">
+                      <a href="#" class="btn btn-primary py-3 px-5 btn-pill">Admission Now</a>
+                    </p>
+                  </div>
 
-                </div>
-
-                <div class="col-lg-5 ml-auto" data-aos="fade-up" data-aos-delay="500">
-                  <form action="/studentEnquiry/enquiry" method="post" class="form-box">
-                    <h3 class="h4 text-black mb-4">Learner Enquiry Form</h3>
-                    <div class="form-group">
-                      <input 
-                        type="text" 
-                        class="form-control" 
-                        placeholder="Email Addresss"
-                        name="email"
-                        id="email"
-                        required
-                      />
-                    </div>
-                    <div class="form-group">
-                      <input 
-                        type="text" 
-                        class="form-control" 
-                        placeholder="Enter 10-digit Mobile Number"
-                        name="contact"
-                        id="contact"
-                        required
-                      />
-                    </div>
-                    <div class="form-group mb-4">
-                      <select name="subject" id="subject" class="form-control">
-                        <option value="">Select Subject</option>
-                        <!-- <option value="Mern Stack">Mern Stack</option>
-                        <option value="Python with AI/ML">Python with AI/ML</option>
-                        <option value="Java Programming Language">Java Programming Language</option>
-                        <option value="C | C++ Language">C | C++ Language</option> -->
-                     
-                        <% result.forEach((course)=>{ %>
-                          <option value="<%=course.courseName%>"><%=course.courseName%></option>  
-                        <% }) %>
-                      </select>
-
-                    </div>
-                    <div class="form-group">
-                      <input 
-                        type="submit" 
-                        class="btn btn-primary btn-pill" 
-                        value="Submit Enquiry"
-                      />
-                    </div>
-                  </form>
+                  <div class="col-lg-5 ml-auto" data-aos="fade-up" data-aos-delay="500">
+                    <form action="/studentEnquiry/enquiry" method="post" class="form-box">
+                      <h3 class="h5 text-black mb-4">
+                        Get Started with a <span style="color:red; font-size: 25px;" id="animate">Free Course</span>
+                      </h3>
+                      <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Email Address" name="email" id="email"
+                          required />
+                      </div>
+                      <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Enter 10-digit Mobile Number"
+                          name="contact" id="contact" required />
+                      </div>
+                      <div class="form-group mb-4">
+                        <select name="subject" id="subject" class="form-control">
+                          <option value="">Select Subject</option>
+                          <% result.forEach((course)=> { %>
+                            <option value="<%= course.courseName %>">
+                              <%= course.courseName %>
+                            </option>
+                            <% }) %>
+                        </select>
+                      </div>
+                      <div class="form-group">
+                        <input id="animateBtn" type="submit" class="btn btn-primary btn-pill" value="Join Now" />
+                      </div>
+                    </form>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+      <!-- canvas div ends -->
+
     </div>
 
-    
+
     <div class="site-section courses-title" id="courses-section">
       <div class="container">
         <div class="row mb-5 justify-content-center">
@@ -178,57 +266,54 @@
         </div>
       </div>
     </div>
-    <div class="site-section courses-entry-wrap"  data-aos="fade-up" data-aos-delay="100">
-      <div class="container">
+    <div class="site-section courses-entry-wrap" data-aos="fade-up" data-aos-delay="100">
+      <div class="container" style="margin-top: -75px;">
         <div class="row">
 
           <div class="owl-carousel col-12 nonloop-block-14">
 
             <div class="course bg-white h-100 align-self-stretch">
               <figure class="m-0">
-                <a href="course-single.html"><img src="images/img_1.jpg" alt="Image" class="img-fluid"></a>
+                <a href="#"><img src="images/java.jpg" alt="Image" class="img-fluid"></a>
               </figure>
               <div class="course-inner-text py-4 px-4">
-                <span class="course-price">$20</span>
-                <div class="meta"><span class="icon-clock-o"></span>4 Lessons / 12 week</div>
-                <h3><a href="#">Study Law of Physics</a></h3>
-                <p>Lorem ipsum dolor sit amet ipsa nulla adipisicing elit. </p>
+                <span class="course-price">Special Discounts Available</span>
+                <div class="meta"><span class="icon-clock-o"></span>Placement Oriented / Short Term</div>
+                <h3><a href="#">Java Programming</a></h3>
+                <p>Build robust, scalable applications with a versatile object-oriented language.</p>
               </div>
               <div class="d-flex border-top stats">
-                <div class="py-3 px-4"><span class="icon-users"></span> 2,193 students</div>
-                <div class="py-3 px-4 w-25 ml-auto border-left"><span class="icon-chat"></span> 2</div>
+                <div class="py-3 px-4"><span class="icon-users"></span> Limited Batch Size</div>
               </div>
             </div>
 
             <div class="course bg-white h-100 align-self-stretch">
               <figure class="m-0">
-                <a href="course-single.html"><img src="images/img_2.jpg" alt="Image" class="img-fluid"></a>
+                <a href="#"><img src="images/python.webp" alt="Image" class="img-fluid"></a>
               </figure>
               <div class="course-inner-text py-4 px-4">
-                <span class="course-price">$99</span>
-                <div class="meta"><span class="icon-clock-o"></span>4 Lessons / 12 week</div>
-                <h3><a href="#">Logo Design Course</a></h3>
-                <p>Lorem ipsum dolor sit amet ipsa nulla adipisicing elit. </p>
+                <span class="course-price">Special Discounts Available</span>
+                <div class="meta"><span class="icon-clock-o"></span>Placement Oriented / Short Term</div>
+                <h3><a href="#">Python Programming</a></h3>
+                <p>Simplify coding with a powerful language for web, data, and AI development.</p>
               </div>
               <div class="d-flex border-top stats">
-                <div class="py-3 px-4"><span class="icon-users"></span> 2,193 students</div>
-                <div class="py-3 px-4 w-25 ml-auto border-left"><span class="icon-chat"></span> 2</div>
+                <div class="py-3 px-4"><span class="icon-users"></span> Limited Batch Size</div>
               </div>
             </div>
 
             <div class="course bg-white h-100 align-self-stretch">
               <figure class="m-0">
-                <a href="course-single.html"><img src="images/img_3.jpg" alt="Image" class="img-fluid"></a>
+                <a href="#"><img src="images/mern.png" alt="Image" class="img-fluid"></a>
               </figure>
               <div class="course-inner-text py-4 px-4">
-                <span class="course-price">$99</span>
-                <div class="meta"><span class="icon-clock-o"></span>4 Lessons / 12 week</div>
-                <h3><a href="#">JS Programming Language</a></h3>
-                <p>Lorem ipsum dolor sit amet ipsa nulla adipisicing elit. </p>
+                <span class="course-price">Special Discounts Available</span>
+                <div class="meta"><span class="icon-clock-o"></span>Placement Oriented / Short Term</div>
+                <h3><a href="#">MERN Stack</a></h3>
+                <p>Master full-stack web development with MongoDB, Express, React, and Node.js.</p>
               </div>
               <div class="d-flex border-top stats">
-                <div class="py-3 px-4"><span class="icon-users"></span> 2,193 students</div>
-                <div class="py-3 px-4 w-25 ml-auto border-left"><span class="icon-chat"></span> 2</div>
+                <div class="py-3 px-4"><span class="icon-users"></span> Limited Batch Size</div>
               </div>
             </div>
 
@@ -236,55 +321,52 @@
 
             <div class="course bg-white h-100 align-self-stretch">
               <figure class="m-0">
-                <a href="course-single.html"><img src="images/img_4.jpg" alt="Image" class="img-fluid"></a>
+                <a href="#"><img src="images/data analytics.webp" alt="Image" class="img-fluid"></a>
               </figure>
               <div class="course-inner-text py-4 px-4">
-                <span class="course-price">$20</span>
-                <div class="meta"><span class="icon-clock-o"></span>4 Lessons / 12 week</div>
-                <h3><a href="#">Study Law of Physics</a></h3>
-                <p>Lorem ipsum dolor sit amet ipsa nulla adipisicing elit. </p>
+                <span class="course-price">Special Discounts Available</span>
+                <div class="meta"><span class="icon-clock-o"></span>Placement Oriented / Short Term</div>
+                <h3><a href="#">Data Science</a></h3>
+                <p>Unlock insights by analyzing and visualizing complex datasets with Data Science.</p>
               </div>
               <div class="d-flex border-top stats">
-                <div class="py-3 px-4"><span class="icon-users"></span> 2,193 students</div>
-                <div class="py-3 px-4 w-25 ml-auto border-left"><span class="icon-chat"></span> 2</div>
+                <div class="py-3 px-4"><span class="icon-users"></span> Limited Batch Size</div>
               </div>
             </div>
 
             <div class="course bg-white h-100 align-self-stretch">
               <figure class="m-0">
-                <a href="course-single.html"><img src="images/img_5.jpg" alt="Image" class="img-fluid"></a>
+                <a href="#"><img src="images/data analytics.webp" alt="Image" class="img-fluid"></a>
               </figure>
               <div class="course-inner-text py-4 px-4">
-                <span class="course-price">$99</span>
-                <div class="meta"><span class="icon-clock-o"></span>4 Lessons / 12 week</div>
-                <h3><a href="#">Logo Design Course</a></h3>
-                <p>Lorem ipsum dolor sit amet ipsa nulla adipisicing elit. </p>
+                <span class="course-price">Special Discounts Available</span>
+                <div class="meta"><span class="icon-clock-o"></span>Placement Oriented / Short Term</div>
+                <h3><a href="#">Data Analytics</a></h3>
+                <p>Interpret data trends to drive strategic decision-making with Data Analytics.</p>
               </div>
               <div class="d-flex border-top stats">
-                <div class="py-3 px-4"><span class="icon-users"></span> 2,193 students</div>
-                <div class="py-3 px-4 w-25 ml-auto border-left"><span class="icon-chat"></span> 2</div>
+                <div class="py-3 px-4"><span class="icon-users"></span> Limited Batch Size</div>
               </div>
             </div>
 
             <div class="course bg-white h-100 align-self-stretch">
               <figure class="m-0">
-                <a href="course-single.html"><img src="images/img_6.jpg" alt="Image" class="img-fluid"></a>
+                <a href="#"><img src="images/aiml.png" alt="Image" class="img-fluid"></a>
               </figure>
               <div class="course-inner-text py-4 px-4">
-                <span class="course-price">$99</span>
-                <div class="meta"><span class="icon-clock-o"></span>4 Lessons / 12 week</div>
-                <h3><a href="#">JS Programming Language</a></h3>
-                <p>Lorem ipsum dolor sit amet ipsa nulla adipisicing elit. </p>
+                <span class="course-price">Special Discounts Available</span>
+                <div class="meta"><span class="icon-clock-o"></span>Placement Oriented / Short Term</div>
+                <h3><a href="#">AI/ML</a></h3>
+                <p>Create intelligent solutions with cutting-edge artificial intelligence and machine learning.</p>
               </div>
               <div class="d-flex border-top stats">
-                <div class="py-3 px-4"><span class="icon-users"></span> 2,193 students</div>
-                <div class="py-3 px-4 w-25 ml-auto border-left"><span class="icon-chat"></span> 2</div>
+                <div class="py-3 px-4"><span class="icon-users"></span> Limited Batch Size</div>
               </div>
             </div>
 
           </div>
 
-         
+
 
         </div>
         <div class="row justify-content-center">
@@ -300,9 +382,10 @@
     <div class="site-section" id="programs-section">
       <div class="container">
         <div class="row mb-5 justify-content-center">
-          <div class="col-lg-7 text-center"  data-aos="fade-up" data-aos-delay="">
-            <h2 class="section-title">Our Programs</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magnam repellat aut neque! Doloribus sunt non aut reiciendis, vel recusandae obcaecati hic dicta repudiandae in quas quibusdam ullam, illum sed veniam!</p>
+          <div class="col-lg-7 text-center" data-aos="fade-up" data-aos-delay="">
+            <h2 class="section-title">Learning Tracks</h2>
+            <p>EduSphere symbolizes a comprehensive and modern educational ecosystem. The name blends "Edu" (education) and "Sphere" (a complete environment) to represent inclusive, tech-driven, and global learning opportunities. It is catchy, brand-friendly, and ideal for scaling in the education sector.
+            </p>
           </div>
         </div>
         <div class="row mb-5 align-items-center">
@@ -311,16 +394,20 @@
           </div>
           <div class="col-lg-4 ml-auto" data-aos="fade-up" data-aos-delay="200">
             <h2 class="text-black mb-4">We Are Excellent In Education</h2>
-            <p class="mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem maxime nam porro possimus fugiat quo molestiae illo.</p>
+            <p class="mb-4">A commitment to delivering top-tier educational experiences, emphasizing expertise, innovation, and a student-centered approach.</p>
 
             <div class="d-flex align-items-center custom-icon-wrap mb-3">
               <span class="custom-icon-inner mr-3"><span class="icon icon-graduation-cap"></span></span>
-              <div><h3 class="m-0">22,931 Yearly Graduates</h3></div>
+              <div>
+                <h3 class="m-0">1000+ Students</h3>
+              </div>
             </div>
 
             <div class="d-flex align-items-center custom-icon-wrap">
               <span class="custom-icon-inner mr-3"><span class="icon icon-university"></span></span>
-              <div><h3 class="m-0">150 Universities Worldwide</h3></div>
+              <div>
+                <h3 class="m-0">2+ Centers</h3>
+              </div>
             </div>
 
           </div>
@@ -332,16 +419,20 @@
           </div>
           <div class="col-lg-4 mr-auto order-2 order-lg-1" data-aos="fade-up" data-aos-delay="200">
             <h2 class="text-black mb-4">Strive for Excellent</h2>
-            <p class="mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem maxime nam porro possimus fugiat quo molestiae illo.</p>
+            <p class="mb-4">Emphasizes the relentless pursuit of growth, improvement, and high-quality outcomes. It embodies a mindset of continuous learning, dedication, and resilience to achieve outstanding results and surpass expectations in every endeavor.</p>
 
             <div class="d-flex align-items-center custom-icon-wrap mb-3">
               <span class="custom-icon-inner mr-3"><span class="icon icon-graduation-cap"></span></span>
-              <div><h3 class="m-0">22,931 Yearly Graduates</h3></div>
+              <div>
+                <h3 class="m-0">750+ Placements</h3>
+              </div>
             </div>
 
             <div class="d-flex align-items-center custom-icon-wrap">
               <span class="custom-icon-inner mr-3"><span class="icon icon-university"></span></span>
-              <div><h3 class="m-0">150 Universities Worldwide</h3></div>
+              <div>
+                <h3 class="m-0">20+ Courses</h3>
+              </div>
             </div>
 
           </div>
@@ -353,16 +444,20 @@
           </div>
           <div class="col-lg-4 ml-auto" data-aos="fade-up" data-aos-delay="200">
             <h2 class="text-black mb-4">Education is life</h2>
-            <p class="mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem maxime nam porro possimus fugiat quo molestiae illo.</p>
+            <p class="mb-4">Emphasizes that education is not limited to classrooms but is a continuous journey that shapes personal growth, builds character, and prepares individuals to navigate the complexities of life with knowledge and wisdom.</p>
 
             <div class="d-flex align-items-center custom-icon-wrap mb-3">
               <span class="custom-icon-inner mr-3"><span class="icon icon-graduation-cap"></span></span>
-              <div><h3 class="m-0">22,931 Yearly Graduates</h3></div>
+              <div>
+                <h3 class="m-0">Personality Development</h3>
+              </div>
             </div>
 
             <div class="d-flex align-items-center custom-icon-wrap">
               <span class="custom-icon-inner mr-3"><span class="icon icon-university"></span></span>
-              <div><h3 class="m-0">150 Universities Worldwide</h3></div>
+              <div>
+                <h3 class="m-0">Aptitude Grooming</h3>
+              </div>
             </div>
 
           </div>
@@ -370,14 +465,149 @@
 
       </div>
     </div>
+    <!-- video gallery starts -->
+    <div class="site-section" id="visual-section" style="background-color: whitesmoke;margin-top: -120px;">
+      <div class="container">
+        <div class="row mb-5 justify-content-center">
+          <div class="col-lg-7 text-center" data-aos="fade-up" data-aos-delay="">
+            <h2 class="text-black mb-4">Our Visual Library</h2>
+          </div>
+        </div>
+        <div class="" data-aos="fade-up" data-aos-delay="100" style="margin-top: -80px;">
+          <div class="container">
+            <div class="row">
 
-    <div class="site-section" id="teachers-section">
+              <div class="owl-carousel col-12 nonloop-block-14">
+
+                <div class="course bg-white h-100 align-self-stretch">
+                  <figure class="m-0">
+                    <!-- <a href="#"><img src="images/java.jpg" alt="Image" class="img-fluid"></a> -->
+                    <iframe class="w-100" style="height:200px" src="https://www.youtube.com/embed/MixpKqGaa6w?si=qhk7VYNCs7N8ZFrt" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+                  </figure>
+                  <div class="course-inner-text py-4 px-4">
+                    <span class="course-price">Special Discounts Available</span>
+                    <div class="meta"><span class="icon-clock-o"></span>Placement Oriented / Short Term</div>
+                    <h3><a href="#">Java Programming</a></h3>
+                    <p>Build robust, scalable applications with a versatile object-oriented language.</p>
+                  </div>
+                  <div class="d-flex border-top stats">
+                    <div class="py-3 px-4"><span class="icon-users"></span> Limited Batch Size</div>
+                  </div>
+                </div>
+
+                <div class="course bg-white h-100 align-self-stretch">
+                  <figure class="m-0">
+                    <!-- <a href="#"><img src="images/python.webp" alt="Image" class="img-fluid"></a> -->
+                    <iframe class="w-100" style="height:200px" src="https://www.youtube.com/embed/MixpKqGaa6w?si=qhk7VYNCs7N8ZFrt" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+                  </figure>
+                  <div class="course-inner-text py-4 px-4">
+                    <span class="course-price">Special Discounts Available</span>
+                    <div class="meta"><span class="icon-clock-o"></span>Placement Oriented / Short Term</div>
+                    <h3><a href="#">Python Programming</a></h3>
+                    <p>Simplify coding with a powerful language for web, data, and AI development.</p>
+                  </div>
+                  <div class="d-flex border-top stats">
+                    <div class="py-3 px-4"><span class="icon-users"></span> Limited Batch Size</div>
+                  </div>
+                </div>
+
+                <div class="course bg-white h-100 align-self-stretch">
+                  <figure class="m-0">
+                    <!-- <a href="#"><img src="images/mern.png" alt="Image" class="img-fluid"></a> -->
+                    <iframe class="w-100" style="height:200px" src="https://www.youtube.com/embed/MixpKqGaa6w?si=qhk7VYNCs7N8ZFrt" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+                  </figure>
+                  <div class="course-inner-text py-4 px-4">
+                    <span class="course-price">Special Discounts Available</span>
+                    <div class="meta"><span class="icon-clock-o"></span>Placement Oriented / Short Term</div>
+                    <h3><a href="#">MERN Stack</a></h3>
+                    <p>Master full-stack web development with MongoDB, Express, React, and Node.js.</p>
+                  </div>
+                  <div class="d-flex border-top stats">
+                    <div class="py-3 px-4"><span class="icon-users"></span> Limited Batch Size</div>
+                  </div>
+                </div>
+
+
+
+                <div class="course bg-white h-100 align-self-stretch">
+                  <figure class="m-0">
+                    <!-- <a href="#"><img src="images/data analytics.webp" alt="Image" class="img-fluid"></a> -->
+                    <iframe class="w-100" style="height:200px" src="https://www.youtube.com/embed/MixpKqGaa6w?si=qhk7VYNCs7N8ZFrt" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+                  </figure>
+                  <div class="course-inner-text py-4 px-4">
+                    <span class="course-price">Special Discounts Available</span>
+                    <div class="meta"><span class="icon-clock-o"></span>Placement Oriented / Short Term</div>
+                    <h3><a href="#">Data Science</a></h3>
+                    <p>Unlock insights by analyzing and visualizing complex datasets with Data Science.</p>
+                  </div>
+                  <div class="d-flex border-top stats">
+                    <div class="py-3 px-4"><span class="icon-users"></span> Limited Batch Size</div>
+                  </div>
+                </div>
+
+                <div class="course bg-white h-100 align-self-stretch">
+                  <figure class="m-0">
+                    <!-- <a href="#"><img src="images/data analytics.webp" alt="Image" class="img-fluid"></a> -->
+                    <iframe class="w-100" style="height:200px" src="https://www.youtube.com/embed/MixpKqGaa6w?si=qhk7VYNCs7N8ZFrt" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+                  </figure>
+                  <div class="course-inner-text py-4 px-4">
+                    <span class="course-price">Special Discounts Available</span>
+                    <div class="meta"><span class="icon-clock-o"></span>Placement Oriented / Short Term</div>
+                    <h3><a href="#">Data Analytics</a></h3>
+                    <p>Interpret data trends to drive strategic decision-making with Data Analytics.</p>
+                  </div>
+                  <div class="d-flex border-top stats">
+                    <div class="py-3 px-4"><span class="icon-users"></span> Limited Batch Size</div>
+                  </div>
+                </div>
+
+                <div class="course bg-white h-100 align-self-stretch">
+                  <figure class="m-0">
+                    <!-- <a href="#"><img src="images/aiml.png" alt="Image" class="img-fluid"></a> -->
+                    <iframe class="w-100" style="height:200px" src="https://www.youtube.com/embed/MixpKqGaa6w?si=qhk7VYNCs7N8ZFrt" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+                  </figure>
+                  <div class="course-inner-text py-4 px-4">
+                    <span class="course-price">Special Discounts Available</span>
+                    <div class="meta"><span class="icon-clock-o"></span>Placement Oriented / Short Term</div>
+                    <h3><a href="#">AI/ML</a></h3>
+                    <p>Create intelligent solutions with cutting-edge artificial intelligence and machine learning.</p>
+                  </div>
+                  <div class="d-flex border-top stats">
+                    <div class="py-3 px-4"><span class="icon-users"></span> Limited Batch Size</div>
+                  </div>
+                </div>
+
+              </div>
+
+
+
+            </div>
+            <div class="row justify-content-center">
+              <div class="col-7 text-center">
+                <button class="customPrevBtn btn btn-primary m-1">Prev</button>
+                <button class="customNextBtn btn btn-primary m-1">Next</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- video gallery ends -->
+    <div class="site-section"  id="teachers-section">
       <div class="container">
 
         <div class="row mb-5 justify-content-center">
-          <div class="col-lg-7 mb-5 text-center"  data-aos="fade-up" data-aos-delay="">
-            <h2 class="section-title">Our Teachers</h2>
-            <p class="mb-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magnam repellat aut neque! Doloribus sunt non aut reiciendis, vel recusandae obcaecati hic dicta repudiandae in quas quibusdam ullam, illum sed veniam!</p>
+          <div class="col-lg-7 mb-5 text-center" data-aos="fade-up" data-aos-delay="">
+            <h2 class="section-title">Pioneers</h2>
+            <p class="mb-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magnam repellat aut neque!
+              Doloribus sunt non aut reiciendis, vel recusandae obcaecati hic dicta repudiandae in quas quibusdam ullam,
+              illum sed veniam!</p>
           </div>
         </div>
 
@@ -389,7 +619,8 @@
               <div class="py-2">
                 <h3 class="text-black">Benjamin Stone</h3>
                 <p class="position">Physics Teacher</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro eius suscipit delectus enim iusto tempora, adipisci at provident.</p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro eius suscipit delectus enim iusto
+                  tempora, adipisci at provident.</p>
               </div>
             </div>
           </div>
@@ -400,7 +631,8 @@
               <div class="py-2">
                 <h3 class="text-black">Katleen Stone</h3>
                 <p class="position">Physics Teacher</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro eius suscipit delectus enim iusto tempora, adipisci at provident.</p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro eius suscipit delectus enim iusto
+                  tempora, adipisci at provident.</p>
               </div>
             </div>
           </div>
@@ -411,7 +643,8 @@
               <div class="py-2">
                 <h3 class="text-black">Sadie White</h3>
                 <p class="position">Physics Teacher</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro eius suscipit delectus enim iusto tempora, adipisci at provident.</p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro eius suscipit delectus enim iusto
+                  tempora, adipisci at provident.</p>
               </div>
             </div>
           </div>
@@ -419,17 +652,156 @@
       </div>
     </div>
 
-    <div class="site-section bg-image overlay" style="background-image: url('images/hero_1.jpg');">
+<!-- slider for photo gallery starts -->
+
+<div class="site-section" id="visual-section" style="background-color: whitesmoke;margin-top: -120px;">
+  <div class="container">
+    <div class="row mb-5 justify-content-center">
+      <div class="col-lg-7 text-center" data-aos="fade-up" data-aos-delay="">
+        <h2 class="text-black mb-4">Glimpse of EduSphere</h2>
+      </div>
+    </div>
+    <div class="" data-aos="fade-up" data-aos-delay="100" style="margin-top: -80px;">
       <div class="container">
+        <div class="row">
+          <div class="owl-carousel col-12 nonloop-block-14">
+            <div class="course bg-white h-100 align-self-stretch">
+              <figure class="m-0">
+                <a href="#"><img src="images/glympse1.jpg" alt="Image" class="img-fluid gallery-image"></a>
+              </figure>
+            </div>
+        
+            <div class="course bg-white h-100 align-self-stretch">
+              <figure class="m-0">
+                <a href="#"><img src="images/glympse2.jpg" alt="Image" class="img-fluid gallery-image"></a>
+              </figure>
+            </div>
+        
+            <div class="course bg-white h-100 align-self-stretch">
+              <figure class="m-0">
+                <a href="#"><img src="images/glympse3.jpeg" alt="Image" class="img-fluid gallery-image"></a>
+              </figure>
+            </div>
+        
+            <div class="course bg-white h-100 align-self-stretch">
+              <figure class="m-0">
+                <a href="#"><img src="images/glympse4.jpg" alt="Image" class="img-fluid gallery-image"></a>
+              </figure>
+            </div>
+        
+            <div class="course bg-white h-100 align-self-stretch">
+              <figure class="m-0">
+                <a href="#"><img src="images/glympse1.jpg" alt="Image" class="img-fluid gallery-image"></a>
+              </figure>
+            </div>
+        
+            <div class="course bg-white h-100 align-self-stretch">
+              <figure class="m-0">
+                <a href="#"><img src="images/glympse3.jpeg" alt="Image" class="img-fluid gallery-image"></a>
+              </figure>
+            </div>
+          </div>
+        </div>
+        
+        <div class="row justify-content-center">
+          <div class="col-7 text-center">
+            <button class="customPrevBtn btn btn-primary m-1">Prev</button>
+            <button class="customNextBtn btn btn-primary m-1">Next</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- slider for photo gallery ends -->
+    <div class="site-section bg-image overlay" style="background-image: url('images/hero_1.jpg');">
+      <!-- <div class="container">
         <div class="row justify-content-center align-items-center">
           <div class="col-md-8 text-center testimony">
             <img src="images/person_4.jpg" alt="Image" class="img-fluid w-25 mb-4 rounded-circle">
             <h3 class="mb-4">Jerome Jensen</h3>
             <blockquote>
-              <p>&ldquo; Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum rem soluta sit eius necessitatibus voluptate excepturi beatae ad eveniet sapiente impedit quae modi quo provident odit molestias! Rem reprehenderit assumenda &rdquo;</p>
+              <p>&ldquo; Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum rem soluta sit eius
+                necessitatibus voluptate excepturi beatae ad eveniet sapiente impedit quae modi quo provident odit
+                molestias! Rem reprehenderit assumenda &rdquo;</p>
             </blockquote>
           </div>
         </div>
+      </div> -->
+    
+        <div class="container">
+          <div class="row mb-5 justify-content-center">
+            <div class="col-lg-7 text-center" data-aos="fade-up" data-aos-delay="">
+              <h2 class="text-white mb-4">Declaration of trust</h2>
+            </div>
+          </div>
+
+          <div class="row" style="margin-top: -70px;">
+  
+            <div class="owl-carousel col-12 nonloop-block-14">
+  
+              <div class="course bg-white h-100 align-self-stretch">
+                <div class="course-inner-text py-4 px-4">
+                  <span class="course-price">Andrew Anderson</span>
+                  <div class="meta"><span class="icon-clock-o"></span>Placement Oriented Batch</div>
+                  <h3><a href="#">JavaScript</a></h3>
+                  <p>The learning experience was empowering—clear, engaging, and incredibly valuable.</p>
+                </div>
+              </div>
+  
+              <div class="course bg-white h-100 align-self-stretch">
+                <div class="course-inner-text py-4 px-4">
+                  <span class="course-price">Jackson Jack</span>
+                  <div class="meta"><span class="icon-clock-o"></span>Short Term Batch</div>
+                  <h3><a href="#">Web Technologies</a></h3>
+                  <p>A game-changer in my professional and personal development!</p>
+                </div>
+              </div>
+  
+              <div class="course bg-white h-100 align-self-stretch">
+                <div class="course-inner-text py-4 px-4">
+                  <span class="course-price">Peter Parker</span>
+                  <div class="meta"><span class="icon-clock-o"></span>Placement Oriented Batch</div>
+                  <h3><a href="#">Java Programming</a></h3>
+                  <p>The learning experience was empowering—clear, engaging, and incredibly valuable.</p>
+                </div>
+              </div>
+  
+              <div class="course bg-white h-100 align-self-stretch">
+                <div class="course-inner-text py-4 px-4">
+                  <span class="course-price">Jacob Jack</span>
+                  <div class="meta"><span class="icon-clock-o"></span>Short Term Batch</div>
+                  <h3><a href="#">MERN Stack Web Development</a></h3>
+                  <p>A game-changer in my professional and personal development!</p>
+                </div>
+              </div>
+  
+              <div class="course bg-white h-100 align-self-stretch">
+                <div class="course-inner-text py-4 px-4">
+                  <span class="course-price">Andrew Anderson</span>
+                  <div class="meta"><span class="icon-clock-o"></span>Placement Oriented Batch</div>
+                  <h3><a href="#">Java Programming</a></h3>
+                  <p>The learning experience was empowering—clear, engaging, and incredibly valuable.</p>
+                </div>
+              </div>
+  
+              <div class="course bg-white h-100 align-self-stretch">
+                <div class="course-inner-text py-4 px-4">
+                  <span class="course-price">Jackson Jack</span>
+                  <div class="meta"><span class="icon-clock-o"></span>Short Term Batch</div>
+                  <h3><a href="#">MERN Stack Web Development</a></h3>
+                  <p>A game-changer in my professional and personal development!</p>
+                </div>
+              </div>
+  
+            </div>
+  
+  
+  
+          </div>
+          
       </div>
     </div>
 
@@ -450,52 +822,70 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-lg-4 ml-auto align-self-start"  data-aos="fade-up" data-aos-delay="100">
+          <div class="col-lg-4 ml-auto align-self-start" data-aos="fade-up" data-aos-delay="100">
 
             <div class="p-4 rounded bg-white why-choose-us-box">
 
               <div class="d-flex align-items-center custom-icon-wrap custom-icon-light mb-3">
-                <div class="mr-3"><span class="custom-icon-inner"><span class="icon icon-graduation-cap"></span></span></div>
-                <div><h3 class="m-0">22,931 Yearly Graduates</h3></div>
+                <div class="mr-3"><span class="custom-icon-inner"><span class="icon icon-graduation-cap"></span></span>
+                </div>
+                <div>
+                  <h3 class="m-0">22,931 Yearly Graduates</h3>
+                </div>
               </div>
 
               <div class="d-flex align-items-center custom-icon-wrap custom-icon-light mb-3">
-                <div class="mr-3"><span class="custom-icon-inner"><span class="icon icon-university"></span></span></div>
-                <div><h3 class="m-0">150 Universities Worldwide</h3></div>
+                <div class="mr-3"><span class="custom-icon-inner"><span class="icon icon-university"></span></span>
+                </div>
+                <div>
+                  <h3 class="m-0">150 Universities Worldwide</h3>
+                </div>
               </div>
 
               <div class="d-flex align-items-center custom-icon-wrap custom-icon-light mb-3">
-                <div class="mr-3"><span class="custom-icon-inner"><span class="icon icon-graduation-cap"></span></span></div>
-                <div><h3 class="m-0">Top Professionals in The World</h3></div>
+                <div class="mr-3"><span class="custom-icon-inner"><span class="icon icon-graduation-cap"></span></span>
+                </div>
+                <div>
+                  <h3 class="m-0">Top Professionals in The World</h3>
+                </div>
               </div>
 
               <div class="d-flex align-items-center custom-icon-wrap custom-icon-light mb-3">
-                <div class="mr-3"><span class="custom-icon-inner"><span class="icon icon-university"></span></span></div>
-                <div><h3 class="m-0">Expand Your Knowledge</h3></div>
+                <div class="mr-3"><span class="custom-icon-inner"><span class="icon icon-university"></span></span>
+                </div>
+                <div>
+                  <h3 class="m-0">Expand Your Knowledge</h3>
+                </div>
               </div>
 
               <div class="d-flex align-items-center custom-icon-wrap custom-icon-light mb-3">
-                <div class="mr-3"><span class="custom-icon-inner"><span class="icon icon-graduation-cap"></span></span></div>
-                <div><h3 class="m-0">Best Online Teaching Assistant Courses</h3></div>
+                <div class="mr-3"><span class="custom-icon-inner"><span class="icon icon-graduation-cap"></span></span>
+                </div>
+                <div>
+                  <h3 class="m-0">Best Online Teaching Assistant Courses</h3>
+                </div>
               </div>
 
               <div class="d-flex align-items-center custom-icon-wrap custom-icon-light">
-                <div class="mr-3"><span class="custom-icon-inner"><span class="icon icon-university"></span></span></div>
-                <div><h3 class="m-0">Best Teachers</h3></div>
+                <div class="mr-3"><span class="custom-icon-inner"><span class="icon icon-university"></span></span>
+                </div>
+                <div>
+                  <h3 class="m-0">Best Teachers</h3>
+                </div>
               </div>
 
             </div>
 
 
           </div>
-          <div class="col-lg-7 align-self-end"  data-aos="fade-left" data-aos-delay="200">
+          <div class="col-lg-7 align-self-end" data-aos="fade-left" data-aos-delay="200">
             <img src="images/person_transparent.png" alt="Image" class="img-fluid">
           </div>
         </div>
       </div>
     </div>
 
-    
+
 
 
 
@@ -506,10 +896,11 @@
           <div class="col-md-7">
 
 
-            
+
             <h2 class="section-title mb-3">Message Us</h2>
-            <p class="mb-5">Natus totam voluptatibus animi aspernatur ducimus quas obcaecati mollitia quibusdam temporibus culpa dolore molestias blanditiis consequuntur sunt nisi.</p>
-          
+            <p class="mb-5">Natus totam voluptatibus animi aspernatur ducimus quas obcaecati mollitia quibusdam
+              temporibus culpa dolore molestias blanditiis consequuntur sunt nisi.</p>
+
             <form method="post" data-aos="fade">
               <div class="form-group row">
                 <div class="col-md-6 mb-3 mb-lg-0">
@@ -533,13 +924,14 @@
               </div>
               <div class="form-group row">
                 <div class="col-md-12">
-                  <textarea class="form-control" id="" cols="30" rows="10" placeholder="Write your message here."></textarea>
+                  <textarea class="form-control" id="" cols="30" rows="10"
+                    placeholder="Write your message here."></textarea>
                 </div>
               </div>
 
               <div class="form-group row">
                 <div class="col-md-6">
-                  
+
                   <input type="submit" class="btn btn-primary py-3 px-5 btn-block btn-pill" value="Send Message">
                 </div>
               </div>
@@ -549,14 +941,15 @@
         </div>
       </div>
     </div>
-    
-     
+
+
     <footer class="footer-section bg-white">
       <div class="container">
         <div class="row">
           <div class="col-md-4">
             <h3>About OneSchool</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro consectetur ut hic ipsum et veritatis corrupti. Itaque eius soluta optio dolorum temporibus in, atque, quos fugit sunt sit quaerat dicta.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro consectetur ut hic ipsum et veritatis
+              corrupti. Itaque eius soluta optio dolorum temporibus in, atque, quos fugit sunt sit quaerat dicta.</p>
           </div>
 
           <div class="col-md-3 ml-auto">
@@ -571,7 +964,8 @@
 
           <div class="col-md-4">
             <h3>Subscribe</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt incidunt iure iusto architecto? Numquam, natus?</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt incidunt iure iusto architecto?
+              Numquam, natus?</p>
             <form action="#" class="footer-subscribe">
               <div class="d-flex mb-5">
                 <input type="text" class="form-control rounded-0" placeholder="Email">
@@ -585,21 +979,59 @@
         <div class="row pt-5 mt-5 text-center">
           <div class="col-md-12">
             <div class="border-top pt-5">
-            <p>
-        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-        Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank" >Colorlib</a>
-        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-      </p>
+              <p>
+                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                Copyright &copy;
+                <script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made
+                with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com"
+                  target="_blank">Colorlib</a>
+                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+              </p>
             </div>
           </div>
-          
+
         </div>
       </div>
     </footer>
 
-  
-    
+
+
   </div> <!-- .site-wrap -->
+
+
+  <!-- Owl Carousel and jQuery Script -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+
+<script>
+  $(document).ready(function () {
+    const $carousel = $('.owl-carousel');
+
+    $carousel.owlCarousel({
+      items: 2,
+      loop: true,
+      margin: 20,
+      autoplay: true,
+      autoplayTimeout: 5000,
+      nav: false,
+      dots: false,
+      responsive: {
+        0: { items: 1 },
+        768: { items: 2 }
+      }
+    });
+
+    // Custom navigation buttons
+    $('.customPrevBtn').click(function () {
+      $carousel.trigger('prev.owl.carousel');
+    });
+
+    $('.customNextBtn').click(function () {
+      $carousel.trigger('next.owl.carousel');
+    });
+  });
+</script>
 
   <script src="js/jquery-3.3.1.min.js"></script>
   <script src="js/jquery-migrate-3.0.1.min.js"></script>
@@ -615,44 +1047,131 @@
   <script src="js/jquery.fancybox.min.js"></script>
   <script src="js/jquery.sticky.js"></script>
 
-  
+
   <script src="js/main.js"></script>
   <script>
     // typed characters
-  // Array of dynamic text content
-  const messages = [
-          "MERN STACK",
-          "Python with AI/ML",
-          "JAVA STACK",
-          "DATA ANALYTICS",
-          "POWER BI",
-          "C | C++"
-      ];
+    // Array of dynamic text content
+    const messages = [
+      "MERN STACK",
+      "Python with AI/ML",
+      "JAVA STACK",
+      "DATA ANALYTICS",
+      "POWER BI",
+      "C | C++"
+    ];
 
-      const outputElement = document.getElementById('output');
-      let messageIndex = 0; // Track current message
-      let charIndex = 0; // Track current character
+    const outputElement = document.getElementById('output');
+    let messageIndex = 0; // Track current message
+    let charIndex = 0; // Track current character
 
-      function printCharacter() {
-          const text = messages[messageIndex]; // Get the current message
-          if (charIndex < text.length) {
-              const span = document.createElement('span');
-              span.textContent = text.charAt(charIndex);
-              span.classList.add('fade-in');
-              outputElement.appendChild(span);
-              charIndex++;
-              setTimeout(printCharacter, 100); // Delay for the next character
-          } else {
-              setTimeout(() => {
-                  outputElement.textContent = ''; // Clear the output
-                  charIndex = 0; // Reset the character index
-                  messageIndex = (messageIndex + 1) % messages.length; // Move to the next message
-                  printCharacter(); // Restart printing with the new message
-              }, 2000); // Pause before switching to the next message
-          }
+    function printCharacter() {
+      const text = messages[messageIndex]; // Get the current message
+      if (charIndex < text.length) {
+        const span = document.createElement('span');
+        span.textContent = text.charAt(charIndex);
+        span.classList.add('fade-in');
+        outputElement.appendChild(span);
+        charIndex++;
+        setTimeout(printCharacter, 100); // Delay for the next character
+      } else {
+        setTimeout(() => {
+          outputElement.textContent = ''; // Clear the output
+          charIndex = 0; // Reset the character index
+          messageIndex = (messageIndex + 1) % messages.length; // Move to the next message
+          printCharacter(); // Restart printing with the new message
+        }, 2000); // Pause before switching to the next message
+      }
+    }
+
+    printCharacter(); // Start the printing process
+  </script>
+
+  <!-- canvas scripts starts -->
+  <script>
+    const canvas = document.getElementById("particleCanvas");
+    const ctx = canvas.getContext("2d");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    let particlesArray = [];
+    const mouse = {
+      x: null,
+      y: null
+    };
+
+    window.addEventListener("mousemove", (event) => {
+      mouse.x = event.x;
+      mouse.y = event.y;
+      // Add fewer particles per mouse movement
+      for (let i = 0; i < 2; i++) {
+        particlesArray.push(new Particle());
+      }
+    });
+
+    class Particle {
+      constructor() {
+        this.x = mouse.x;
+        this.y = mouse.y;
+        this.size = Math.random() * 4 + 1;
+        this.speedX = (Math.random() - 0.5) * 1;  // Reduced speed
+        this.speedY = (Math.random() - 0.5) * 1;
+        this.color = `rgba(255, 255, 255, ${Math.random() * 0.7 + 0.3})`;
       }
 
-      printCharacter(); // Start the printing process
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        if (this.size > 0.2) this.size -= 0.01; // Slower shrinking
+      }
+
+      draw() {
+        ctx.fillStyle = this.color;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    function handleParticles() {
+      for (let i = 0; i < particlesArray.length; i++) {
+        particlesArray[i].update();
+        particlesArray[i].draw();
+
+        for (let j = i; j < particlesArray.length; j++) {
+          const dx = particlesArray[i].x - particlesArray[j].x;
+          const dy = particlesArray[i].y - particlesArray[j].y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+          if (distance < 70) { // Increased minimum distance for fewer connections
+            ctx.beginPath();
+            ctx.strokeStyle = particlesArray[i].color;
+            ctx.lineWidth = 0.1;
+            ctx.moveTo(particlesArray[i].x, particlesArray[i].y);
+            ctx.lineTo(particlesArray[j].x, particlesArray[j].y);
+            ctx.stroke();
+          }
+        }
+        if (particlesArray[i].size <= 0.2) {
+          particlesArray.splice(i, 1);
+          i--;
+        }
+      }
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      handleParticles();
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+
+    window.addEventListener("resize", () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
   </script>
-  </body>
+  <!-- canvas script ends -->
+</body>
+
 </html>

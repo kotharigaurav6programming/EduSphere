@@ -1,5 +1,5 @@
 import express from 'express';
-import { adminLoginController,adminEmployeeListController,adminVerifyEmployeeController,adminEnquiryStudentListController,adminAddStudRemarkController,adminUploadSyllabusController,adminSendSyllabusController,adminAddCourseController,adminViewCoursesController,adminCourseListController,adminAddDetailedSyllabusController,adminDetailedSyllabusController } from '../controller/adminController.js';
+import { adminLoginController,adminEmployeeListController,adminVerifyEmployeeController,adminEnquiryStudentListController,adminAddStudRemarkController,adminUploadSyllabusController,adminSendSyllabusController,adminAddCourseController,adminViewCoursesController,adminCourseListController,adminAddDetailedSyllabusController,adminDetailedSyllabusController,downloadExcelController } from '../controller/adminController.js';
 import {fileURLToPath} from 'url';
 import jwt from 'jsonwebtoken';
 import path from 'path';
@@ -59,7 +59,7 @@ adminRouter.get('/uploadSyllabus',authenticateJWT,async(request,response)=>{
     try{
             const result = await courseSchema.find();
             console.log(result);
-            response.render("adminUploadSyllabus.ejs",{flag:false,message:"",status:"",result:result});
+            response.render("adminUploadSyllabus.ejs",{message:"",status:"",result:result});
         }catch(error){
             response.render("notfound.ejs",{message:message.SERVER_ERROR,status:status.SERVER_ERROR});
         }
@@ -67,5 +67,6 @@ adminRouter.get('/uploadSyllabus',authenticateJWT,async(request,response)=>{
 adminRouter.get('/adminCourseList',authenticateJWT,adminCourseListController);
 adminRouter.get('/adminAddDetailedSyllabus',authenticateJWT,adminAddDetailedSyllabusController);
 adminRouter.post('/adminDetailedSyllabus',authenticateJWT,adminDetailedSyllabusController);
+adminRouter.get('/download-excel',authenticateJWT,downloadExcelController);
 export default adminRouter;
 

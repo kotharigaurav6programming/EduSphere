@@ -94,13 +94,11 @@
             </div>
   
             <div class="col-lg-5 ml-auto" data-aos="fade-up" data-aos-delay="500" style="margin-top: -40px;">
-              <!-- <form action="/admin/adminUploadSyllabus" method="post" class="form-box" enctype="multipart/form-data"> -->
-
-                <form action="/admin/checkUploadSyllabusAvailability" method="post" class="form-box" enctype="multipart/form-data">
+              <form action="/admin/adminUploadSyllabus" method="post" class="form-box" enctype="multipart/form-data">
                 
                 <h3 class="h4 text-black mb-4">Upload Syllabus</h3>
                 <div class="form-group mb-4">
-                  <select name="subject" id="subject" class="form-control">
+                  <select required name="subject" id="subject" class="form-control">
                     <option value="">Select Subject</option>
                     <% result.forEach((course)=>{ %>
                       <option value="<%=course.courseName%>"><%=course.courseName%></option>  
@@ -108,7 +106,7 @@
                   </select>
                 </div>
                 <div class="form-group mb-4">
-                  <select name="type" id="type" class="form-control">
+                  <select required name="type" id="type" class="form-control">
                     <option value="">Select Type</option>
                     <option value="Short Term Course">Short Term Course</option>
                     <option value="Placement Oriented Course">Placement Oriented Course</option>
@@ -116,20 +114,16 @@
                 </div>
                 <div class="form-group">
                   Date of Upload: 
-                  <input type="date" name="date" id="date" class="form-control">
+                  <input required type="date" name="date" id="date" class="form-control">
                 </div>
                 <div class="form-group">
                   Upload Syllabus:
-                  <input type="file" name="syllabus" id="syllabus" class="form-control">
+                  <input required type="file" name="syllabus" id="syllabus" class="form-control">
                 </div>
 
                 <div class="form-group">
-                  <%if(flag){%>
-                  <input type="submit" class="btn btn-danger btn-pill" value="Modify Syllabus">
-                  <%}else{%>
                     <input type="submit" class="btn btn-primary btn-pill" value="Upload Syllabus">
-                    <%}%>
-                  <input type="reset" class="btn btn-primary btn-pill" value="Reset">
+                <input type="reset" class="btn btn-primary btn-pill" value="Reset">
                 </div>
 
               </form>
