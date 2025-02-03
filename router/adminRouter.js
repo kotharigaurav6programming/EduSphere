@@ -5,6 +5,7 @@ import jwt from 'jsonwebtoken';
 import path from 'path';
 import { status,message } from '../utils/statusMessage.js';
 import courseSchema from '../model/courseSchema.js';
+import detailedSyllabusSchema from '../model/detailedSyllabusSchema.js';
 // import dotenv from 'dotenv';
 // dotenv.config();
 
@@ -57,10 +58,17 @@ adminRouter.get('/adminCourses',authenticateJWT,(request,response)=>{
 });
 adminRouter.get('/uploadSyllabus',authenticateJWT,async(request,response)=>{
     try{
-            const result = await courseSchema.find();
-            console.log(result);
-            response.render("adminUploadSyllabus.ejs",{message:"",status:"",result:result});
+        const detailedObj = await detailedSyllabusSchema.find();
+        const courseNameArray = [];
+        for(let i=0;i<detailedObj.length;i++){
+            const courseObj = await courseSchema.findOne({courseId:detailedObj[i].courseId});
+            courseNameArray.push(courseObj.courseName);
+        }
+        // console.log("courseNameArray : ",courseNameArray);
+            response.render("adminUploadSyllabus.ejs",{message:"",status:"",result:courseNameArray});
         }catch(error){
+            console.log(error);
+            
             response.render("notfound.ejs",{message:message.SERVER_ERROR,status:status.SERVER_ERROR});
         }
 });

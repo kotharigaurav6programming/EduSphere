@@ -221,7 +221,7 @@
                   <div class="col-lg-5 ml-auto" data-aos="fade-up" data-aos-delay="500">
                     <form action="/studentEnquiry/enquiry" method="post" class="form-box">
                       <h3 class="h5 text-black mb-4">
-                        Get Started with a <span style="color:red; font-size: 25px;" id="animate">Free Course</span>
+                        Let's Get Started with a <span style="color:red; font-size: 25px;" id="animate">Free Course</span>
                       </h3>
                       <div class="form-group">
                         <input type="text" class="form-control" placeholder="Email Address" name="email" id="email"
@@ -235,8 +235,8 @@
                         <select name="subject" id="subject" class="form-control">
                           <option value="">Select Subject</option>
                           <% result.forEach((course)=> { %>
-                            <option value="<%= course.courseName %>">
-                              <%= course.courseName %>
+                            <option value="<%= course.subject %>">
+                              <%= course.subject %>
                             </option>
                             <% }) %>
                         </select>
@@ -818,48 +818,49 @@
       <div class="container">
         <div class="row mb-5 justify-content-center" data-aos="fade-up" data-aos-delay="">
           <div class="col-lg-7 text-center">
-            <h2 class="section-title">Why Choose Us</h2>
+            <h2 class="section-title">Benefits of Choosing Us</h2>
           </div>
         </div>
         <div class="row">
-          <div class="col-lg-4 ml-auto align-self-start" data-aos="fade-up" data-aos-delay="100">
+          <div class="col-lg-5 ml-auto align-self-start" data-aos="fade-up" data-aos-delay="100">
 
             <div class="p-4 rounded bg-white why-choose-us-box">
 
               <div class="d-flex align-items-center custom-icon-wrap custom-icon-light mb-3">
-                <div class="mr-3"><span class="custom-icon-inner"><span class="icon icon-graduation-cap"></span></span>
+                <div class="mr-3"><span class="custom-icon-inner"><span class="icon icon-star"></span></span>
                 </div>
                 <div>
-                  <h3 class="m-0">22,931 Yearly Graduates</h3>
+                  <h3 class="m-0">Central India's Top Growing Institute</h3>
+                
                 </div>
               </div>
 
               <div class="d-flex align-items-center custom-icon-wrap custom-icon-light mb-3">
-                <div class="mr-3"><span class="custom-icon-inner"><span class="icon icon-university"></span></span>
+                <div class="mr-3"><span class="custom-icon-inner"><span class="icon icon-star"></span></span>
                 </div>
                 <div>
-                  <h3 class="m-0">150 Universities Worldwide</h3>
+                  <h3 class="m-0">Trending Courses</h3>
                 </div>
               </div>
 
               <div class="d-flex align-items-center custom-icon-wrap custom-icon-light mb-3">
-                <div class="mr-3"><span class="custom-icon-inner"><span class="icon icon-graduation-cap"></span></span>
+                <div class="mr-3"><span class="custom-icon-inner"><span class="icon icon-star"></span></span>
                 </div>
                 <div>
-                  <h3 class="m-0">Top Professionals in The World</h3>
+                  <h3 class="m-0">Top Professionals Workshops</h3>
                 </div>
               </div>
 
               <div class="d-flex align-items-center custom-icon-wrap custom-icon-light mb-3">
-                <div class="mr-3"><span class="custom-icon-inner"><span class="icon icon-university"></span></span>
+                <div class="mr-3"><span class="custom-icon-inner"><span class="icon icon-star"></span></span>
                 </div>
                 <div>
-                  <h3 class="m-0">Expand Your Knowledge</h3>
+                  <h3 class="m-0">Well Furnished Labs</h3>
                 </div>
               </div>
 
               <div class="d-flex align-items-center custom-icon-wrap custom-icon-light mb-3">
-                <div class="mr-3"><span class="custom-icon-inner"><span class="icon icon-graduation-cap"></span></span>
+                <div class="mr-3"><span class="custom-icon-inner"><span class="icon icon-star"></span></span>
                 </div>
                 <div>
                   <h3 class="m-0">Best Online Teaching Assistant Courses</h3>
@@ -867,18 +868,32 @@
               </div>
 
               <div class="d-flex align-items-center custom-icon-wrap custom-icon-light">
-                <div class="mr-3"><span class="custom-icon-inner"><span class="icon icon-university"></span></span>
+                <div class="mr-3"><span class="custom-icon-inner"><span class="icon icon-star"></span></span>
                 </div>
                 <div>
-                  <h3 class="m-0">Best Teachers</h3>
+                  <h3 class="m-0">Best Industry Experts</h3>
                 </div>
               </div>
 
             </div>
 
+            <style>
+              .custom-icon-wrap:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+              }
+              .custom-icon-wrap {
+                padding: 15px;
+                background-color: #f9f9f9;
+                border-radius: 10px;
+              }
+            </style>
+                        
 
           </div>
-          <div class="col-lg-7 align-self-end" data-aos="fade-left" data-aos-delay="200">
+          <div class="col-lg-6 align-self-end" data-aos="fade-left" data-aos-delay="200">
             <img src="images/person_transparent.png" alt="Image" class="img-fluid">
           </div>
         </div>
@@ -897,17 +912,13 @@
 
 
 
-            <h2 class="section-title mb-3">Message Us</h2>
-            <p class="mb-5">Natus totam voluptatibus animi aspernatur ducimus quas obcaecati mollitia quibusdam
-              temporibus culpa dolore molestias blanditiis consequuntur sunt nisi.</p>
+            <h2 class="section-title mb-3">Get In Touch</h2>
+            <p class="mb-5">"Your Success, Our Mission!"</p>
 
             <form method="post" data-aos="fade">
               <div class="form-group row">
-                <div class="col-md-6 mb-3 mb-lg-0">
-                  <input type="text" class="form-control" placeholder="First name">
-                </div>
-                <div class="col-md-6">
-                  <input type="text" class="form-control" placeholder="Last name">
+                <div class="col-md-12">
+                  <input type="text" class="form-control" placeholder="First Username">
                 </div>
               </div>
 
@@ -924,13 +935,13 @@
               </div>
               <div class="form-group row">
                 <div class="col-md-12">
-                  <textarea class="form-control" id="" cols="30" rows="10"
+                  <textarea class="form-control" id="" cols="30" rows="3"
                     placeholder="Write your message here."></textarea>
                 </div>
               </div>
 
               <div class="form-group row">
-                <div class="col-md-6">
+                <div class="col-md-12">
 
                   <input type="submit" class="btn btn-primary py-3 px-5 btn-block btn-pill" value="Send Message">
                 </div>
@@ -947,9 +958,8 @@
       <div class="container">
         <div class="row">
           <div class="col-md-4">
-            <h3>About OneSchool</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro consectetur ut hic ipsum et veritatis
-              corrupti. Itaque eius soluta optio dolorum temporibus in, atque, quos fugit sunt sit quaerat dicta.</p>
+            <h3>About EduSphere</h3>
+            <p>EduSphere symbolizes a comprehensive and modern educational ecosystem. The name blends "Edu" (education) and "Sphere" (a complete environment) to represent inclusive, tech-driven, and global learning opportunities.</p>
           </div>
 
           <div class="col-md-3 ml-auto">
@@ -964,8 +974,7 @@
 
           <div class="col-md-4">
             <h3>Subscribe</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt incidunt iure iusto architecto?
-              Numquam, natus?</p>
+            <p>It is catchy, brand-friendly, and ideal for scaling in the education sector.</p>
             <form action="#" class="footer-subscribe">
               <div class="d-flex mb-5">
                 <input type="text" class="form-control rounded-0" placeholder="Email">
@@ -976,16 +985,12 @@
 
         </div>
 
-        <div class="row pt-5 mt-5 text-center">
+        <div class="row pt-1 mt-1 text-center">
           <div class="col-md-12">
-            <div class="border-top pt-5">
+            <div class="border-top pt-1">
               <p>
-                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                 Copyright &copy;
-                <script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made
-                with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com"
-                  target="_blank">Colorlib</a>
-                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                <script>document.write(new Date().getFullYear());</script> All rights reserved | Created By GK &trade;
               </p>
             </div>
           </div>

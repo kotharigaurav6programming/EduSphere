@@ -80,7 +80,7 @@ export const employeeLoginController = async(request,response)=>{
         const passResult = await bcrypt.compare(password,existingPassword);
         if(passResult){
             if(employeeObj.status){
-                var employeePayload = {email : email};
+                var employeePayload = {email : email,profile:employeeObj.profile,name:employeeObj.name};
                 var expireTime = {
                     expiresIn:'1d'
                 }
@@ -89,7 +89,7 @@ export const employeeLoginController = async(request,response)=>{
                 if(!token)
                     response.render("notfound.ejs",{message:message.SOMETHING_WENT_WRONG,status:status.UN_AUTHORIZE});
                 else{
-                    response.render("employeeHome.ejs",{status : status.SUCCESS,message:message.LOGIN_SUCCESSFULL});
+                    response.render("employeeHome.ejs",{email,profile:employeeObj.profile,name:employeeObj.name,status : status.SUCCESS,message:message.LOGIN_SUCCESSFULL});
                 }    
             }else{
                 response.render("employeeLogin.ejs",{message:message.ACCOUNT_DEACTIVATED,status:status.SUCCESS});
@@ -100,5 +100,14 @@ export const employeeLoginController = async(request,response)=>{
     }catch(error){
         console.log("Error in Login Controller : ",error);
         response.render("employeeLogin.ejs",{message:message.SOMETHING_WENT_WRONG,status:status.SERVER_ERROR});        
+    }
+}
+
+export const addBatchController = async(request,response)=>{
+    try{
+        console.log("data : ",request.body);
+        
+    }catch(error){
+
     }
 }

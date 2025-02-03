@@ -6,18 +6,18 @@ import uploadSyllabusSchema from "../model/uploadSyllabusSchema.js";
 
 export const studentEnquiry = async(request,response)=>{
     try{
+        console.log("request.body : ",request.body);
         // Generate a new UUID
-        var id = uuid4();
-        console.log(id);
-        
         const enquiryObj = {
-            id:id,
+            id:uuid4(),
             email:request.body.email,
             contact:request.body.contact,
             subject:request.body.subject
         }
+        console.log("enquiryObj : ",enquiryObj);
+        
         const result = await studentEnquirySchema.create(enquiryObj);
-        // console.log("result : ",result);
+         
         const courseObj = await courseSchema.findOne({courseName:request.body.subject});
         const detailedSyllabusObj = await detailedSyllabusSchema.findOne({courseId:courseObj.courseId});
         detailedSyllabusObj.courseName = request.body.subject;

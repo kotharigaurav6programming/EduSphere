@@ -65,17 +65,17 @@
         <div class="row mb-5 justify-content-center">
           <div class="col-lg-12 text-center"  data-aos="fade-up" data-aos-delay="">
             <br>
-            <h4>Enquired Student List</h4>
+            <h4 class="text-black">Enquired Student List</h4>
             <center>
               <span style="color:green"><%=message%></span>
             </center>
             <br>
 <!-- for downloading excel designing logic starts -->
             <form id="download-form" method="GET" action="/admin/download-excel">
-              <label for="fromDate">From:</label>
+              <label for="fromDate" class="text-black">From:</label>
               <input type="date" id="fromDate" name="fromDate" required>
           
-              <label for="toDate">To:</label>
+              <label for="toDate" class="text-black">To:</label>
               <input type="date" id="toDate" name="toDate" required>
           
               <button type="submit" class="btn btn-success text-white p-2">Download Excel</button>
@@ -83,7 +83,7 @@
 <!-- for downloading excel designing logic ends -->
 
             <br>
-            <table class="table" style="font-size: 14px;">
+            <table class="table" style="font-size: 14px;color:black;">
                 <thead>
                   <tr>
                     <th scope="col">S.No</th>
@@ -110,7 +110,7 @@
                             <form action="/admin/addEnqStudRemark" method="post">
                                 <input type="hidden" name="id" id="id" value="<%=enqStudent.id%>">
                                 <input required name="remark" id="remark" class="form-control" style="outline-color: #7971ea;" placeholder="Enter Remark">
-                                <input class="btn btn-primary btn-pill p-1" type="submit" value="Add Remark" style="color:white;background-color: #7971ea; border-width: 0px;">
+                                <input class="btn btn-primary p-1" type="submit" value="Add Remark" style="color:white;background-color: #7971ea; border-width: 0px;">
                             </form>
                         </td>
                         <td>
@@ -124,7 +124,7 @@
                                   <option value="<%=obj.syllabus%>"><%=obj.syllabus%></option>
                                 <%})%>
                               </select>
-                              <button class="btn btn-primary btn-pill p-1">Mail Syllabus</button>
+                              <button class="btn btn-primary p-1">Mail Syllabus</button>
                             </div>
                           </form>
                         </td>

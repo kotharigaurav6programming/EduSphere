@@ -41,13 +41,7 @@ app.use(express.json());
 
 app.get("/",async (request,response)=>{
     try{
-        const courseArrObj = await courseSchema.find();
-        const detailedSyllabusArrObj = await detailedSyllabusSchema.find();
-        const res = courseArrObj.filter((obj)=>{
-            return detailedSyllabusArrObj.find((detailedObj)=>{
-                return detailedObj.courseId == obj.courseId;
-            });
-        });
+        const res = await uploadSyllabusSchema.find();
         console.log(res);
         response.render("home.ejs",{result:res});
     }catch(error){

@@ -154,7 +154,13 @@ export const adminAddStudRemarkController = async(request,response)=>{
 
 export const adminUploadSyllabusController = async(request,response)=>{
     try{
-        const result = await courseSchema.find();
+        const detailedObj = await detailedSyllabusSchema.find();
+        const courseNameArray = [];
+        for(let i=0;i<detailedObj.length;i++){
+            const courseObj = await courseSchema.findOne({courseId:detailedObj[i].courseId});
+            courseNameArray.push(courseObj.courseName);
+        }
+        // console.log("courseNameArray : ",courseNameArray);
         // console.log("-----------------",request.body);
         const filename = request.files.syllabus;
         // console.log(request.files);
@@ -167,14 +173,14 @@ export const adminUploadSyllabusController = async(request,response)=>{
                 request.body.syllabus = fileName;
                 const res = await uploadSyllabusSchema.findOne({subject:request.body.subject});
                 if(res){
-                    response.render("adminUploadSyllabus.ejs",{result:result,message:message.COURSE_AVAILABLE,status:status.SUCCESS});
+                    response.render("adminUploadSyllabus.ejs",{result:courseNameArray,message:message.COURSE_AVAILABLE,status:status.SUCCESS});
                 }else{
                     const resultNew = await uploadSyllabusSchema.create(request.body);
-                    response.render("adminUploadSyllabus.ejs",{result:result,message:message.UPLOAD_STATUS,status:status.SUCCESS});   
+                    response.render("adminUploadSyllabus.ejs",{result:courseNameArray,message:message.UPLOAD_STATUS,status:status.SUCCESS});   
                 }
             }catch(error){
                 console.log(error);
-                response.render("adminUploadSyllabus.ejs",{result:result,message:message.FILE_NOT_UPLOADED,status:status.SUCCESS});
+                response.render("adminUploadSyllabus.ejs",{result:courseNameArray,message:message.FILE_NOT_UPLOADED,status:status.SUCCESS});
             }
         })
     }catch(error){

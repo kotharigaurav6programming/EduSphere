@@ -65,10 +65,10 @@
         <div class="row mb-5 justify-content-center">
           <div class="col-lg-12 text-center"  data-aos="fade-up" data-aos-delay="">
             <br>
-            <h2>Course List</h2>
+            <h4 class="text-black">Course List</h4>
             <br>
             <span style="color:green"><%=message%></span>
-            <table class="table" style="font-size: 12px;">
+            <table class="table" style="font-size: 12px;color:black;">
                 <thead>
                   <tr>
                     <th scope="col">S.No</th>
@@ -90,9 +90,9 @@
                         <td><%=course.courseType%></td>
                         <td><%=course.courseDuration%></td>
                         <td><%=course.courseFees%></td>
-                        <td><a class="btn btn-primary py-1 px-2 btn-pill" href="">Update</a></td>
-                        <td><a class="btn btn-danger py-1 px-2 btn-pill" href="">Delete</a></td>
-                        <td><a class="btn btn-success text-white py-1 px-2 btn-pill" href="/admin/adminAddDetailedSyllabus?course=<%=JSON.stringify(course)%>">Add</a></td>
+                        <td><a class="btn btn-primary py-1 px-2" href="">Update</a></td>
+                        <td><a class="btn btn-danger py-1 px-2" href="">Delete</a></td>
+                        <td><a class="btn btn-success text-white py-1 px-2" href="/admin/adminAddDetailedSyllabus?course=<%=JSON.stringify(course)%>">Add</a></td>
                       </tr>
                   <%})%>
                 </tbody>
