@@ -103,11 +103,3 @@ export const employeeLoginController = async(request,response)=>{
     }
 }
 
-export const addBatchController = async(request,response)=>{
-    try{
-        console.log("data : ",request.body);
-        
-    }catch(error){
-
-    }
-}

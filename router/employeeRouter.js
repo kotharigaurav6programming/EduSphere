@@ -2,7 +2,7 @@ import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import jwt from 'jsonwebtoken';
-import { employeeRegistrationController,employeeVerifyEmailController,employeeLoginController,addBatchController } from '../controller/employeeController.js';
+import { employeeRegistrationController,employeeVerifyEmailController,employeeLoginController } from '../controller/employeeController.js';
 import { message, status } from '../utils/statusMessage.js';
 import courseSchema from '../model/courseSchema.js';
 
@@ -49,5 +49,4 @@ employeeRouter.get('/addBatch',authenticateJWT,async(request,response)=>{
     const courseArrObj = await courseSchema.find();
     response.render("addBatch.ejs",{courseArrObj,email:request.employeePayload.email,name:request.employeePayload.name,message:"",status:status.SUCCESS});
 });
-employeeRouter.post('/addBatch',authenticateJWT,addBatchController);
 export default employeeRouter;

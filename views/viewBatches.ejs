@@ -39,7 +39,7 @@
       <div class="site-mobile-menu-body"></div>
     </div>
    
-
+    
     <header class="site-navbar py-4 js-sticky-header site-navbar-target" role="banner">
       
         <div class="container-fluid">
@@ -57,85 +57,62 @@
         </div>
         
       </header>
+  
 
-      <div class="site-section" id="courses-section" style="margin-top: -1px;">
-        <br>
+    <div class="site-section" id="programs-section" style="margin-top: -1px;">
+      <br>
         <div class="container">
-          <div class="row mb-5 justify-content-center">
-            <div class="col-lg-7 text-center"  data-aos="fade-up" data-aos-delay="">
-                <br>
-              <h4 class="text-black">Batch Section</h4>
-              <span><%=message%></span>
-            </div>
+        <div class="row mb-5 justify-content-center">
+          <div class="col-lg-12 text-center"  data-aos="fade-up" data-aos-delay="">
+            <br>
+            <h4 class="text-black">Batch List</h4>
+            <br>
+            <span style="color:green"><%=message%></span>
+            <%if(batchesData.length==0){%>
+                <span style="color:crimson">No Record Found</span>
+            <%}else{%>
+            <table class="table" style="font-size: 12px; color: black;">
+                <thead>
+                  <tr>
+                    <th scope="col">S.No</th>
+                    <th scope="col" style="width:180px">BatchId</th>
+                    <th scope="col">CourseName</th>
+                    <th scope="col">StartDate</th>
+                    <th scope="col">StartTime</th>
+                    <th scope="col">EndTime</th>
+                    <th scope="col">Duration</th>
+                    <th scope="col">Trainer Name</th>
+                    <th scope="col">Update</th>
+                    <th scope="col">Delete</th>
+                </tr>
+                </thead>
+                <tbody>
+                  <%batchesData.forEach((batch,index)=>{%>
+                      <tr>
+                        <td><%=(index+1)%></td>
+                        <td><%=batch.batchId%></td>
+                        <td><%=batch.courseName%></td>
+                        <td><%=new Date(batch.startDate).toISOString().split("T")[0]%></td>
+                        <td><%=batch.startTime%></td>
+                        <td><%=batch.endTime%></td>
+                        <td><%=batch.batchDuration%></td>
+                        <td><%=batch.trainerEnrollId%></td>
+                        <td><a href="">Update</a></td>
+                        <td><a href="">Delete</a></td>
+                      </tr>
+                  <%})%>
+                </tbody>
+              </table>
+            <%}%>  
           </div>
-          <div style="margin-top: -70px;" class="row mb-5 align-items-center">
-            
-            <div class="col-lg-6 mb-5 order-1 order-lg-2" data-aos="fade-up" data-aos-delay="100">
-              <img src="images/undraw_teaching.svg" alt="Image" class="img-fluid">
-              <form action="/batch/viewBatches">
-                <div class="form-group">
-                  <input type="submit" class="btn btn-primary btn-block" value="View Batches">
-                </div>
-              </form>  
-
-            </div>
-  
-            <div class="col-lg-5 mr-auto order-2 order-lg-1" data-aos="fade-up" data-aos-delay="200">
-              <div>
-                <!-- Admin Add Course -->
-                <form action="/batch/addBatch" method="post" class="form-box">
-                  <h3 class="h4 text-black mb-4">
-                    Add Batch
-                  </h3>
-                  <div class="form-group mb-4">
-                    <select name="courseId" id="courseId" class="form-control">
-                      <option value="">Select Course</option>
-                      <%courseArrObj.forEach((obj)=>{%>
-                        <option value="<%=obj.courseId%>"><%=obj.courseName%></option>
-                      <%})%>
-                    </select>
-                  </div>
-                  Batch Start Date
-                  <div class="form-group">
-                    <input type="date" name="startDate" id="startDate" class="form-control">
-                  </div>
-                  Batch Start Time
-                  <div class="form-group">
-                    <input type="text" name="startTime" placeholder="00:00 AM | PM" id="startTime" class="form-control">
-                  </div>
-                  Batch End Time
-                  <div class="form-group">
-                    <input type="text" name="endTime" placeholder="00:00 AM | PM" id="endTime" class="form-control">
-                  </div>
-
-                  <div class="form-group mb-4">
-                    <select name="batchDuration" id="batchDuration" class="form-control">
-                      <option value="">Select Batch Duration</option>
-                      <option value="1 Month">1 Month</option>
-                      <option value="2 Months">2 Months</option>
-                      <option value="3 Months">3 Months</option>
-                      <option value="6 Months">6 Months</option>
-                      <option value="1 Year">1 Year</option>
-                    </select>
-                  </div>
-                  
-                  <div class="form-group">
-                    <input type="submit" class="btn btn-primary btn-block" value="Add Batch">    
-                </div>
-
-                </form>
-              </div>
-              
-            </div>
-          </div>
-  
-        
-  
         </div>
-      </div>
-    
+      
 
-  
+      </div>
+    </div>
+
+    
+     
     <footer class="footer-section bg-white">
       <div class="container">
         <div class="row">
