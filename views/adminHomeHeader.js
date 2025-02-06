@@ -3,7 +3,7 @@
     <li><a href="/admin/adminCourses" class="nav-link">Courses</a></li>
     <li><a href="/admin/adminEmployeeList" class="nav-link">Employees</a></li>
     <li><a href="/admin/adminStudent" class="nav-link">Students</a></li>
-    <li><a href="" class="nav-link">Batches</a></li>
+    <li><a href="/admin/adminViewBatches" class="nav-link">Batches</a></li>
     <li><a href="/admin/uploadSyllabus" class="nav-link">Syllabus</a></li>
     <li><a href="" class="nav-link">Password</a></li>
     <li><a href="" class="nav-link">Logout</a></li>

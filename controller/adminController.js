@@ -16,6 +16,7 @@ import uploadSyllabusSchema from "../model/uploadSyllabusSchema.js";
 import mailer_syllabus from "./mailer_syllabus.js";
 import courseSchema from '../model/courseSchema.js';
 import detailedSyllabusSchema from "../model/detailedSyllabusSchema.js";
+import batchSchema from "../model/batchSchema.js";
 dotenv.config();
 const ADMIN_SECRET_KEY = process.env.ADMIN_SECRET_KEY;
 const __filename = fileURLToPath(import.meta.url);
@@ -395,4 +396,42 @@ export const adminDetailedSyllabusController = async(request,response)=>{
     }
   };
 
+export const adminViewBatchesController = async(request,response)=>{
+    try{
+        //const result = await batchSchema.find();
+
+        const batchesData = await batchSchema.find({status:false});
+        for(let i=0;i<batchesData.length;i++){
+            const courseObj = await courseSchema.findOne({courseId:batchesData[i].courseId},{courseName:1});
+            console.log("courseName : ",courseObj.courseName);
+            batchesData[i].courseName = courseObj.courseName; 
+        }
+        const trainerArrObj = await employeeSchema.find({profile:"Trainer"});
+        response.render("adminViewBatches.ejs",{trainerArrObj,batchesData,message:"",status:status.SUCCESS});
+    }catch(error){
+        console.log("error while admin view batches controller : ",error);
+        
+    }
+}  
+
+export const adminAllocateTrainerController = async(request,response)=>{
+    try{
+        // console.log(request.body);
+        const result = await batchSchema.updateOne({batchId:request.body.batchId},{$set:{trainerEnrollId:request.body.trainerEnrollId,status:true}});
+        // console.log("AFTER UPDATE : ",result);
+
+        const batchesData = await batchSchema.find({status:false});
+        for(let i=0;i<batchesData.length;i++){
+            const courseObj = await courseSchema.findOne({courseId:batchesData[i].courseId},{courseName:1});
+            console.log("courseName : ",courseObj.courseName);
+            batchesData[i].courseName = courseObj.courseName; 
+        }
+        const trainerArrObj = await employeeSchema.find({profile:"Trainer"});
+        response.render("adminViewBatches.ejs",{trainerArrObj,batchesData,message:message.ALLOCATION_SUCCESS,status:status.SUCCESS});
+        
+    }catch(error){
+        console.log("Error in adminAllocateTrainerController : ",error);
+        
+    }
+}
 // needs to print email id on every page {email:request.payload.email} like this

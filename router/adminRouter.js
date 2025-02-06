@@ -1,5 +1,5 @@
 import express from 'express';
-import { adminLoginController,adminEmployeeListController,adminVerifyEmployeeController,adminEnquiryStudentListController,adminAddStudRemarkController,adminUploadSyllabusController,adminSendSyllabusController,adminAddCourseController,adminViewCoursesController,adminCourseListController,adminAddDetailedSyllabusController,adminDetailedSyllabusController,downloadExcelController } from '../controller/adminController.js';
+import { adminLoginController,adminEmployeeListController,adminVerifyEmployeeController,adminEnquiryStudentListController,adminAddStudRemarkController,adminUploadSyllabusController,adminSendSyllabusController,adminAddCourseController,adminViewCoursesController,adminCourseListController,adminAddDetailedSyllabusController,adminDetailedSyllabusController,downloadExcelController,adminViewBatchesController,adminAllocateTrainerController } from '../controller/adminController.js';
 import {fileURLToPath} from 'url';
 import jwt from 'jsonwebtoken';
 import path from 'path';
@@ -76,5 +76,7 @@ adminRouter.get('/adminCourseList',authenticateJWT,adminCourseListController);
 adminRouter.get('/adminAddDetailedSyllabus',authenticateJWT,adminAddDetailedSyllabusController);
 adminRouter.post('/adminDetailedSyllabus',authenticateJWT,adminDetailedSyllabusController);
 adminRouter.get('/download-excel',authenticateJWT,downloadExcelController);
+adminRouter.get('/adminViewBatches',authenticateJWT,adminViewBatchesController);
+adminRouter.post('/adminAllocateTrainer',authenticateJWT,adminAllocateTrainerController);
 export default adminRouter;
 

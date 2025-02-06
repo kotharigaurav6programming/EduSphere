@@ -31,5 +31,6 @@ export const message = {
     DETAILED_SYLLABUS_ADDED:"Detailed Syllabus Added",
     COURSE_AVAILABLE:"Course Already Available | Go to Update Section",
     BATCH_ADDED : "Batch Added Successfully",
-    BATCH_ADD_ERROR : "Error while Adding Batch"
+    BATCH_ADD_ERROR : "Error while Adding Batch",
+    ALLOCATION_SUCCESS:"Trainer Allocated Successfully"
 }
