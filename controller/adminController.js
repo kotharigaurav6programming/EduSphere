@@ -392,7 +392,8 @@ export const adminDetailedSyllabusController = async(request,response)=>{
       });
     } catch (error) {
       console.log("Error in excel:", error);
-      response.status(500).send('Internal Server Error');
+    //   response.status(500).send('Internal Server Error');
+    response.render("adminHome.ejs",{message:message.SOMETHING_WENT_WRONG,status:status.SERVER_ERROR});   
     }
   };
 
@@ -410,7 +411,8 @@ export const adminViewBatchesController = async(request,response)=>{
         response.render("adminViewBatches.ejs",{trainerArrObj,batchesData,message:"",status:status.SUCCESS});
     }catch(error){
         console.log("error while admin view batches controller : ",error);
-        
+        response.render("adminHome.ejs",{message:message.SOMETHING_WENT_WRONG,status:status.SERVER_ERROR});
+   
     }
 }  
 
@@ -431,7 +433,7 @@ export const adminAllocateTrainerController = async(request,response)=>{
         
     }catch(error){
         console.log("Error in adminAllocateTrainerController : ",error);
-        
+        response.render("adminHome.ejs",{message:message.SOMETHING_WENT_WRONG,status:status.SERVER_ERROR});
     }
 }
 // needs to print email id on every page {email:request.payload.email} like this

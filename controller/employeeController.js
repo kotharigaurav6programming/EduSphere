@@ -6,6 +6,10 @@ import {message,status} from '../utils/statusMessage.js'
 import mailer from './mailer.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import { request } from 'http';
+import { response } from 'express';
+import courseSchema from '../model/courseSchema.js';
+import batchSchema from '../model/batchSchema.js';
 const EMPLOYEE_SECRET_KEY = process.env.EMPLOYEE_SECRET_KEY;
 export const employeeRegistrationController = async(request,response)=>{
     try{
@@ -103,3 +107,22 @@ export const employeeLoginController = async(request,response)=>{
     }
 }
 
+export const employeeViewBatchesController = async(request,response)=>{
+    try{
+        const employeeEnrollId = await employeeSchema.findOne({email:request.employeePayload.email},{enrollId:1});
+         const batchesData = await batchSchema.find({trainerEnrollId:employeeEnrollId.enrollId});
+        for(let i=0;i<batchesData.length;i++){
+            const courseObj = await courseSchema.findOne({courseId:batchesData[i].courseId},{courseName:1});
+            // console.log("courseName : ",courseObj.courseName);
+            batchesData[i].courseName = courseObj.courseName; 
+
+            const obj = await employeeSchema.findOne({enrollId:batchesData[i].trainerEnrollId},{name:1});
+            // console.log(obj);
+            batchesData[i].trainerEnrollId = obj?.name ? obj.name : "Not Allocate";
+        }
+        response.render('employeeViewBatches.ejs',{batchesData,name:request.employeePayload.name,message:"",status:status.SUCCESS});
+    }catch(error){
+        console.log("error in employeeViewBatchesController : ",error);        
+        response.render('employeeHome.ejs',{profile:request.employeePayload.profile,email:request.employeePayload.email,name:request.employeePayload.name,message:message.SOMETHING_WENT_WRONG,status:status.SERVER_ERROR});
+    }
+}

@@ -3,7 +3,7 @@
     <li><a href="#courses-section" class="nav-link">trainer</a></li>
     <li><a href="/admin/adminEmployeeList" class="nav-link">Assignment</a></li>
     <li><a href="#teachers-section" class="nav-link">RequestLeave</a></li>
-    <li><a href="#teachers-section" class="nav-link">Batches</a></li>
+    <li><a href="/employee/employeeViewBatches" class="nav-link">Batches</a></li>
     <li><a href="#teachers-section" class="nav-link">UpdateProfile</a></li>
     <li><a href="#teachers-section" class="nav-link">Logout</a></li>
 </ul>
