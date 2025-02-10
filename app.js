@@ -15,6 +15,7 @@ import { message, status } from './utils/statusMessage.js';
 import uploadSyllabusSchema from './model/uploadSyllabusSchema.js';
 import detailedSyllabusSchema from './model/detailedSyllabusSchema.js';
 import batchRouter from './router/batchRouter.js';
+import assignmentRouter from './router/assignmentRouter.js';
 
 mongoose.connect(url,{
     useNewUrlParser:true,
@@ -57,6 +58,7 @@ app.use('/admin',adminRouter);
 app.use('/studentEnquiry',studentEnquiryRouter);
 app.use('/employee',employeeRouter);
 app.use('/batch',batchRouter);
+app.use('/assignment',assignmentRouter);
 
 app.listen(process.env.PORT,()=>{
     console.log("Connection established Successfully");

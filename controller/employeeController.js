@@ -126,3 +126,14 @@ export const employeeViewBatchesController = async(request,response)=>{
         response.render('employeeHome.ejs',{profile:request.employeePayload.profile,email:request.employeePayload.email,name:request.employeePayload.name,message:message.SOMETHING_WENT_WRONG,status:status.SERVER_ERROR});
     }
 }
+
+export const assignmentFormController = async(request,response)=>{
+    try{
+        const data = JSON.parse(request.query.data);
+        // console.log("data received : ",data);
+        response.render("assignmentForm.ejs",{data,email:request.employeePayload.email,name:request.employeePayload.name,message:"",status:status.SUCCESS});
+    }catch(error){
+        console.log("error in assignmentFormController : ",error);
+        
+    }
+}

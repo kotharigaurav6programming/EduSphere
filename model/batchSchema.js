@@ -27,10 +27,6 @@ const batchSchema = mongoose.Schema({
     trainerEnrollId:{
         type:String,
         default:"Not Allocate"
-    },
-    status:{
-        type:Boolean,
-        default:false
     }
 });
 export default mongoose.model('batchSchema',batchSchema,'batch');
