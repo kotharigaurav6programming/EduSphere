@@ -8,7 +8,7 @@ const assignmentSchema = mongoose.Schema({
         type:String,
         required:true
     },
-    courseName : {
+    batchCourse : {
         type: String,
         required:true
     },
@@ -29,7 +29,7 @@ const assignmentSchema = mongoose.Schema({
         default:false
     },
     assignmentDoc:{
-        type:File,
+        type:String,
         required:true
     }
 });
