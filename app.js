@@ -60,6 +60,13 @@ app.use('/employee',employeeRouter);
 app.use('/batch',batchRouter);
 app.use('/assignment',assignmentRouter);
 
+app.get("/interviewQuestion",(request,response)=>{
+    response.render("interviewQuestion.ejs",{message:"",status:""});
+});
+app.get("/blog",(request,response)=>{
+    response.render("blog.ejs",{message:"",status:""});
+});
+
 app.listen(process.env.PORT,()=>{
     console.log("Connection established Successfully");
 });
