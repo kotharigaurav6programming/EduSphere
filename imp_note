@@ -1,0 +1,58 @@
+Problem : https://edusphere-0r2e.onrender.com/js/main.js will works fine and showing images and everything but when i go inside admin panel after login it shows https://edusphere-0r2e.onrender.com/admin/js/main.js and due to this scripts and images and stylesheet not implements so how to solve ? 
+
+Solution : Your issue is that when you navigate to the admin panel (/admin), your assets (JS, CSS, images) are being looked for inside /admin/js/main.js instead of /js/main.js. This happens because the browser is treating relative paths incorrectly due to how they are referenced in your HTML.
+
+✅ Solution: Use Absolute Paths
+Modify how you include your assets in EJS templates (or your frontend files). Instead of using relative paths, use absolute paths.
+
+1️⃣ Fix script, styles, and images in EJS templates
+Change this:
+
+html
+<script src="js/main.js"></script>
+<link rel="stylesheet" href="css/style.css">
+<img src="images/logo.png">
+To this:
+
+html
+<script src="/js/main.js"></script>
+<link rel="stylesheet" href="/css/style.css">
+<img src="/images/logo.png">
+Using / at the beginning ensures that assets always load from the root (/), no matter which page you are on.
+
+2️⃣ Set Static Directory in Express
+If you haven't already, make sure your Express app serves static files correctly:
+
+javascript
+const express = require('express');
+const app = express();
+const path = require('path');
+
+app.use(express.static(path.join(__dirname, 'public'))); // Ensure public folder is used
+
+// If your assets are inside a different folder, adjust accordingly:
+app.use('/js', express.static(path.join(__dirname, 'public/js')));
+app.use('/css', express.static(path.join(__dirname, 'public/css')));
+app.use('/images', express.static(path.join(__dirname, 'public/images')));
+
+app.listen(3000, () => console.log('Server running on port 3000'));
+Make sure your static assets (js, css, images) are inside the public directory.
+
+3️⃣ Alternative: Use base Tag in HTML (If Needed)
+If you are unable to change every asset reference, you can also use the <base> tag in your <head> section:
+
+html
+<base href="/">
+This tells the browser to always use / as the base for all relative URLs.
+
+✅ Final Check
+After making these changes:
+
+Deploy again to Render.
+Clear your browser cache (Ctrl + Shift + R).
+Test if assets are loading properly on all pages, including /admin.
+Let me know if you need further debugging! 🚀
+
+#############
+We use <base href="/"> in every ejs page inside <head> tag  
+#############
