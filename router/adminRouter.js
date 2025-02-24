@@ -13,8 +13,11 @@ var adminRouter = express.Router();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 // console.log("__dirname : ",__dirname.replace('\\router','')+'/public');
-//adminRouter.use(express.static(__dirname.replace('\\router','')+'/public'));
-
+adminRouter.use(express.static(__dirname.replace('\\router','')+'/public'));
+/*
+if we comment this line adminRouter.use(express.static(__dirname.replace('\\router','')+'/public'));
+then also front end properly works as we put <base href='/'> on every page <head> tag
+*/
 const ADMIN_SECRET_KEY = process.env.ADMIN_SECRET_KEY; // needs to uncomment dotenv.config();
 
 const authenticateJWT = (request,response,next)=>{
