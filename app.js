@@ -60,9 +60,13 @@ app.use('/employee',employeeRouter);
 app.use('/batch',batchRouter);
 app.use('/assignment',assignmentRouter);
 
-app.get("/interviewQuestion",(request,response)=>{
-    response.render("interviewQuestion.ejs",{message:"",status:""});
+app.get("/interviewSubject",(request,response)=>{
+    response.render("interviewSubject.ejs",{message:"",status:""});
 });
+app.get("/interviewQuestions",(request,response)=>{
+    response.render("interviewQuestions.ejs",{message:"",status:""});
+});
+
 app.get("/blog",(request,response)=>{
     response.render("blog.ejs",{message:"",status:""});
 });

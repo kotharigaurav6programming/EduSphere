@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <base href="/">
     <title>EduSphere</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    
-    
+
+
     <link href="https://fonts.googleapis.com/css?family=Muli:300,400,700,900" rel="stylesheet">
     <link rel="stylesheet" href="fonts/icomoon/style.css">
 
@@ -25,306 +26,270 @@
     <link rel="stylesheet" href="css/aos.css">
 
     <link rel="stylesheet" href="css/style.css">
-    
-  </head>
-  <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
-  
-  <div class="site-wrap">
+    <!-- blog style starts -->
+    <style>
+        .blog-card {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            overflow: hidden;
+            padding: 20px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            background: #f9f9f9;
+        }
+        .blog-image {
+            width: 40%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+        .blog-content {
+            padding-left: 20px;
+            width: 60%;
+        }
+    </style>
 
-    <div class="site-mobile-menu site-navbar-target">
-      <div class="site-mobile-menu-header">
-        <div class="site-mobile-menu-close mt-3">
-          <span class="icon-close2 js-menu-toggle"></span>
-        </div>
-      </div>
-      <div class="site-mobile-menu-body"></div>
-    </div>
-   
-    
-    <header class="site-navbar py-4 js-sticky-header site-navbar-target" role="banner">
+     <!-- blog style ends -->
+</head>
 
-        <div class="container-fluid">
-          <div class="d-flex align-items-center">
-            <div class="site-logo mr-auto w-25"><a href="index.html">EduSphere</a></div>
-  
-            <div class="mx-auto text-center">
-              <nav class="site-navigation position-relative text-right" role="navigation">
-                <ul class="site-menu main-menu js-clone-nav mx-auto d-none d-lg-block  m-0 p-0">
-                  <li><a href="#home-section" class="nav-link">Home</a></li>
-                  <li><a href="#courses-section" class="nav-link">Courses</a></li>
-                  <!-- <li><a href="#programs-section" class="nav-link">Programs</a></li> -->
-                  <li><a href="/blog" class="nav-link">Blog</a></li>
-                  <li><a href="/employee/employeeLogin" class="nav-link">Employee</a></li>
-                </ul>
-              </nav>
+<body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
+
+    <div class="site-wrap">
+
+        <div class="site-mobile-menu site-navbar-target">
+            <div class="site-mobile-menu-header">
+                <div class="site-mobile-menu-close mt-3">
+                    <span class="icon-close2 js-menu-toggle"></span>
+                </div>
             </div>
-  
-            <div class="ml-auto w-25">
-              <nav class="site-navigation position-relative text-right" role="navigation">
-                <ul class="site-menu main-menu site-menu-dark js-clone-nav mr-auto d-none d-lg-block m-0 p-0">
-                  <li class="cta"><a href="#contact-section" class="nav-link"><span>Contact Us</span></a></li>
-                </ul>
-              </nav>
-              <a href="#" class="d-inline-block d-lg-none site-menu-toggle js-menu-toggle text-black float-right"><span
-                  class="icon-menu h3"></span></a>
-            </div>
-          </div>
+            <div class="site-mobile-menu-body"></div>
         </div>
-  
-      </header>
-  
-  
-  
 
-    <div class="site-section" id="programs-section" style="margin-top: -1px;">
-      <br>
-        <div class="container">
-        <div class="row mb-5 justify-content-center">
-          <div class="col-lg-12 text-center"  data-aos="fade-up" data-aos-delay="">
-            <style>
-                body {
-                    height: 100vh;
+
+        <header class="site-navbar py-4 js-sticky-header site-navbar-target" role="banner">
+
+            <div class="container-fluid">
+                <div class="d-flex align-items-center">
+                    <div class="site-logo mr-auto w-25"><a href="index.html">EduSphere</a></div>
+
+                    <div class="mx-auto text-center">
+                        <nav class="site-navigation position-relative text-right" role="navigation">
+                            <ul class="site-menu main-menu js-clone-nav mx-auto d-none d-lg-block  m-0 p-0">
+                                <li><a href="#home-section" class="nav-link">Home</a></li>
+                                <li><a href="#courses-section" class="nav-link">Courses</a></li>
+                                <li><a href="#programs-section" class="nav-link">Programs</a></li>
+                                <li><a href="/blog" class="nav-link">Blog</a></li>
+                                <li><a href="/employee/employeeLogin" class="nav-link">Employee</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+
+                    <div class="ml-auto w-25">
+                        <nav class="site-navigation position-relative text-right" role="navigation">
+                            <ul
+                                class="site-menu main-menu site-menu-dark js-clone-nav mr-auto d-none d-lg-block m-0 p-0">
+                                <li class="cta"><a href="#contact-section" class="nav-link"><span>Contact Us</span></a>
+                                </li>
+                            </ul>
+                        </nav>
+                        <a href="#"
+                            class="d-inline-block d-lg-none site-menu-toggle js-menu-toggle text-black float-right"><span
+                                class="icon-menu h3"></span></a>
+                    </div>
+                </div>
+            </div>
+
+        </header>
+
+        <div class="text-black site-section" id="teachers-section" style="margin-top: -1px;">
+            <div class="container">
+        
+                <div class="row justify-content-center">
+                    <div class="col-lg-7 mb-5 text-center" data-aos="fade-up" data-aos-delay="">
+                        <br><br>
+                        <h4 class="text-black">Blog</h4>
+                    </div>
+                </div>
+        
+                <!-- Blog Section -->
+                <div class="row">
+                    <!-- Blog Post 1 -->
+                    <div class="col-md-12">
+                        <div class="d-flex blog-card p-3 mb-4 shadow-sm">
+                            <img src="/images/blog_image.jpg" class="blog-image" alt="Tech Blog">
+                            <div class="blog-content pl-3">
+                                <h5>Latest in Technology</h5>
+                                <p class="blog-text">
+                                    <span class="short-text">Technology is evolving at an unprecedented pace. From AI to blockchain, new advancements are shaping the future of industries...</span>
+                                    <span class="full-text d-none"> Technology is evolving at an unprecedented pace. From AI to blockchain, new advancements are shaping the future of industries, making everyday tasks more efficient and automated. Businesses and individuals must keep up with these innovations to stay competitive and relevant in the digital age.</span>
+                                </p>
+                                <button class="btn btn-primary toggle-btn">Read More</button>
+                            </div>
+                        </div>
+                    </div>
+        
+                    <!-- Blog Post 2 -->
+                    <div class="col-md-12">
+                        <div class="d-flex blog-card p-3 mb-4 shadow-sm">
+                            <img src="/images/blog_image1.jpg" class="blog-image" alt="Business Blog">
+                            <div class="blog-content pl-3">
+                                <h5>Business Growth Strategies</h5>
+                                <p class="blog-text">
+                                    <span class="short-text">Entrepreneurs are finding new ways to scale their businesses. Strategic planning, innovation, and digital marketing...</span>
+                                    <span class="full-text d-none"> Entrepreneurs are finding new ways to scale their businesses. Strategic planning, innovation, and digital marketing play key roles in achieving sustainable growth. Companies that embrace technological advancements and data-driven decision-making are more likely to thrive in competitive markets.</span>
+                                </p>
+                                <button class="btn btn-primary toggle-btn">Read More</button>
+                            </div>
+                        </div>
+                    </div>
+        
+                    <!-- Blog Post 3 -->
+                    <div class="col-md-12">
+                        <div class="d-flex blog-card p-3 mb-4 shadow-sm">
+                            <img src="/images/blog_image2.webp" class="blog-image" alt="Travel Blog">
+                            <div class="blog-content pl-3">
+                                <h5>Explore the World</h5>
+                                <p class="blog-text">
+                                    <span class="short-text">Traveling opens doors to new cultures and experiences. Whether it's hiking in the mountains or relaxing on a beach...</span>
+                                    <span class="full-text d-none"> Traveling opens doors to new cultures and experiences. Whether it's hiking in the mountains or relaxing on a beach, every journey provides new perspectives and unforgettable memories. Exploring different destinations broadens our understanding of the world and enriches our lives.</span>
+                                </p>
+                                <button class="btn btn-primary toggle-btn">Read More</button>
+                            </div>
+                        </div>
+                    </div>
+        
+                </div>
+            </div>
+        </div>
+                
+        <footer class="footer-section bg-white">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4">
+                        <h3>About EduSphere</h3>
+                        <p>EduSphere symbolizes a comprehensive and modern educational ecosystem. The name blends "Edu"
+                            (education)
+                            and "Sphere" (a complete environment) to represent inclusive, tech-driven, and global
+                            learning
+                            opportunities.</p>
+                    </div>
+
+                    <div class="col-md-3 ml-auto">
+                        <h3>Links</h3>
+                        <ul class="list-unstyled footer-links">
+                            <li><a href="#">Home</a></li>
+                            <li><a href="#">Courses</a></li>
+                            <li><a href="#">Programs</a></li>
+                            <li><a href="#">Teachers</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="col-md-4">
+                        <h3>Subscribe</h3>
+                        <p>It is catchy, brand-friendly, and ideal for scaling in the education sector.</p>
+                        <form action="#" class="footer-subscribe">
+                            <div class="d-flex mb-5">
+                                <input type="text" class="form-control rounded-0" placeholder="Email">
+                                <input type="submit" class="btn btn-primary rounded-0" value="Subscribe">
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+
+                <div class="row pt-1 mt-1 text-center">
+                    <div class="col-md-12">
+                        <div class="border-top pt-1">
+                            <p>
+                                Copyright &copy;
+                                <script>document.write(new Date().getFullYear());</script> All rights reserved | Created
+                                By GK &trade;
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </footer>
+
+
+
+    </div> <!-- .site-wrap -->
+
+
+    <!-- Owl Carousel and jQuery Script -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            const $carousel = $('.owl-carousel');
+
+            $carousel.owlCarousel({
+                items: 2,
+                loop: true,
+                margin: 20,
+                autoplay: true,
+                autoplayTimeout: 5000,
+                nav: false,
+                dots: false,
+                responsive: {
+                    0: { items: 1 },
+                    768: { items: 2 }
                 }
-                .sidebar {
-                    height: 100vh;
-                    position: fixed;
-                    overflow-y: auto;
-                    background-color: #f8f9fa;
-                    padding-top: 20px;
-                    width: 25%;
-                }
-                .content {
-                    margin-left: 25%;
-                    width: 75%;
-                    height: 100vh;
-                    overflow-y: auto;
-                    padding: 20px;
-                }
-                @media (max-width: 768px) {
-                    .sidebar {
-                        position: relative;
-                        height: auto;
-                        width: 100%;
+            });
+
+            // Custom navigation buttons
+            $('.customPrevBtn').click(function () {
+                $carousel.trigger('prev.owl.carousel');
+            });
+
+            $('.customNextBtn').click(function () {
+                $carousel.trigger('next.owl.carousel');
+            });
+        });
+    </script>
+
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/jquery-migrate-3.0.1.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/jquery.stellar.min.js"></script>
+    <script src="js/jquery.countdown.min.js"></script>
+    <script src="js/bootstrap-datepicker.min.js"></script>
+    <script src="js/jquery.easing.1.3.js"></script>
+    <script src="js/aos.js"></script>
+    <script src="js/jquery.fancybox.min.js"></script>
+    <script src="js/jquery.sticky.js"></script>
+
+
+    <script src="js/main.js"></script>
+           <!-- Read More/Read Less Script starts -->
+           <script>
+            document.querySelectorAll('.toggle-btn').forEach(button => {
+                button.addEventListener('click', function () {
+                    let blogText = this.previousElementSibling;
+                    let shortText = blogText.querySelector('.short-text');
+                    let fullText = blogText.querySelector('.full-text');
+        
+                    if (fullText.classList.contains('d-none')) {
+                        fullText.classList.remove('d-none');
+                        shortText.classList.add('d-none');
+                        this.textContent = "Read Less";
+                    } else {
+                        fullText.classList.add('d-none');
+                        shortText.classList.remove('d-none');
+                        this.textContent = "Read More";
                     }
-                    .content {
-                        margin-left: 0;
-                        width: 100%;
-                    }
-                }
-            </style>
+                });
+            });
+        </script>
+           <!-- Read More/Read Less Script ends -->
+         
+</body>
 
-
-
-<div class="container-fluid">
-    <div class="row">
-        <!-- Sidebar -->
-        <nav class="col-md-3 col-lg-2 d-md-block sidebar">
-            <ul class="nav flex-column">
-                <li class="nav-item"><a class="nav-link" href="#topic1">What is React?</a></li>
-                <li class="nav-item"><a class="nav-link" href="#topic2">What are React Components?</a></li>
-                <li class="nav-item"><a class="nav-link" href="#topic3">What is JSX?</a></li>
-                <li class="nav-item"><a class="nav-link" href="#topic4">What is the Virtual DOM?</a></li>
-                <li class="nav-item"><a class="nav-link" href="#topic5">Explain React Hooks</a></li>
-                <li class="nav-item"><a class="nav-link" href="#topic6">What is useState Hook?</a></li>
-                <li class="nav-item"><a class="nav-link" href="#topic7">What is useEffect Hook?</a></li>
-                <li class="nav-item"><a class="nav-link" href="#topic8">Difference between Props and State</a></li>
-                <li class="nav-item"><a class="nav-link" href="#topic9">What is Context API?</a></li>
-                <li class="nav-item"><a class="nav-link" href="#topic10">What are React Lifecycle Methods?</a></li>
-                <li class="nav-item"><a class="nav-link" href="#topic11">What is Redux?</a></li>
-                <li class="nav-item"><a class="nav-link" href="#topic12">Explain React Router</a></li>
-                <li class="nav-item"><a class="nav-link" href="#topic13">What is a Higher-Order Component (HOC)?</a></li>
-                <li class="nav-item"><a class="nav-link" href="#topic14">What is Lazy Loading in React?</a></li>
-                <li class="nav-item"><a class="nav-link" href="#topic15">What is an Error Boundary?</a></li>
-                <li class="nav-item"><a class="nav-link" href="#topic16">What is Server-Side Rendering (SSR)?</a></li>
-                <li class="nav-item"><a class="nav-link" href="#topic17">What is Suspense in React?</a></li>
-                <li class="nav-item"><a class="nav-link" href="#topic18">What are Controlled Components?</a></li>
-                <li class="nav-item"><a class="nav-link" href="#topic19">What are Uncontrolled Components?</a></li>
-                <li class="nav-item"><a class="nav-link" href="#topic20">What is the use of Keys in React?</a></li>
-                <li class="nav-item"><a class="nav-link" href="#topic21">What is Reconciliation in React?</a></li>
-                <li class="nav-item"><a class="nav-link" href="#topic22">What is React Fragments?</a></li>
-                <li class="nav-item"><a class="nav-link" href="#topic23">What is the useMemo Hook?</a></li>
-                <li class="nav-item"><a class="nav-link" href="#topic24">What is the useCallback Hook?</a></li>
-                <li class="nav-item"><a class="nav-link" href="#topic25">What is a Pure Component?</a></li>
-                <li class="nav-item"><a class="nav-link" href="#topic26">What is Memoization in React?</a></li>
-                <li class="nav-item"><a class="nav-link" href="#topic27">What is Prop Drilling?</a></li>
-                <li class="nav-item"><a class="nav-link" href="#topic28">What is Forward Ref?</a></li>
-                <li class="nav-item"><a class="nav-link" href="#topic29">What is the difference between class and functional components?</a></li>
-                <li class="nav-item"><a class="nav-link" href="#topic30">What is React Fiber?</a></li>
-                <li class="nav-item"><a class="nav-link" href="#topic31">How to handle forms in React?</a></li>
-                <li class="nav-item"><a class="nav-link" href="#topic32">What is useReducer Hook?</a></li>
-                <li class="nav-item"><a class="nav-link" href="#topic33">What are synthetic events in React?</a></li>
-                <li class="nav-item"><a class="nav-link" href="#topic34">What is Concurrent Mode?</a></li>
-                <li class="nav-item"><a class="nav-link" href="#topic35">What are portals in React?</a></li>
-                <li class="nav-item"><a class="nav-link" href="#topic36">What is Hydration in React?</a></li>
-            </ul>
-        </nav>
-
-        <!-- Content -->
-        <main class="col-md-9 col-lg-10 content">
-            <h2 id="topic1">What is React?</h2>
-            <p>React is an open-source JavaScript library created by Facebook for building dynamic user interfaces, particularly single-page applications. It follows a component-based architecture, where the UI is divided into reusable components. React uses a virtual DOM to improve performance by minimizing direct interactions with the real DOM. Developers can manage application state efficiently using React hooks or state management libraries like Redux. React allows server-side rendering and integrates well with modern front-end tools. It supports JSX, a syntax extension that enables writing HTML in JavaScript. React is widely used due to its flexibility, performance, and strong community support.</p>
-            
-            <h2 id="topic2">What are React Components?</h2>
-            <p>React components are the building blocks of a React application. They encapsulate logic and UI elements, making code reusable and maintainable. There are two types: functional and class components. Functional components are simpler, using hooks like useState and useEffect to manage state and side effects. Class components, which extend React.Component, use lifecycle methods such as componentDidMount and setState for state management. Components can accept props (input data) and return JSX to render UI elements. By breaking UIs into small, independent pieces, components enhance scalability and reusability, promoting efficient development and maintainability of large applications.</p>
-            
-            <h2 id="topic3">What is JSX?</h2>
-            <p>JSX (JavaScript XML) is a syntax extension for JavaScript used in React to describe UI structures in a syntax similar to HTML. It allows developers to write HTML-like code directly inside JavaScript, making UI development more intuitive. JSX gets compiled into standard JavaScript using Babel before being rendered in the browser. It supports embedding JavaScript expressions using curly braces ({}), enabling dynamic content rendering. JSX also helps prevent security vulnerabilities like cross-site scripting (XSS) by escaping injected values. Though optional, JSX simplifies writing React components and improves code readability compared to using React’s traditional createElement API.</p>
-       
-            
-            <h2 id="topic4">What is the Virtual DOM?</h2>
-            <p>The Virtual DOM (VDOM) is a lightweight JavaScript representation of the actual DOM. React uses it to optimize performance by reducing direct manipulations of the real DOM, which are slow and expensive. When a component’s state changes, React creates a new Virtual DOM tree and compares it with the previous one using a process called reconciliation. Only the changed parts are updated in the real DOM, improving efficiency. This approach ensures smooth UI updates, reducing unnecessary re-rendering and enhancing performance, especially in large applications where frequent updates would otherwise cause significant delays.</p>
-            
-            <h2 id="topic5">Explain React Hooks</h2>
-            <p>React Hooks are functions that let developers use state and lifecycle features in functional components, eliminating the need for class components. Introduced in React 16.8, hooks like useState and useEffect enable managing component state and side effects efficiently. Custom hooks can be created for reusable logic. Hooks simplify component structure, improve readability, and enable better reusability of logic. Unlike class components, hooks don’t require lifecycle methods like componentDidMount. The most commonly used hooks include useState for state management, useEffect for handling side effects, and useContext for accessing context data across components without prop drilling.</p>
-            
-            <h2 id="topic6">What is useState Hook?</h2>
-            <p>useState is a React Hook that enables functional components to manage state. It takes an initial state as an argument and returns an array with two elements: the current state value and a function to update it. This hook allows components to store and modify values without needing class components. For example, calling useState(0) initializes a state variable with 0. Updating the state triggers a re-render of the component. useState is particularly useful for handling UI interactions like form inputs, toggling elements, and managing counters. Multiple state variables can be declared within the same component.</p>
-            
-            <h2 id="topic7">What is useEffect Hook?</h2>
-            <p>useEffect is a React Hook that handles side effects in functional components, replacing lifecycle methods like componentDidMount and componentDidUpdate. It runs after the component renders and can execute effects such as fetching data, updating the DOM, or setting up event listeners. useEffect takes a callback function and an optional dependency array. If the array is empty, it runs only once. If dependencies are provided, it runs whenever they change. It also supports cleanup functions for removing subscriptions or clearing intervals. This hook is essential for managing asynchronous operations and integrating external APIs efficiently in React applications.</p>
-            
-            <h2 id="topic8">Difference between Props and State</h2>
-            <p>Props and state are both used to manage data in React components but serve different purposes. Props (short for properties) are passed from parent to child components as immutable values, allowing data sharing. They cannot be modified within the receiving component. State, on the other hand, is managed within a component and can be updated using setState or useState. State changes trigger re-renders, making it useful for dynamic content. While props enable communication between components, state maintains component-specific data. Understanding their differences is crucial for effectively designing component interactions and ensuring efficient UI updates.</p>
- 
-            <h2 id="topic9">What is Context API?</h2>
-            <p>Context API is a built-in feature in React that allows data to be shared across components without passing props manually at every level. It provides a way to manage global state efficiently, reducing prop drilling issues. The Context API consists of a Provider and a Consumer; the Provider holds the state, while the Consumer accesses it. It is useful for themes, authentication, and language preferences. Unlike Redux, which offers more complex state management, the Context API is lightweight and easy to implement for simpler global state needs in React applications.</p>
-            
-            <h2 id="topic10">What are React Lifecycle Methods?</h2>
-            <p>React lifecycle methods are special functions in class components that allow developers to execute code at different stages of a component’s lifecycle. The lifecycle has three phases: mounting, updating, and unmounting. Key methods include componentDidMount (executed after initial rendering), componentDidUpdate (triggered when props or state change), and componentWillUnmount (called before a component is removed). Functional components use hooks like useEffect to replicate lifecycle behaviors. Lifecycle methods are essential for handling side effects, fetching data, and managing application performance efficiently in React.</p>
-     
-            <h2 id="topic11">Topic 11</h2>
-            <p>Details of topic 3...</p>
-            <h2 id="topic12">Topic 12</h2>
-            <p>Insights on topic 4...</p>
-            <h2 id="topic13">Topic 13</h2>
-            <p>Lorem ipsum dolor sit amet...</p>
-            <h2 id="topic14">Topic 14</h2>
-            <p>More content about topic 2...</p>
-            <h2 id="topic15">Topic 15</h2>
-            <p>Details of topic 3...</p>
-            <h2 id="topic16">Topic 16</h2>
-            <p>Insights on topic 4...</p>
-            <h2 id="topic17">Topic 17</h2>
-            <p>Lorem ipsum dolor sit amet...</p>
-            <h2 id="topic18">Topic 18</h2>
-            <p>More content about topic 2...</p>
-            <h2 id="topic19">Topic 19</h2>
-            <p>Details of topic 3...</p>
-            <h2 id="topic20">Topic 20</h2>
-            <p>Insights on topic 4...</p>
-            <h2 id="topic21">Topic 21</h2>
-            <p>Lorem ipsum dolor sit amet...</p>
-            <h2 id="topic22">Topic 22</h2>
-            <p>More content about topic 2...</p>
-            <h2 id="topic23">Topic 23</h2>
-            <p>Details of topic 3...</p>
-            <h2 id="topic24">Topic 24</h2>
-            <p>Insights on topic 4...</p>
-            <h2 id="topic25">Topic 25</h2>
-            <p>Lorem ipsum dolor sit amet...</p>
-            <h2 id="topic26">Topic 26</h2>
-            <p>More content about topic 2...</p>
-            <h2 id="topic27">Topic 27</h2>
-            <p>Details of topic 3...</p>
-            <h2 id="topic28">Topic 28</h2>
-            <p>Insights on topic 4...</p>
-            <h2 id="topic29">Topic 29</h2>
-            <p>Lorem ipsum dolor sit amet...</p>
-            <h2 id="topic30">Topic 30</h2>
-            <p>More content about topic 2...</p>
-            <h2 id="topic31">Topic 31</h2>
-            <p>Details of topic 3...</p>
-            <h2 id="topic32">Topic 32</h2>
-            <p>Insights on topic 4...</p>
-            <h2 id="topic33">Topic 33</h2>
-            <p>Lorem ipsum dolor sit amet...</p>
-            <h2 id="topic34">Topic 34</h2>
-            <p>More content about topic 2...</p>
-            <h2 id="topic35">Topic 35</h2>
-            <p>Details of topic 3...</p>
-            <h2 id="topic36">Topic 36</h2>
-            <p>Insights on topic 4...</p>
-        </main>
-    </div>
-</div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-          </div>
-        </div>
-      
-
-      </div>
-    </div>
-
-    
-     
-    <footer class="footer-section bg-white">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-4">
-            <h3>About OneSchool</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro consectetur ut hic ipsum et veritatis corrupti. Itaque eius soluta optio dolorum temporibus in, atque, quos fugit sunt sit quaerat dicta.</p>
-          </div>
-
-          <div class="col-md-3 ml-auto">
-            <h3>Links</h3>
-            <ul class="list-unstyled footer-links">
-              <li><a href="#">Home</a></li>
-              <li><a href="#">Courses</a></li>
-              <li><a href="#">Programs</a></li>
-              <li><a href="#">Teachers</a></li>
-            </ul>
-          </div>
-
-          <div class="col-md-4">
-            <h3>Subscribe</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt incidunt iure iusto architecto? Numquam, natus?</p>
-            <form action="#" class="footer-subscribe">
-              <div class="d-flex mb-5">
-                <input type="text" class="form-control rounded-0" placeholder="Email">
-                <input type="submit" class="btn btn-primary rounded-0" value="Subscribe">
-              </div>
-            </form>
-          </div>
-
-        </div>
-
-        <div class="row pt-5 mt-5 text-center">
-          <div class="col-md-12">
-            <div class="border-top pt-5">
-            <p>
-        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-        Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank" >Colorlib</a>
-        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-      </p>
-            </div>
-          </div>
-          
-        </div>
-      </div>
-    </footer>
-
-  
-    
-  </div> <!-- .site-wrap -->
-
-  <script src="js/jquery-3.3.1.min.js"></script>
-  <script src="js/jquery-migrate-3.0.1.min.js"></script>
-  <script src="js/jquery-ui.js"></script>
-  <script src="js/popper.min.js"></script>
-  <script src="js/bootstrap.min.js"></script>
-  <script src="js/owl.carousel.min.js"></script>
-  <script src="js/jquery.stellar.min.js"></script>
-  <script src="js/jquery.countdown.min.js"></script>
-  <script src="js/bootstrap-datepicker.min.js"></script>
-  <script src="js/jquery.easing.1.3.js"></script>
-  <script src="js/aos.js"></script>
-  <script src="js/jquery.fancybox.min.js"></script>
-  <script src="js/jquery.sticky.js"></script>
-
-  
-  <script src="js/main.js"></script>
-    
-  </body>
 </html>
