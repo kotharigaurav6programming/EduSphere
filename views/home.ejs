@@ -30,7 +30,7 @@
   <style>
     #output {
       font-family: Arial, sans-serif;
-      font-size: 50px;
+      font-size: 40px;
       white-space: pre-wrap;
       text-shadow: 1px 2px 1px black;
       color: white;
@@ -161,7 +161,15 @@
           <span class="icon-close2 js-menu-toggle"></span>
         </div>
       </div>
-      <div class="site-mobile-menu-body"></div>
+      <div class="">
+        <ul class="m-0 p-2">
+          <li><a href="/" class="nav-link">Home</a></li>
+          <li><a href="" class="nav-link">Courses</a></li>
+          <li><a href="/interviewSubject" class="nav-link">InterviewPrep</a></li>
+          <li><a href="/blog" class="nav-link">Blog</a></li>
+          <li><a href="/employee/employeeLogin" class="nav-link">Employee</a></li>
+        </ul>
+      </div>
     </div>
 
 
@@ -176,7 +184,7 @@
               <ul class="site-menu main-menu js-clone-nav mx-auto d-none d-lg-block  m-0 p-0">
                 <li><a href="#home-section" class="nav-link">Home</a></li>
                 <li><a href="#courses-section" class="nav-link">Courses</a></li>
-                <!-- <li><a href="#programs-section" class="nav-link">Programs</a></li> -->
+                <li><a href="/interviewSubject" class="nav-link">InterviewPrep</a></li>
                 <li><a href="/blog" class="nav-link">Blog</a></li>
                 <li><a href="/employee/employeeLogin" class="nav-link">Employee</a></li>
               </ul>
@@ -209,21 +217,18 @@
               <div class="col-12" style="height: 500px; position: relative;">
                 <div class="row align-items-center" style="position: relative; z-index: 1;">
                   <div class="col-lg-6 mb-4">
-                    <h1 data-aos="fade-up" data-aos-delay="100">EduSphere</h1>
+                    <h1 data-aos="fade-up" data-aos-delay="100">Our TechStack</h1>
                     <h1 data-aos="fade-up" data-aos-delay="100" id="output"></h1>
                     <p class="mb-4" data-aos="fade-up" data-aos-delay="200">
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime ipsa nulla sed quis rerum amet
-                      natus quas necessitatibus.
+                      Simplify coding with a powerful language for web, data, and AI development. Also Build robust, scalable applications with a versatile object-oriented language.
                     </p>
-                    <p data-aos="fade-up" data-aos-delay="300">
-                      <a href="#" class="btn btn-primary py-3 px-5 btn-pill">Admission Now</a>
-                    </p>
+                   
                   </div>
 
                   <div class="col-lg-5 ml-auto" data-aos="fade-up" data-aos-delay="500">
                     <form action="/studentEnquiry/enquiry" method="post" class="form-box">
-                      <h3 class="h5 text-black mb-4">
-                        Let's Get Started with a <span style="color:red; font-size: 25px;" id="animate">Free Course</span>
+                      <h3 class="h6 text-black mb-2">
+                        Let's Get Started with a <span style="color:red; font-size: 20px;" id="animate">Free Course</span>
                       </h3>
                       <div class="form-group">
                         <input type="text" class="form-control" placeholder="Email Address" name="email" id="email"
@@ -244,7 +249,7 @@
                         </select>
                       </div>
                       <div class="form-group">
-                        <input id="animateBtn" type="submit" class="btn btn-primary btn-pill" value="Join Now" />
+                        <input id="animateBtn" type="submit" class="btn btn-primary p-2 w-100" value="Join Now" />
                       </div>
                     </form>
                   </div>
@@ -260,15 +265,15 @@
 
 
     <div class="site-section courses-title" id="courses-section">
-      <div class="container">
+      <div class="container mt-5">
         <div class="row mb-5 justify-content-center">
           <div class="col-lg-7 text-center" data-aos="fade-up" data-aos-delay="">
             <h2 class="section-title">Courses</h2>
           </div>
         </div>
       </div>
-    </div>
-    <div class="site-section courses-entry-wrap" data-aos="fade-up" data-aos-delay="100">
+    <!-- </div>
+    <div class="site-section courses-entry-wrap" data-aos="fade-up" data-aos-delay="100"> -->
       <div class="container" style="margin-top: -75px;">
         <div class="row">
 
@@ -373,8 +378,8 @@
         </div>
         <div class="row justify-content-center">
           <div class="col-7 text-center">
-            <button class="customPrevBtn btn btn-primary m-1">Prev</button>
-            <button class="customNextBtn btn btn-primary m-1">Next</button>
+            <button class="customPrevBtn btn btn-light m-1 col-md-3">Prev</button>
+            <button class="customNextBtn btn btn-light m-1 col-md-3">Next</button>
           </div>
         </div>
       </div>
