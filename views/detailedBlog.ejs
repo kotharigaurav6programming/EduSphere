@@ -112,70 +112,37 @@
 
         <div class="text-black site-section" id="teachers-section" style="margin-top: -1px;">
             <div class="container">
-        
-                <div class="row justify-content-center">
+                <br>
+                <!-- <div class="row justify-content-center">
                     <div class="col-lg-7 mb-5 text-center" data-aos="fade-up" data-aos-delay="">
                         <br><br>
                         <h4 class="text-black">Blog</h4>
                     </div>
-                </div>
+                </div> -->
         
                 <!-- Blog Section -->
+               
                 <div class="row" data-aos="fade-up" data-aos-delay="">
-
-                    <% blogData.forEach((blogObj)=>{ %>
-                    <!-- Blog Post 1 -->
+                    <!-- Blog Post -->
                     <div class="col-md-12">
-                        <div class="d-flex blog-card p-3 mb-4 shadow-sm">
-                            <img src="/blogImages/<%=blogObj.blogFile%>" class="blog-image" alt="Tech Blog">
-                            <div class="blog-content pl-3">
-                                <h5><%=blogObj.blogTitle%></h5>
-                                <span><b>Uploaded On : </b> <%=blogObj.uploadDate%> | <%=blogObj.uploadTime%></span>
-                                <p class="blog-text">
-                                    <span class="short-text">
-                                        <%=blogObj.blogContent.split(' ').slice(0, 20).join(' ') + '...'%>
+                        <div class="d-flex flex-column justify-content-center p-3 mb-4 shadow-sm vh-100 overflow-auto w-100">
+                            <div class="blog-content pl-3 col-md-12 w-100">
+                                <h5><%=blogObject.blogTitle%></h5>
+                                <span class="small"><b>Uploaded On:</b> <%=blogObject.uploadDate%> | <%=blogObject.uploadTime%></span> <br>
+                                <span class="small"><b>Read Time:</b> <%=blogObject.timeToRead%></span> <br>
+                                <img src="/blogImages/<%=blogObject.blogFile%>" class="blog-image w-100 h-auto" alt="Tech Blog">
+                                <p class="blog-text w-100" style="text-align: justify;">
+                                    <span style="white-space: pre-line;">
+                                        <%=blogObject.blogContent%>
                                     </span><br>
-                                    <span><b>Read Time : </b><%=blogObj.timeToRead%></span>    
                                 </p>
-                                <a href="/blog/detailedBlog?blogObject=<%=JSON.stringify(blogObj)%>">
-                                    <button class="btn btn-primary toggle-btn">Read More</button>
-                                </a>    
                             </div>
                         </div>
                     </div>
-                    <%})%>
-
-                    <!-- Blog Post 2 -->
-                    <!-- <div class="col-md-12">
-                        <div class="d-flex blog-card p-3 mb-4 shadow-sm">
-                            <img src="/images/blog_image1.jpg" class="blog-image" alt="Business Blog">
-                            <div class="blog-content pl-3">
-                                <h5>Business Growth Strategies</h5>
-                                <p class="blog-text">
-                                    <span class="short-text">Entrepreneurs are finding new ways to scale their businesses. Strategic planning, innovation, and digital marketing...</span>
-                                    <span class="full-text d-none"> Entrepreneurs are finding new ways to scale their businesses. Strategic planning, innovation, and digital marketing play key roles in achieving sustainable growth. Companies that embrace technological advancements and data-driven decision-making are more likely to thrive in competitive markets.</span>
-                                </p>
-                                <button class="btn btn-primary toggle-btn">Read More</button>
-                            </div>
-                        </div>
-                    </div>
-         -->
-                    <!-- Blog Post 3 -->
-                    <!-- <div class="col-md-12">
-                        <div class="d-flex blog-card p-3 mb-4 shadow-sm">
-                            <img src="/images/blog_image2.webp" class="blog-image" alt="Travel Blog">
-                            <div class="blog-content pl-3">
-                                <h5>Explore the World</h5>
-                                <p class="blog-text">
-                                    <span class="short-text">Traveling opens doors to new cultures and experiences. Whether it's hiking in the mountains or relaxing on a beach...</span>
-                                    <span class="full-text d-none"> Traveling opens doors to new cultures and experiences. Whether it's hiking in the mountains or relaxing on a beach, every journey provides new perspectives and unforgettable memories. Exploring different destinations broadens our understanding of the world and enriches our lives.</span>
-                                </p>
-                                <button class="btn btn-primary toggle-btn">Read More</button>
-                            </div>
-                        </div>
-                    </div>
-         -->
                 </div>
+                
+
+                
             </div>
         </div>
                 

@@ -16,6 +16,8 @@ import uploadSyllabusSchema from './model/uploadSyllabusSchema.js';
 import detailedSyllabusSchema from './model/detailedSyllabusSchema.js';
 import batchRouter from './router/batchRouter.js';
 import assignmentRouter from './router/assignmentRouter.js';
+import blogSchema from './model/blogSchema.js';
+import blogRouter from './router/blogRouter.js';
 
 mongoose.connect(url,{
     useNewUrlParser:true,
@@ -44,7 +46,7 @@ app.use(express.json());
 app.get("/",async (request,response)=>{
     try{
         const res = await uploadSyllabusSchema.find();
-        console.log(res);
+        // console.log(res);
         response.render("home.ejs",{result:res});
     }catch(error){
         response.render("notfound.ejs",{message:message.SERVER_ERROR,status:status.SERVER_ERROR});
@@ -59,16 +61,13 @@ app.use('/studentEnquiry',studentEnquiryRouter);
 app.use('/employee',employeeRouter);
 app.use('/batch',batchRouter);
 app.use('/assignment',assignmentRouter);
+app.use('/blog',blogRouter);
 
 app.get("/interviewSubject",(request,response)=>{
     response.render("interviewSubject.ejs",{message:"",status:""});
 });
 app.get("/interviewQuestions",(request,response)=>{
     response.render("interviewQuestions.ejs",{message:"",status:""});
-});
-
-app.get("/blog",(request,response)=>{
-    response.render("blog.ejs",{message:"",status:""});
 });
 
 app.listen(process.env.PORT,()=>{

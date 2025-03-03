@@ -1,5 +1,5 @@
 import express from 'express';
-import { adminLoginController,adminEmployeeListController,adminVerifyEmployeeController,adminEnquiryStudentListController,adminAddStudRemarkController,adminUploadSyllabusController,adminSendSyllabusController,adminAddCourseController,adminViewCoursesController,adminCourseListController,adminAddDetailedSyllabusController,adminDetailedSyllabusController,downloadExcelController,adminViewBatchesController,adminAllocateTrainerController } from '../controller/adminController.js';
+import { adminLoginController,adminEmployeeListController,adminVerifyEmployeeController,adminEnquiryStudentListController,adminAddStudRemarkController,adminUploadSyllabusController,adminSendSyllabusController,adminAddCourseController,adminViewCoursesController,adminCourseListController,adminAddDetailedSyllabusController,adminDetailedSyllabusController,downloadExcelController,adminViewBatchesController,adminAllocateTrainerController,adminAddBlogController } from '../controller/adminController.js';
 import {fileURLToPath} from 'url';
 import jwt from 'jsonwebtoken';
 import path from 'path';
@@ -81,5 +81,13 @@ adminRouter.post('/adminDetailedSyllabus',authenticateJWT,adminDetailedSyllabusC
 adminRouter.get('/download-excel',authenticateJWT,downloadExcelController);
 adminRouter.get('/adminViewBatches',authenticateJWT,adminViewBatchesController);
 adminRouter.post('/adminAllocateTrainer',authenticateJWT,adminAllocateTrainerController);
+adminRouter.get('/blogPage',authenticateJWT,(request,response)=>{
+    response.render("blogPage.ejs");
+});
+adminRouter.get('/createBlogForm',authenticateJWT,(request,response)=>{
+    response.render("createBlogForm.ejs",{message:"",status:""});
+});
+adminRouter.post('/adminAddBlog',authenticateJWT,adminAddBlogController);
+
 export default adminRouter;
 

@@ -17,6 +17,9 @@ import mailer_syllabus from "./mailer_syllabus.js";
 import courseSchema from '../model/courseSchema.js';
 import detailedSyllabusSchema from "../model/detailedSyllabusSchema.js";
 import batchSchema from "../model/batchSchema.js";
+import blogSchema from "../model/blogSchema.js";
+import moment from 'moment';
+
 dotenv.config();
 const ADMIN_SECRET_KEY = process.env.ADMIN_SECRET_KEY;
 const __filename = fileURLToPath(import.meta.url);
@@ -434,6 +437,32 @@ export const adminAllocateTrainerController = async(request,response)=>{
     }catch(error){
         console.log("Error in adminAllocateTrainerController : ",error);
         response.render("adminHome.ejs",{message:message.SOMETHING_WENT_WRONG,status:status.SERVER_ERROR});
+    }
+}
+
+export const adminAddBlogController = async(request,response)=>{
+    try{
+        //console.log(request.body);
+        const filename = request.files.blogFile;
+        // console.log(request.files);
+        const fileName = new Date().getTime()+filename.name;
+        const filePath = path.join(__dirname.replace("\\controller","/public/blogImages/")+fileName);
+        filename.mv(filePath,async(error)=>{
+            try{
+                request.body.blogId = uuid4();
+                request.body.blogFile = fileName;
+                request.body.uploadDate = moment().format('DD-MM-YYYY');
+                request.body.uploadTime = moment().format('hh:mm:ss A');
+                    const resultNew = await blogSchema.create(request.body);
+                    response.render("createBlogForm.ejs",{message:message.UPLOAD_STATUS,status:status.SUCCESS});   
+            }catch(error){
+                console.log(error);
+                response.render("createBlogForm.ejs",{message:message.FILE_NOT_UPLOADED,status:status.SUCCESS});
+            }
+        })
+    }catch(error){
+        console.log("Error in adminAddBlogController : ",error);
+        response.render("creeateBlogForm.ejs",{message:message.SOMETHING_WENT_WRONG,status:status.SERVER_ERROR});
     }
 }
 // needs to print email id on every page {email:request.payload.email} like this
