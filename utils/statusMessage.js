@@ -35,4 +35,6 @@ export const message = {
     ALLOCATION_SUCCESS:"Trainer Allocated Successfully",
     ASSIGNMENT_NOT_UPLOAD:"Error While Uploading Assignment",
     ASSIGNMENT_UPLOADED:"Assignment Uploaded Successfully",
+    DOMAIN_ADDED:"Domain Added Successfully",
+    DOMAIN_NOT_ADDED:"Error while Adding Domain"
 }

@@ -18,6 +18,7 @@ import batchRouter from './router/batchRouter.js';
 import assignmentRouter from './router/assignmentRouter.js';
 import blogSchema from './model/blogSchema.js';
 import blogRouter from './router/blogRouter.js';
+import domainSchema from './model/domainSchema.js';
 
 mongoose.connect(url,{
     useNewUrlParser:true,
@@ -63,8 +64,18 @@ app.use('/batch',batchRouter);
 app.use('/assignment',assignmentRouter);
 app.use('/blog',blogRouter);
 
-app.get("/interviewSubject",(request,response)=>{
-    response.render("interviewSubject.ejs",{message:"",status:""});
+app.get("/interviewSubject",async(request,response)=>{
+     try{
+            const domainData = await domainSchema.find();
+            // console.log(domainData);
+            response.render("interviewSubject.ejs",{domainData:domainData,message:"",status:""});
+        }catch(error){
+            console.log("Error in interview subjects : ",error);
+            const res = await uploadSyllabusSchema.find();
+            response.render("home.ejs",{result:res,message:"",status:""});        
+        }
+
+
 });
 app.get("/interviewQuestions",(request,response)=>{
     response.render("interviewQuestions.ejs",{message:"",status:""});

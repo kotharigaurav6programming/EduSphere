@@ -19,6 +19,7 @@ import detailedSyllabusSchema from "../model/detailedSyllabusSchema.js";
 import batchSchema from "../model/batchSchema.js";
 import blogSchema from "../model/blogSchema.js";
 import moment from 'moment';
+import domainSchema from "../model/domainSchema.js";
 
 dotenv.config();
 const ADMIN_SECRET_KEY = process.env.ADMIN_SECRET_KEY;
@@ -462,7 +463,19 @@ export const adminAddBlogController = async(request,response)=>{
         })
     }catch(error){
         console.log("Error in adminAddBlogController : ",error);
-        response.render("creeateBlogForm.ejs",{message:message.SOMETHING_WENT_WRONG,status:status.SERVER_ERROR});
+        response.render("createBlogForm.ejs",{message:message.SOMETHING_WENT_WRONG,status:status.SERVER_ERROR});
     }
 }
+
+export const adminAddDomainController = async(request,response)=>{
+    try{
+                request.body.domainId = uuid4();
+                const result = await domainSchema.create(request.body);
+                response.render("createDomainForm.ejs",{message:message.DOMAIN_ADDED,status:status.SUCCESS});   
+    }catch(error){
+        console.log("Error in adminAddDomainController : ",error);
+        response.render("createDomainForm.ejs",{message:message.SOMETHING_WENT_WRONG,status:status.SERVER_ERROR});
+    }
+}
+
 // needs to print email id on every page {email:request.payload.email} like this
