@@ -478,4 +478,63 @@ export const adminAddDomainController = async(request,response)=>{
     }
 }
 
+export const updateDomainFormController = async (request,response)=>{
+    response.render("updateDomainForm.ejs",{domainObj:JSON.parse(request.body.domainObj),message:"",status:""});
+}
+export const adminUpdateDomainController = async (request,response)=>{
+    const domainId = {domainId : request.body.domainId};
+    const updateStatus = {
+        $set : {
+            domainTitle : request.body.domainTitle,
+            domainDescription : request.body.domainDescription
+        }
+    }
+    const result = await domainSchema.updateOne(domainId,updateStatus);
+    console.log(result);
+    if(result.modifiedCount==1){
+        const domainResult = await domainSchema.find({status:true});
+        response.render("domainPage.ejs",{message:message.DOMAIN_UPDATED,status:status.SUCCESS,domainResult:domainResult.reverse()});
+    }else{
+        const domainResult = await domainSchema.find({status:true});
+        response.render("domainPage.ejs",{message:message.DOMAIN_NOT_UPDATED,status:status.SUCCESS,domainResult:domainResult.reverse()});
+    }
+}
+
+export const deleteDomainController = async (request,response)=>{
+    console.log("domainId : ",JSON.parse(request.body.domainObj).domainId);
+    
+    const domainId = {domainId : JSON.parse(request.body.domainObj).domainId};
+    const updateStatus = {
+        $set : {
+            status : false
+        }
+    }
+    const result = await domainSchema.updateOne(domainId,updateStatus);
+    console.log(result);
+    if(result.modifiedCount==1){
+        const domainResult = await domainSchema.find({status:true});
+        response.render("domainPage.ejs",{message:message.DOMAIN_DELETED,status:status.SUCCESS,domainResult:domainResult.reverse()});
+    }else{
+        const domainResult = await domainSchema.find({status:true});
+        response.render("domainPage.ejs",{message:message.DOMAIN_NOT_DELETED,status:status.SUCCESS,domainResult:domainResult.reverse()});
+    }
+}
+export const domainPageController = async(request,response)=>{
+    const domainResult = await domainSchema.find({status:true});
+    response.render("domainPage.ejs",{message:"",status:"",domainResult:domainResult.reverse()});
+}
+
+export const createDomainFormController = async (request,response)=>{
+    response.render("createDomainForm.ejs",{message:"",status:""});
+}
+
+export const addInterviewQuestionsController = async(request,response)=>{
+    response.render("adminAddInterviewQuestions.ejs",{domainObj : JSON.parse(request.body.domainObj),message:"",status:""});
+}
+
+export const adminAddInterviewQuestionsController = async(request,response)=>{
+    console.log(request.body);
+    
+}
+
 // needs to print email id on every page {email:request.payload.email} like this

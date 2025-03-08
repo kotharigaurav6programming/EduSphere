@@ -36,5 +36,10 @@ export const message = {
     ASSIGNMENT_NOT_UPLOAD:"Error While Uploading Assignment",
     ASSIGNMENT_UPLOADED:"Assignment Uploaded Successfully",
     DOMAIN_ADDED:"Domain Added Successfully",
-    DOMAIN_NOT_ADDED:"Error while Adding Domain"
+    DOMAIN_NOT_ADDED:"Error while Adding Domain",
+    DOMAIN_UPDATED:"Domain Updated Successfully",
+    DOMAIN_NOT_UPDATED:"Domain Not Updated",
+    DOMAIN_DELETED:"Domain deleted Successfully",
+    DOMAIN_NOT_DELETED:"Domain Not Deleted",
+    
 }

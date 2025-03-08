@@ -59,86 +59,51 @@
         
       </header>
 
-    
-    <div class="site-section" id="teachers-section" style="margin-top: -1px;">
-      <div class="container">
-
-        <div class="row mb-5 justify-content-center">
-          <div class="col-lg-7 mb-5 text-center"  data-aos="fade-up" data-aos-delay="">
-            <br><br>
-            <h4 class="text-black">Domain Section</h4>
-            <span><%=message%></span>
-          </div>
-        </div>
-
-        <div class="row">
-
-          <div class="col-md-4 col-lg-4 mb-6" data-aos="fade-up" data-aos="fade-up" data-aos-delay="100">
-            <div class="teacher text-center">
-              <a href="/admin/createDomainForm">
-              <img src="images/domain.jpg" alt="Image" class="img-fluid w-50 rounded-circle mx-auto mb-4">
-              <div class="py-2">
-                <h5 class="text-black">Create Domain</h5>
-                <!-- <p class="position">Physics Teacher</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro eius suscipit delectus enim iusto tempora, adipisci at provident.</p> -->
-              </div>
-              </a>
+      <div class="site-section" id="courses-section" style="margin-top: -1px;">
+        <br>
+        <div class="container">
+          <div class="row mb-0 justify-content-center">
+            <div class="col-lg-7 text-center"  data-aos="fade-up" data-aos-delay="">
+              <br>
+              <!-- <h4 class="text-black">Blog</h4> -->
+              <h3 class="h4 text-black mb-4">Update Domain Section</h3>
+              <span><%=message%></span>
             </div>
           </div>
-   
-          <div class="col-md-8 col-lg-8 mb-6" style="margin-top: -50px;" data-aos="fade-up" data-aos-delay="300">
-            <div class="text-center">
-              <div class="table-responsive" style="max-height: 400px; overflow-y: auto; scrollbar-width: none;">
-                <table class="table table-sm table-bordered text-black">
-                  <caption>
-                    <%=domainResult.length==0 ? "No Record Found" : ""%>
-                  </caption>
-                  <thead class="table-dark">
-                    <tr>
-                      <th scope="col">S.No</th>
-                      <th scope="col">Name</th>
-                      <th scope="col" width="35%">Description</th>
-                      <th scope="col" colspan="2">Action</th>
-                      <th scope="col" colspan="2">Questions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <%domainResult.forEach((obj,index)=>{%>
-                      <tr>
-                        <td><%=index+1%></td>
-                        <td><%=obj.domainTitle%></td>
-                        <td><%=obj.domainDescription%></td>
-                        <td>
-                          <form action="/admin/updateDomainForm" method="post">
-                            <input type="hidden" value="<%=JSON.stringify(obj)%>" name="domainObj" id="domainObj">
-                            <button class="btn btn-primary p-2 text-white">Update</button>
-                          </form>
-                        </td>
-                        <td>
-                          <form action="/admin/deleteDomain" method="post">
-                            <input type="hidden" value="<%=JSON.stringify(obj)%>" name="domainObj" id="domainObj">
-                            <button class="btn btn-primary p-2 text-white">Delete</button>
-                          </form>
-                        </td>
-                        <td>
-                          <form action="/admin/addInterviewQuestions" method="post">
-                            <input type="hidden" value="<%=JSON.stringify(obj)%>" name="domainObj" id="domainObj">
-                            <button class="btn btn-danger p-2 text-white">Add Questions</button>
-                          </form>
-                        </td>
-                      </tr>  
-                    <%})%>
-
-                  </tbody>
-                </table>
+          <div class="row mb-5 align-items-center">
+            
+            <div class="col-lg-4 mb-5 order-1 order-lg-2" data-aos="fade-up" data-aos-delay="100">
+              <img src="images/undraw_teaching.svg" alt="Image" class="img-fluid">
+            </div>
+  
+            <div class="col-lg-8 mr-auto order-2 order-lg-1" data-aos="fade-up" data-aos-delay="200">
+              <div>
+                <!-- Admin Add Domain -->
+                <form action="/admin/adminUpdateDomain" method="post" class="form-box">
+                  <span class="text-black">Domain Title</span>
+                  <input type="hidden" value="<%=domainObj.domainId%>" name="domainId" id="domainId" class="form-control">
+                  
+                  <div class="form-group">
+                    <input type="text" value="<%=domainObj.domainTitle%>" placeholder="Domain Title" name="domainTitle" id="domainTitle" class="form-control">
+                  </div>
+                  <span class="text-black">Domain Description</span>
+                  <div class="form-group">
+                    <textarea rows="7%" placeholder="Enter Domain Description" name="domainDescription" id="domainDescription" class="form-control"><%=domainObj.domainDescription%></textarea>
+                  </div>
+                  <div class="form-group">
+                    <input type="submit" class="btn btn-primary p-2 w-100" value="Update Domain">
+                  </div>
+                </form>
               </div>
+              
             </div>
           </div>
-          
-          
+  
+        
+  
         </div>
       </div>
-    </div>
+    
 
   
     <footer class="footer-section bg-white">
