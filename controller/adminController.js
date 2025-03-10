@@ -20,6 +20,7 @@ import batchSchema from "../model/batchSchema.js";
 import blogSchema from "../model/blogSchema.js";
 import moment from 'moment';
 import domainSchema from "../model/domainSchema.js";
+import interviewQuestionsSchema from "../model/interviewQuestionsSchema.js";
 
 dotenv.config();
 const ADMIN_SECRET_KEY = process.env.ADMIN_SECRET_KEY;
@@ -533,8 +534,44 @@ export const addInterviewQuestionsController = async(request,response)=>{
 }
 
 export const adminAddInterviewQuestionsController = async(request,response)=>{
-    console.log(request.body);
-    
+    try{
+        // console.log(request.body);
+        request.body.interviewQuestionsId = uuid4();
+        request.body.domainId = JSON.parse(request.body.domainObj).domainId;
+        const result = await interviewQuestionsSchema.create(request.body);
+        // console.log(result);
+        if(result){
+            const domainResult = await domainSchema.find({status:true});
+            response.render("domainPage.ejs",{message:message.INTERVIEW_QUESTIONS_ADDED,status:status.SUCCESS,domainResult:domainResult.reverse()});
+        }else{
+            console.log("Inside else of try while admin add interview questions");
+            const domainResult = await domainSchema.find({status:true});
+            response.render("domainPage.ejs",{message:message.INTERVIEW_QUESTIONS_NOT_ADDED,status:status.SUCCESS,domainResult:domainResult.reverse()});    
+        }
+    }catch(error){
+        console.log("Error while admin add interview questions : ",error);
+        const domainResult = await domainSchema.find({status:true});
+        response.render("domainPage.ejs",{message:message.INTERVIEW_QUESTIONS_NOT_ADDED,status:status.SERVER_ERROR,domainResult:domainResult.reverse()});
+    }
+}
+
+export const adminViewInterviewQuestionsController = async(request,response)=>{
+    try{
+        const domainId = JSON.parse(request.body.domainObj).domainId;
+        const result = await interviewQuestionsSchema.find({domainId:domainId});
+        console.log(result);
+        if(result.length!=0){
+            response.render("adminViewInterviewQuestions.ejs",{interviewQuestions:result,message:"",status:status.SUCCESS});
+        }else{
+            console.log("Inside else of try while admin view interview questions");
+            const domainResult = await domainSchema.find({status:true});
+        response.render("domainPage.ejs",{message:message.INTERVIEW_QUESTIONS_NOT_FOUND,status:status.SUCCESS,domainResult:domainResult.reverse()});
+        }
+    }catch(error){
+        console.log("Error while admin add interview questions : ",error);
+        const domainResult = await domainSchema.find({status:true});
+        response.render("domainPage.ejs",{message:message.INTERVIEW_QUESTIONS_NOT_ADDED,status:status.SERVER_ERROR,domainResult:domainResult.reverse()});
+    }
 }
 
 // needs to print email id on every page {email:request.payload.email} like this

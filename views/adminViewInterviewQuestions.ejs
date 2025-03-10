@@ -40,7 +40,7 @@
       <div class="site-mobile-menu-body"></div>
     </div>
    
-
+    
     <header class="site-navbar py-4 js-sticky-header site-navbar-target" role="banner">
       
         <div class="container-fluid">
@@ -58,101 +58,60 @@
         </div>
         
       </header>
+  
 
-    
-    <div class="site-section" id="teachers-section" style="margin-top: -1px;">
-      <div class="container">
-
+    <div class="site-section" id="programs-section" style="margin-top: -1px;">
+      <br>
+        <div class="container">
         <div class="row mb-5 justify-content-center">
-          <div class="col-lg-7 mb-5 text-center"  data-aos="fade-up" data-aos-delay="">
-            <br><br>
-            <h4 class="text-black">Domain Section</h4>
-            <span><%=message%></span>
-          </div>
-        </div>
-
-        <div class="row">
-
-          <div class="col-md-4 col-lg-4 mb-6" data-aos="fade-up" data-aos="fade-up" data-aos-delay="100">
-            <div class="teacher text-center">
-              <a href="/admin/createDomainForm">
-              <img src="images/domain.jpg" alt="Image" class="img-fluid w-50 rounded-circle mx-auto mb-4">
-              <div class="py-2">
-                <h5 class="text-black">Create Domain</h5>
-                <!-- <p class="position">Physics Teacher</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro eius suscipit delectus enim iusto tempora, adipisci at provident.</p> -->
-              </div>
-              </a>
-            </div>
-          </div>
-   
-          <div class="col-md-8 col-lg-8 mb-6" style="margin-top: -50px;" data-aos="fade-up" data-aos-delay="300">
-            <div class="text-center">
-              <div class="table-responsive" style="max-height: 400px; overflow-y: auto; scrollbar-width: none;">
-                <table class="table table-sm table-bordered text-black" style="font-size: 14px;">
-                  <caption>
-                    <%=domainResult.length==0 ? "No Record Found" : ""%>
-                  </caption>
-                  <thead class="table-dark">
+          <div class="col-lg-12 text-center table-responsive"  data-aos="fade-up" data-aos-delay="">
+            <br>
+            <h4 class="text-black">Interview Questions</h4>
+            <br>
+            <span style="color:green"><%=message%></span>
+            <table border="1" class="text-black" style="font-size:14px;">
+                <thead>
                     <tr>
-                      <th scope="col">S.No</th>
-                      <th scope="col">Name</th>
-                      <th scope="col" width="35%">Description</th>
-                      <th scope="col" colspan="2">Action</th>
-                      <th scope="col">AddQuestions</th>
-                      <th scope="col">ViewQuestions</th>
+                        <th>S.No</th>
+                        <th width="10%">Interview Question ID</th>
+                        <th width="10%">Domain ID</th>
+                        <th>Question</th>
+                        <th>Description</th>
+                        <th>Company</th>
+                        <th width="5%">Frequency</th>
+                        <th>Delete</th>
                     </tr>
-                  </thead>
-                  <tbody>
-                    <style>
-                      .custom-hover:hover {
-                          color: white !important;
-                      }
-                  </style>
-                    <%domainResult.forEach((obj,index)=>{%>
-                      <tr>
-                        <td><%=index+1%></td>
-                        <td><%=obj.domainTitle%></td>
-                        <td><%=obj.domainDescription%></td>
-                        <td>
-                          <form action="/admin/updateDomainForm" method="post">
-                            <input type="hidden" value="<%=JSON.stringify(obj)%>" name="domainObj" id="domainObj">
-                            <button class="btn btn-outline-primary p-2 text-black custom-hover">Update</button>
-                          </form>
-                        </td>
-                        <td>
-                          <form action="/admin/deleteDomain" method="post">
-                            <input type="hidden" value="<%=JSON.stringify(obj)%>" name="domainObj" id="domainObj">
-                            <button class="btn btn-outline-primary p-2 text-black custom-hover">Delete</button>
-                          </form>
-                        </td>
-                        <td>
-                          <form action="/admin/addInterviewQuestions" method="post">
-                            <input type="hidden" value="<%=JSON.stringify(obj)%>" name="domainObj" id="domainObj">
-                            <button class="btn btn-outline-primary p-2 text-black custom-hover">Add<br>Questions</button>
-                          </form>
-                        </td>
-                        <td>
-                          <form action="/admin/adminViewInterviewQuestions" method="post">
-                            <input type="hidden" value="<%=JSON.stringify(obj)%>" name="domainObj" id="domainObj">
-                            <button class="btn btn-outline-primary p-2 text-black custom-hover">View<br>Questions</button>
-                          </form>
-                        </td>
-                      </tr>  
-                    <%})%>
-
-                  </tbody>
-                </table>
-              </div>
-            </div>
+                </thead>
+                <tbody>
+                    <% interviewQuestions.forEach((obj, index) => { %>
+                        <% let maxLength = Math.max(obj.question.length, obj.description.length, obj.company.length, obj.frequency.length); %>
+                        <% for (let i = 0; i < maxLength; i++) { %>
+                            <tr>
+                                <% if (i === 0) { %>
+                                    <td rowspan="<%= maxLength %>"><%= index + 1 %></td>
+                                    <td rowspan="<%= maxLength %>"><%= obj.interviewQuestionsId %></td>
+                                    <td rowspan="<%= maxLength %>"><%= obj.domainId %></td>
+                                <% } %>
+                                <td><%= obj.question[i] || '-' %></td>
+                                <td><%= obj.description[i] || '-' %></td>
+                                <td><%= obj.company[i] || '-' %></td>
+                                <td><%= obj.frequency[i] || '-' %></td>
+                                <td>Delete</td>
+                            </tr>
+                        <% } %>
+                    <% }) %>
+                </tbody>
+            </table>
+            
           </div>
-          
-          
         </div>
+      
+
       </div>
     </div>
 
-  
+    
+     
     <footer class="footer-section bg-white">
       <div class="container">
         <div class="row">

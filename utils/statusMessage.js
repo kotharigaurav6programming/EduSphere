@@ -41,5 +41,7 @@ export const message = {
     DOMAIN_NOT_UPDATED:"Domain Not Updated",
     DOMAIN_DELETED:"Domain deleted Successfully",
     DOMAIN_NOT_DELETED:"Domain Not Deleted",
-    
+    INTERVIEW_QUESTIONS_ADDED:"Interview Questions Added",
+    INTERVIEW_QUESTIONS_NOT_ADDED:"Issue While Adding Interview Questions",
+    INTERVIEW_QUESTIONS_NOT_FOUND:"Interview Questions Not Found",
 }

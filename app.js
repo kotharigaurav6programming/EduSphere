@@ -50,6 +50,7 @@ app.get("/",async (request,response)=>{
         // console.log(res);
         response.render("home.ejs",{result:res});
     }catch(error){
+        console.log("error in home page: ",error);
         response.render("notfound.ejs",{message:message.SERVER_ERROR,status:status.SERVER_ERROR});
     }
 });
@@ -74,8 +75,6 @@ app.get("/interviewSubject",async(request,response)=>{
             const res = await uploadSyllabusSchema.find();
             response.render("home.ejs",{result:res,message:"",status:""});        
         }
-
-
 });
 app.get("/interviewQuestions",(request,response)=>{
     response.render("interviewQuestions.ejs",{message:"",status:""});
