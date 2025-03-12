@@ -19,6 +19,7 @@ import assignmentRouter from './router/assignmentRouter.js';
 import blogSchema from './model/blogSchema.js';
 import blogRouter from './router/blogRouter.js';
 import domainSchema from './model/domainSchema.js';
+import interviewQuestionsRouter from './router/interviewQuestionsRouter.js';
 
 mongoose.connect(url,{
     useNewUrlParser:true,
@@ -64,22 +65,7 @@ app.use('/employee',employeeRouter);
 app.use('/batch',batchRouter);
 app.use('/assignment',assignmentRouter);
 app.use('/blog',blogRouter);
-
-app.get("/interviewSubject",async(request,response)=>{
-     try{
-            const domainData = await domainSchema.find();
-            // console.log(domainData);
-            response.render("interviewSubject.ejs",{domainData:domainData,message:"",status:""});
-        }catch(error){
-            console.log("Error in interview subjects : ",error);
-            const res = await uploadSyllabusSchema.find();
-            response.render("home.ejs",{result:res,message:"",status:""});        
-        }
-});
-app.get("/interviewQuestions",(request,response)=>{
-    response.render("interviewQuestions.ejs",{message:"",status:""});
-});
-
+app.use('/interview',interviewQuestionsRouter);
 app.listen(process.env.PORT,()=>{
     console.log("Connection established Successfully");
 });

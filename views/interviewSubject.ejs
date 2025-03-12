@@ -43,7 +43,7 @@
         <ul class="m-0 p-2">
           <li><a href="/" class="nav-link">Home</a></li>
           <li><a href="" class="nav-link">Courses</a></li>
-          <li><a href="/interviewSubject" class="nav-link">InterviewPrep</a></li>
+          <li><a href="/interview/interviewSubject" class="nav-link">InterviewPrep</a></li>
           <li><a href="/blog" class="nav-link">Blog</a></li>
           <li><a href="/employee/employeeLogin" class="nav-link">Employee</a></li>
         </ul>
@@ -62,7 +62,7 @@
               <ul class="site-menu main-menu js-clone-nav mx-auto d-none d-lg-block  m-0 p-0">
                 <li><a href="#home-section" class="nav-link">Home</a></li>
                 <li><a href="#courses-section" class="nav-link">Courses</a></li>
-                <li><a href="/interviewSubject" class="nav-link">InterviewPrep</a></li>
+                <li><a href="/interview/interviewSubject" class="nav-link">InterviewPrep</a></li>
                 <li><a href="/blog" class="nav-link">Blog</a></li>
                 <li><a href="/employee/employeeLogin" class="nav-link">Employee</a></li>
               </ul>
@@ -75,7 +75,7 @@
                 <li class="cta"><a href="#contact-section" class="nav-link"><span>Contact Us</span></a></li>
               </ul>
             </nav>
-            <a href="#" class="d-inline-block d-lg-none site-menu-toggle js-menu-toggle text-black float-right"><span
+            <a href="#" class="d-inline-block d-lg-none site-menu-toggle js-menu-toggle text-white float-right"><span
                 class="icon-menu h3"></span></a>
           </div>
         </div>
@@ -102,6 +102,7 @@
         <div class="row mb-5 justify-content-center">
           <div class="col-lg-7 text-center" data-aos="fade-up" data-aos-delay="">
             <h4 class="text-white mb-4">Technical Domains</h4>
+            <span><%=message%></span>
           </div>
         </div>
 
@@ -115,7 +116,7 @@
         <div class="row" style="margin-top: -50px;" data-aos="fade-up" data-aos-delay="">
           <%domainData.forEach((domainObj)=>{%> 
           <div id="intQ" class="col-md-5 col-lg-3" style="margin:4%;border-radius:10px;background-color:white;box-shadow: 1px 1px 10px 1px; ">
-              <a href="/interviewQuestions">
+              <a href="/interview/interviewQuestions?domainObj=<%=JSON.stringify(domainObj)%>">
               <h5 class="text-black pt-3">
                 <img src="images/interviewlogo.jpg" style="margin-left: 16%;height: 100%; width:15%" alt="">
                 <strong><%=domainObj.domainTitle%></strong> <br><br>
