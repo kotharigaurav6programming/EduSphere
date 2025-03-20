@@ -84,6 +84,11 @@
                     </tr>
                 </thead>
                 <tbody>
+                  <style>
+                    .custom-hover:hover {
+                        color: white !important;
+                    }
+                </style>
                     <% interviewQuestions.forEach((obj, index) => { %>
                         <% let maxLength = Math.max(obj.question.length, obj.description.length, obj.company.length, obj.frequency.length); %>
                         <% for (let i = 0; i < maxLength; i++) { %>
@@ -97,7 +102,13 @@
                                 <td><%= obj.description[i] || '-' %></td>
                                 <td><%= obj.company[i] || '-' %></td>
                                 <td><%= obj.frequency[i] || '-' %></td>
-                                <td>Delete</td>
+                                <td>
+                                  <form action="/admin/adminDeleteInterviewQuestion" method="post">
+                                    <input type="hidden" name="interviewQuestionsId" id="interviewQuestionsId" value="<%=obj.interviewQuestionsId%>">
+                                    <input type="hidden" name="interviewQuestionIndex" id="interviewQuestionIndex" value="<%=i%>">
+                                    <input type="submit" class="btn btn-outline-primary p-2 text-black custom-hover" value="Delete">
+                                  </form>
+                                </td>
                             </tr>
                         <% } %>
                     <% }) %>

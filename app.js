@@ -20,6 +20,7 @@ import blogSchema from './model/blogSchema.js';
 import blogRouter from './router/blogRouter.js';
 import domainSchema from './model/domainSchema.js';
 import interviewQuestionsRouter from './router/interviewQuestionsRouter.js';
+import studentRouter from './router/studentRouter.js';
 
 mongoose.connect(url,{
     useNewUrlParser:true,
@@ -66,6 +67,7 @@ app.use('/batch',batchRouter);
 app.use('/assignment',assignmentRouter);
 app.use('/blog',blogRouter);
 app.use('/interview',interviewQuestionsRouter);
+app.use('/student',studentRouter);
 app.listen(process.env.PORT,()=>{
     console.log("Connection established Successfully");
 });

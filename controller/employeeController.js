@@ -10,6 +10,8 @@ import { request } from 'http';
 import { response } from 'express';
 import courseSchema from '../model/courseSchema.js';
 import batchSchema from '../model/batchSchema.js';
+import mailer_enrollLink from './mailer_enrollLink.js';
+import studentSchema from '../model/studentSchema.js';
 const EMPLOYEE_SECRET_KEY = process.env.EMPLOYEE_SECRET_KEY;
 export const employeeRegistrationController = async(request,response)=>{
     try{
@@ -135,5 +137,56 @@ export const assignmentFormController = async(request,response)=>{
     }catch(error){
         console.log("error in assignmentFormController : ",error);
         
+    }
+}
+
+export const sendEnrollLinkController = async(request,response)=>{
+    try{
+        mailer_enrollLink.mailer(request.body.email,async(result)=>{
+            if(result){
+                console.log("info in sendEnrollLinkcontroller : ",result);
+                response.render("employeeHome.ejs",{profile:request.employeePayload.profile,email:request.employeePayload.email,name:request.employeePayload.name,message:message.MAIL_SENT_FOR_ENROLL,status:status.SUCCESS});                
+            }else{
+                response.render("employeeHome.ejs",{profile:request.employeePayload.profile,email:request.employeePayload.email,name:request.employeePayload.name,message:message.LOW_INTERNET,status:""}); 
+            }                    
+        });
+    }catch(error){
+        response.render("employeeHome.ejs",{profile:request.employeePayload.profile,email:request.employeePayload.email,name:request.employeePayload.name,message:message.SOMETHING_WENT_WRONG,status:status.SERVER_ERROR});
+    }
+}
+
+export const viewStudentListController = async(request,response)=>{
+    try{
+        const studentData = await studentSchema.find();
+        //console.log(studentData);
+        const batchData = await batchSchema.find();
+        console.log(batchData);
+        
+        var batchNewData = [];
+        if(batchData.length!=0){
+            for(let i=0;i<batchData.length;i++){
+                const batchId = batchData[i].batchId;
+                const courseId = batchData[i].courseId;
+                const enrollId = batchData[i].trainerEnrollId;
+                const courseObj = await courseSchema.findOne({courseId},{courseName:1});
+                const trainerObj = await employeeSchema.findOne({enrollId},{name:1});
+                if(trainerObj){
+                    const obj = {
+                        batchId,
+                        courseId,
+                        enrollId,
+                        courseName:courseObj.courseName,
+                        trainerName:trainerObj.name
+                    }
+                    batchNewData.push(obj);
+                }
+            }
+        }
+        // console.log("batchNewData : ",batchNewData);
+        
+        response.render('viewStudentList.ejs',{batchNewData,studentData:studentData,name:request.employeePayload.name,message:"",status:status.SUCCESS});    
+    }catch(error){
+        console.log("error in viewStudentListController : ",error);        
+        response.render('employeeHome.ejs',{profile:request.employeePayload.profile,email:request.employeePayload.email,name:request.employeePayload.name,message:message.SOMETHING_WENT_WRONG,status:status.SERVER_ERROR});
     }
 }

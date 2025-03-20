@@ -1,5 +1,5 @@
 import express from 'express';
-import { adminLoginController,adminEmployeeListController,adminVerifyEmployeeController,adminEnquiryStudentListController,adminAddStudRemarkController,adminUploadSyllabusController,adminSendSyllabusController,adminAddCourseController,adminViewCoursesController,adminCourseListController,adminAddDetailedSyllabusController,adminDetailedSyllabusController,downloadExcelController,adminViewBatchesController,adminAllocateTrainerController,adminAddBlogController,adminAddDomainController,updateDomainFormController,adminUpdateDomainController,deleteDomainController,domainPageController, createDomainFormController,addInterviewQuestionsController,adminAddInterviewQuestionsController,adminViewInterviewQuestionsController } from '../controller/adminController.js';
+import { adminLoginController,adminEmployeeListController,adminVerifyEmployeeController,adminEnquiryStudentListController,adminAddStudRemarkController,adminUploadSyllabusController,adminSendSyllabusController,adminAddCourseController,adminViewCoursesController,adminCourseListController,adminAddDetailedSyllabusController,adminDetailedSyllabusController,downloadExcelController,adminViewBatchesController,adminAllocateTrainerController,adminAddBlogController,adminAddDomainController,updateDomainFormController,adminUpdateDomainController,deleteDomainController,domainPageController, createDomainFormController,addInterviewQuestionsController,adminAddInterviewQuestionsController,adminViewInterviewQuestionsController,adminViewBlogController,updateBlogController,adminDeleteBlogController,adminDeleteInterviewQuestionController } from '../controller/adminController.js';
 import {fileURLToPath} from 'url';
 import jwt from 'jsonwebtoken';
 import path from 'path';
@@ -7,6 +7,7 @@ import { status,message } from '../utils/statusMessage.js';
 import courseSchema from '../model/courseSchema.js';
 import detailedSyllabusSchema from '../model/detailedSyllabusSchema.js';
 import domainSchema from '../model/domainSchema.js';
+import blogSchema from '../model/blogSchema.js';
 // import dotenv from 'dotenv';
 // dotenv.config();
 
@@ -82,12 +83,14 @@ adminRouter.post('/adminDetailedSyllabus',authenticateJWT,adminDetailedSyllabusC
 adminRouter.get('/download-excel',authenticateJWT,downloadExcelController);
 adminRouter.get('/adminViewBatches',authenticateJWT,adminViewBatchesController);
 adminRouter.post('/adminAllocateTrainer',authenticateJWT,adminAllocateTrainerController);
-adminRouter.get('/blogPage',authenticateJWT,(request,response)=>{
-    response.render("blogPage.ejs");
+adminRouter.get('/blogPage',authenticateJWT,async(request,response)=>{
+    const blogData = await blogSchema.find();
+    response.render("blogPage.ejs",{blogData:blogData,message:"",status:status.SUCCESS});
 });
 adminRouter.get('/createBlogForm',authenticateJWT,(request,response)=>{
     response.render("createBlogForm.ejs",{message:"",status:""});
 });
+adminRouter.post('/adminViewBlog',authenticateJWT,adminViewBlogController);
 adminRouter.post('/adminAddBlog',authenticateJWT,adminAddBlogController);
 adminRouter.get('/domainPage',authenticateJWT,domainPageController);
 adminRouter.get('/createDomainForm',authenticateJWT,createDomainFormController);
@@ -98,5 +101,8 @@ adminRouter.post('/deleteDomain',authenticateJWT,deleteDomainController);
 adminRouter.post('/addInterviewQuestions',authenticateJWT,addInterviewQuestionsController);
 adminRouter.post('/adminAddInterviewQuestions',authenticateJWT,adminAddInterviewQuestionsController);
 adminRouter.post('/adminViewInterviewQuestions',authenticateJWT,adminViewInterviewQuestionsController);
+adminRouter.post('/updateBlog',authenticateJWT,updateBlogController);
+adminRouter.post('/adminDeleteBlog',authenticateJWT,adminDeleteBlogController);
+adminRouter.post('/adminDeleteInterviewQuestion',authenticateJWT,adminDeleteInterviewQuestionController);
 export default adminRouter;
 

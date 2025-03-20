@@ -60,83 +60,65 @@
         
       </header>
 
-    
-    <div class="site-section" id="teachers-section" style="margin-top: -1px;">
-      <div class="container">
-
-        <div class="row mb-5 justify-content-center">
-          <div class="col-lg-7 mb-5 text-center"  data-aos="fade-up" data-aos-delay="">
-            <br><br>
-            <h4 class="text-black">Blog Section</h4>
-            <span><%=message%></span>
-          </div>
-        </div>
-
-        <div class="row">
-
-          <div class="col-md-4 col-lg-4 mb-6" data-aos="fade-up" data-aos-delay="100">
-            <div class="teacher text-center">
-              <a href="/admin/createBlogForm">
-              <img src="images/blog_logo1.jpg" alt="Image" class="img-fluid w-50 rounded-circle mx-auto mb-4">
-              <div class="py-2">
-                <h5 class="text-black">Create Blog</h5>
-                <!-- <p class="position">Physics Teacher</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro eius suscipit delectus enim iusto tempora, adipisci at provident.</p> -->
-              </div>
-              </a>
+      <div class="site-section" id="courses-section" style="margin-top: -1px;">
+        <br>
+        <div class="container">
+          <div class="row mb-0 justify-content-center">
+            <div class="col-lg-7 text-center"  data-aos="fade-up" data-aos-delay="">
+              <br>
+              <!-- <h4 class="text-black">Blog</h4> -->
+              <h3 class="h4 text-black mb-4">Update Weblog</h3>
+              <span><%=message%></span>
             </div>
           </div>
-
-          <div class="col-md-8 col-lg-8 mb-6" style="margin-top: -50px;" data-aos="fade-up" data-aos-delay="300">
-            <div class="text-center">
-              <div class="table-responsive" style="max-height: 400px; overflow-y: auto; scrollbar-width: none;">
-                <table class="table table-sm table-bordered text-black" style="font-size: 14px;">
-                  <caption>
-                    
-                  </caption>
-                  <thead class="table-dark">
-                    <tr>
-                      <th scope="col">S.No</th>
-                      <th scope="col">Name</th>
-                      <th scope="col" colspan="2">Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <style>
-                      .custom-hover:hover {
-                          color: white !important;
-                      }
-                  </style>
-                  <%blogData.forEach((obj,index)=>{%>
-                    <tr>
-                      <td><%=index+1%></td>
-                      <td><%=obj.blogTitle%></td>
-                      <td>
-                        <form action="/admin/adminViewBlog" method="post">
-                          <input type="hidden" value="<%=JSON.stringify(obj)%>" name="blogData" id="blogData">
-                          <button class="btn btn-outline-primary p-2 text-black custom-hover">View & Update</button>
-                        </form>
-                      </td>
-                      <td>
-                        <form action="/admin/adminDeleteBlog" method="post">
-                          <input type="hidden" value="<%=obj.blogId%>" name="blogId" id="blogId">
-                          <button class="btn btn-outline-primary p-2 text-black custom-hover">Delete</button>
-                        </form>
-                      </td>
-                    </tr>  
-
-                  <%})%>
-                  
-                  </tbody>
-                </table>
+          <div class="row mb-5 align-items-center">
+            
+            <div class="col-lg-4 mb-5 order-1 order-lg-2" data-aos="fade-up" data-aos-delay="100">
+              <img src="images/undraw_teaching.svg" alt="Image" class="img-fluid">
+            </div>
+  
+            <div class="col-lg-8 mr-auto order-2 order-lg-1" data-aos="fade-up" data-aos-delay="200">
+              <div>
+                <!-- Admin view update Blog -->
+                <form action="/admin/updateBlog" method="post" class="form-box" enctype="multipart/form-data">
+                  <span class="text-black">Blog Title</span>
+                  <div class="form-group">
+                    <input type="hidden" name="blogId" id="blogId" value="<%=blogData.blogId%>" class="form-control">
+                  </div>
+                  <div class="form-group">
+                    <input type="text" placeholder="Blog Title" value="<%=blogData.blogTitle%>" name="blogTitle" id="blogTitle" class="form-control">
+                  </div>
+                  <span class="text-black">Blog Content</span>
+                  <div class="form-group">
+                    <textarea rows="7%" placeholder="Enter Blog Content" name="blogContent" id="blogContent" class="form-control">
+                        <%=blogData.blogContent%>
+                    </textarea>
+                  </div>
+                  <span class="text-black">Reading Time</span>
+                  <div class="form-group">
+                    <input placeholder="Enter Reading Time" value="<%=blogData.timeToRead%>" name="timeToRead" id="timeToRead" class="form-control">
+                  </div>
+                  <span class="text-black">Existing Blog File</span> <br>
+                  <img src="/blogImages/<%=blogData.blogFile%>" height="50%" width="100%" alt=""> <br>
+                  <input type="hidden" name="previousBlogFile" id="previousBlogFile" value="<%=blogData.blogFile%>">
+                  <span class="text-black">Or Upload New Blog File</span>
+                  <div class="form-group">
+                    <input type="file" name="blogFile" id="blogFile" class="form-control">
+                  </div>
+                  <div class="form-group">
+                    <input type="submit" class="btn btn-primary p-2 w-100" value="Update Weblog">
+                  </div>
+                </form>
               </div>
+              
             </div>
           </div>
-
-
+  
+        
+  
         </div>
       </div>
-    </div>
+    
 
   
     <footer class="footer-section bg-white">

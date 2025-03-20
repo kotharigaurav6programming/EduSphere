@@ -2,7 +2,7 @@ import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import jwt from 'jsonwebtoken';
-import { employeeRegistrationController,employeeVerifyEmailController,employeeLoginController,employeeViewBatchesController,assignmentFormController } from '../controller/employeeController.js';
+import { employeeRegistrationController,employeeVerifyEmailController,employeeLoginController,employeeViewBatchesController,assignmentFormController,sendEnrollLinkController,viewStudentListController } from '../controller/employeeController.js';
 import { message, status } from '../utils/statusMessage.js';
 import courseSchema from '../model/courseSchema.js';
 
@@ -51,4 +51,7 @@ employeeRouter.get('/addBatch',authenticateJWT,async(request,response)=>{
 });
 employeeRouter.get('/employeeViewBatches',authenticateJWT,employeeViewBatchesController);
 employeeRouter.get('/assignmentForm',authenticateJWT,assignmentFormController);
+employeeRouter.post('/sendEnrollLink',authenticateJWT,sendEnrollLinkController);
+employeeRouter.get('/viewStudentList',authenticateJWT,viewStudentListController);
+
 export default employeeRouter;

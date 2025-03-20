@@ -44,4 +44,10 @@ export const message = {
     INTERVIEW_QUESTIONS_ADDED:"Interview Questions Added",
     INTERVIEW_QUESTIONS_NOT_ADDED:"Issue While Adding Interview Questions",
     INTERVIEW_QUESTIONS_NOT_FOUND:"Interview Questions Not Found",
+    LOW_INTERNET:"Check your Internet Connection",
+    MAIL_SENT_FOR_ENROLL : "Mail Sent Successfully",
+    BLOG_UPDATED : "Blog Updated Successfully",
+    BLOG_NOT_UPDATED : "Error while Updating Blog",
+    BLOG_DELETED : "Blog deleted Successfully",
+    BLOG_NOT_DELETED : "Error while Deleting Blog",
 }
