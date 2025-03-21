@@ -50,4 +50,6 @@ export const message = {
     BLOG_NOT_UPDATED : "Error while Updating Blog",
     BLOG_DELETED : "Blog deleted Successfully",
     BLOG_NOT_DELETED : "Error while Deleting Blog",
+    INTERVIEW_QUESTIONS_DELETED:"Interview Question Deleted Successfully",
+    INTERVIEW_QUESTIONS_NOT_DELETED:"Interview Question Not Deleted",
 }

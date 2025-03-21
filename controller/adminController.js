@@ -21,6 +21,7 @@ import blogSchema from "../model/blogSchema.js";
 import moment from 'moment';
 import domainSchema from "../model/domainSchema.js";
 import interviewQuestionsSchema from "../model/interviewQuestionsSchema.js";
+import glimphsSchema from "../model/glimphsSchema.js";
 
 dotenv.config();
 const ADMIN_SECRET_KEY = process.env.ADMIN_SECRET_KEY;
@@ -652,14 +653,54 @@ export const adminDeleteBlogController = async (request, response) => {
 }
 
 export const adminDeleteInterviewQuestionController = async(request,response)=>{
-    try{
-        console.log("-----------------------------");
+    try{        
+        // console.log(request.body.interviewQuestionsId);
+        // console.log(request.body.interviewQuestionIndex);
+        const iqId = request.body.interviewQuestionsId;
+        const index = request.body.interviewQuestionIndex;
+        const interviewObj = await interviewQuestionsSchema.findOne({interviewQuestionsId:iqId});
+        //console.log(interviewObj);
+        interviewObj.question.splice(index,1);
+        interviewObj.description.splice(index,1);
+        interviewObj.company.splice(index,1);
+        interviewObj.frequency.splice(index,1);
+        //console.log(interviewObj);
         
-        console.log(request.body.interviewQuestionsId);
-        console.log(request.body.interviewQuestionIndex);
-        
+        const result = await interviewQuestionsSchema.updateOne({interviewQuestionsId:iqId},{$set:interviewObj});
+        //console.log(result);
+        if(result.modifiedCount>0){
+            const domainResult = await domainSchema.find({ status: true });
+            response.render("domainPage.ejs", { message: message.INTERVIEW_QUESTIONS_DELETED, status: status.SUCCESS, domainResult: domainResult.reverse() });
+        } else{
+            const domainResult = await domainSchema.find({ status: true });
+            response.render("domainPage.ejs", { message: message.INTERVIEW_QUESTIONS_NOT_DELETED, status: status.SUCCESS, domainResult: domainResult.reverse() });
+        }
     }catch(error){
+        console.log("inside catch of adminDeleteInterviewQuestionController : ",error);
+        const domainResult = await domainSchema.find({ status: true });
+        response.render("domainPage.ejs", { message: message.INTERVIEW_QUESTIONS_NOT_DELETED, status: status.SUCCESS, domainResult: domainResult.reverse() });
+    }
+}
 
+export const glimphsFileUploadController = async(request,response)=>{
+    try {
+        const filename = request.files.glimphsImage;
+        const fileName = new Date().getTime() + filename.name;
+        const filePath = path.join(__dirname.replace("\\controller", "/public/glimphsImages/") + fileName);
+        filename.mv(filePath, async (error) => {
+            if(error){
+                console.log("Error while glimphsfile upload : ",error);
+                response.render("glimphsGallery.ejs", {message: message.FILE_NOT_UPLOADED, status: status.SUCCESS });
+            }else{
+                request.body.glimphsId = uuid4();
+                request.body.glimphsImage = fileName;
+                const resultNew = await glimphsSchema.create(request.body);
+                response.render("glimphsGallery.ejs", {message: message.UPLOAD_STATUS, status: status.SUCCESS });
+            }
+        })
+    } catch (error) {
+        console.log("Error in glimphsFileUploadController : ",error);
+        response.render("adminHome.ejs", { message: message.SERVER_ERROR, status: status.SERVER_ERROR });
     }
 }
 // needs to print email id on every page {email:request.payload.email} like this
