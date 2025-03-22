@@ -690,12 +690,14 @@ export const glimphsFileUploadController = async(request,response)=>{
         filename.mv(filePath, async (error) => {
             if(error){
                 console.log("Error while glimphsfile upload : ",error);
-                response.render("glimphsGallery.ejs", {message: message.FILE_NOT_UPLOADED, status: status.SUCCESS });
+                const glimphsData = await glimphsSchema.find();
+                response.render("glimphsGallery.ejs", {glimphsData:glimphsData.reverse(),message: message.FILE_NOT_UPLOADED, status: status.SUCCESS });
             }else{
                 request.body.glimphsId = uuid4();
                 request.body.glimphsImage = fileName;
                 const resultNew = await glimphsSchema.create(request.body);
-                response.render("glimphsGallery.ejs", {message: message.UPLOAD_STATUS, status: status.SUCCESS });
+                const glimphsData = await glimphsSchema.find();
+                response.render("glimphsGallery.ejs", {glimphsData:glimphsData.reverse(),message: message.UPLOAD_STATUS, status: status.SUCCESS });
             }
         })
     } catch (error) {

@@ -1,4 +1,5 @@
 import blogSchema from "../model/blogSchema.js";
+import glimphsSchema from "../model/glimphsSchema.js";
 import uploadSyllabusSchema from "../model/uploadSyllabusSchema.js";
 export const blogController = async(request,response)=>{
     try{
@@ -8,7 +9,8 @@ export const blogController = async(request,response)=>{
     }catch(error){
         console.log("Error in blog : ",error);
         const res = await uploadSyllabusSchema.find();
-        response.render("home.ejs",{result:res,message:"",status:""});        
+        const glimphsData = await glimphsSchema.find({status:true});
+        response.render("home.ejs",{glimphsData:glimphsData.reverse(),result:res,message:"",status:""});
     }    
 }
 
@@ -20,6 +22,8 @@ export const detailedBlogController = async(request,response)=>{
     }catch(error){
         console.log("Error in detailed blog controller : ",error);
         const res = await uploadSyllabusSchema.find();
-        response.render("home.ejs",{result:res,message:"",status:""});
+        const glimphsData = await glimphsSchema.find({status:true});
+        response.render("home.ejs",{glimphsData:glimphsData.reverse(),result:res,message:"",status:""});
+
     }    
 }

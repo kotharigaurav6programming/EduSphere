@@ -52,4 +52,5 @@ export const message = {
     BLOG_NOT_DELETED : "Error while Deleting Blog",
     INTERVIEW_QUESTIONS_DELETED:"Interview Question Deleted Successfully",
     INTERVIEW_QUESTIONS_NOT_DELETED:"Interview Question Not Deleted",
+    GLIMPHS_DELETED:"Glimphs Deleted Successfully",
 }

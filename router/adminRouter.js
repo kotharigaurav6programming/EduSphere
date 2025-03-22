@@ -8,6 +8,7 @@ import courseSchema from '../model/courseSchema.js';
 import detailedSyllabusSchema from '../model/detailedSyllabusSchema.js';
 import domainSchema from '../model/domainSchema.js';
 import blogSchema from '../model/blogSchema.js';
+import glimphsSchema from '../model/glimphsSchema.js';
 // import dotenv from 'dotenv';
 // dotenv.config();
 
@@ -105,8 +106,14 @@ adminRouter.post('/updateBlog',authenticateJWT,updateBlogController);
 adminRouter.post('/adminDeleteBlog',authenticateJWT,adminDeleteBlogController);
 adminRouter.post('/adminDeleteInterviewQuestion',authenticateJWT,adminDeleteInterviewQuestionController);
 adminRouter.get('/glimphsGallery',authenticateJWT,async(request,response)=>{
-    response.render("glimphsGallery.ejs",{message:"",status:status.SUCCESS});
+    const glimphsData = await glimphsSchema.find({status:true});
+    response.render("glimphsGallery.ejs",{glimphsData:glimphsData.reverse(),message:"",status:status.SUCCESS});
 });
 adminRouter.post('/glimphsFileUpload',authenticateJWT,glimphsFileUploadController);
+adminRouter.post('/deleteGlimphs',authenticateJWT,async(request,response)=>{
+    await glimphsSchema.updateOne({glimphsId:request.body.glimphsId},{$set:{status:false}});
+    const glimphsData = await glimphsSchema.find({status:true});
+    response.render("glimphsGallery.ejs",{glimphsData:glimphsData.reverse(),message:message.GLIMPHS_DELETED,status:status.SUCCESS});
+})
 export default adminRouter;
 

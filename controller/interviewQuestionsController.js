@@ -1,4 +1,5 @@
 import domainSchema from "../model/domainSchema.js";
+import glimphsSchema from "../model/glimphsSchema.js";
 import interviewQuestionsSchema from "../model/interviewQuestionsSchema.js";
 import uploadSyllabusSchema from "../model/uploadSyllabusSchema.js";
 import { message, status } from "../utils/statusMessage.js";
@@ -10,7 +11,9 @@ export const interviewSubjectController = async(request,response)=>{
        }catch(error){
            console.log("Error in interview subjects : ",error);
            const res = await uploadSyllabusSchema.find();
-           response.render("home.ejs",{result:res,message:"",status:""});        
+           const glimphsData = await glimphsSchema.find({status:true});
+           response.render("home.ejs",{glimphsData:glimphsData.reverse(),result:res,message:"",status:""});
+   
        }
 }
 

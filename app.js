@@ -21,6 +21,7 @@ import blogRouter from './router/blogRouter.js';
 import domainSchema from './model/domainSchema.js';
 import interviewQuestionsRouter from './router/interviewQuestionsRouter.js';
 import studentRouter from './router/studentRouter.js';
+import glimphsSchema from './model/glimphsSchema.js';
 
 mongoose.connect(url,{
     useNewUrlParser:true,
@@ -50,7 +51,8 @@ app.get("/",async (request,response)=>{
     try{
         const res = await uploadSyllabusSchema.find();
         // console.log(res);
-        response.render("home.ejs",{result:res});
+        const glimphsData = await glimphsSchema.find({status:true});
+        response.render("home.ejs",{glimphsData:glimphsData.reverse(),result:res,message:"",status:""});
     }catch(error){
         console.log("error in home page: ",error);
         response.render("notfound.ejs",{message:message.SERVER_ERROR,status:status.SERVER_ERROR});

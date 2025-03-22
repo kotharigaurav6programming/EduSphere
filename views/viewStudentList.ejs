@@ -91,6 +91,7 @@
                     <th scope="col">AdminVerify</th>
                     <th scope="col">Fees Status</th>
                     <th scope="col">BactchId</th>
+                    <th scope="col">Allocate Batch</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -110,20 +111,24 @@
                         <td><%=obj.gcontact%></td>
                         <td><%=obj.gaddress%></td>
                         <td><%=obj.adminVerify%></td>
-                        <form action="" method="post">
-                            <td>
-                                <input type="text" placeholder="Enter Due Amount" id="feesStatus" name="feesStatus">
+                        <form action="/employee/allocateBatch" method="post">
+                          <input type="hidden" value="<%=obj.enrollId%>" name="studentEnrollId" id="studentEnrollId">  
+                          <td>
+                                <textarea type="text"  placeholder="Enter Due Amount" id="feesStatus" name="feesStatus"></textarea>
                             </td>
                             <td>
-                                <select>
-                                    <option value="">Select Batch Id | Trainer </option>
+                                <select name="batchObj" id="batchObj" class="p-2">
+                                    <option value="">Select Batch Id | Trainer</option>
                                     <%batchNewData.forEach((batchObj)=>{%>
-                                        <option value="">
+                                        <option value="<%=JSON.stringify(batchObj)%>">
                                             <%= batchObj.batchId %> |
                                             <%= batchObj.trainerName %>
                                         </option>
                                     <%})%>
                                 </select>
+                            </td>
+                            <td>
+                              <input type="submit" class="btn btn-primary p-2" value="Allocate Batch">
                             </td>
                         </form>
                       </tr>

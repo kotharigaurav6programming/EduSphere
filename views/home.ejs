@@ -672,41 +672,17 @@
       <div class="container">
         <div class="row">
           <div class="owl-carousel col-12 nonloop-block-14">
+           <%if(glimphsData.length==0){%>
+            Gallery is Empty  
+          <%}else{ 
+            glimphsData.forEach((obj,index)=>{
+            %>
             <div class="course bg-white h-100 align-self-stretch">
               <figure class="m-0">
-                <a href="#"><img src="images/glympse1.jpg" alt="Image" class="img-fluid gallery-image"></a>
+                <a href="#"><img src="/glimphsImages/<%=obj.glimphsImage%>" alt="Image" class="img-fluid gallery-image"></a>
               </figure>
             </div>
-        
-            <div class="course bg-white h-100 align-self-stretch">
-              <figure class="m-0">
-                <a href="#"><img src="images/glympse2.jpg" alt="Image" class="img-fluid gallery-image"></a>
-              </figure>
-            </div>
-        
-            <div class="course bg-white h-100 align-self-stretch">
-              <figure class="m-0">
-                <a href="#"><img src="images/glympse3.jpeg" alt="Image" class="img-fluid gallery-image"></a>
-              </figure>
-            </div>
-        
-            <div class="course bg-white h-100 align-self-stretch">
-              <figure class="m-0">
-                <a href="#"><img src="images/glympse4.jpg" alt="Image" class="img-fluid gallery-image"></a>
-              </figure>
-            </div>
-        
-            <div class="course bg-white h-100 align-self-stretch">
-              <figure class="m-0">
-                <a href="#"><img src="images/glympse1.jpg" alt="Image" class="img-fluid gallery-image"></a>
-              </figure>
-            </div>
-        
-            <div class="course bg-white h-100 align-self-stretch">
-              <figure class="m-0">
-                <a href="#"><img src="images/glympse3.jpeg" alt="Image" class="img-fluid gallery-image"></a>
-              </figure>
-            </div>
+        <%})}%>
           </div>
         </div>
         

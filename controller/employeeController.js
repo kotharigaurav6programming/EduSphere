@@ -190,3 +190,14 @@ export const viewStudentListController = async(request,response)=>{
         response.render('employeeHome.ejs',{profile:request.employeePayload.profile,email:request.employeePayload.email,name:request.employeePayload.name,message:message.SOMETHING_WENT_WRONG,status:status.SERVER_ERROR});
     }
 }
+
+export const allocateBatchController = async(request,response)=>{
+    try{
+            const studentEnrollId = request.body.studentEnrollId; 
+            const batchAllocationObj = JSON.parse(request.body.batchObj);
+            //await studentSchema.updateOne({enrollId : studentEnrollId},{$set:})
+            
+    }catch(error){
+
+    }
+}
