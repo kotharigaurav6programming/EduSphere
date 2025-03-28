@@ -10,7 +10,9 @@ export const blogController = async(request,response)=>{
         console.log("Error in blog : ",error);
         const res = await uploadSyllabusSchema.find();
         const glimphsData = await glimphsSchema.find({status:true});
-        response.render("home.ejs",{glimphsData:glimphsData.reverse(),result:res,message:"",status:""});
+                const videoData = await videoSchema.find({status:true});
+                response.render("home.ejs",{videoData:videoData.reverse(),glimphsData:glimphsData.reverse(),result:res,message:"",status:""});
+        
     }    
 }
 
@@ -23,7 +25,8 @@ export const detailedBlogController = async(request,response)=>{
         console.log("Error in detailed blog controller : ",error);
         const res = await uploadSyllabusSchema.find();
         const glimphsData = await glimphsSchema.find({status:true});
-        response.render("home.ejs",{glimphsData:glimphsData.reverse(),result:res,message:"",status:""});
-
+                const videoData = await videoSchema.find({status:true});
+                response.render("home.ejs",{videoData:videoData.reverse(),glimphsData:glimphsData.reverse(),result:res,message:"",status:""});
+        
     }    
 }

@@ -22,6 +22,8 @@ import moment from 'moment';
 import domainSchema from "../model/domainSchema.js";
 import interviewQuestionsSchema from "../model/interviewQuestionsSchema.js";
 import glimphsSchema from "../model/glimphsSchema.js";
+import studentSchema from "../model/studentSchema.js";
+import videoSchema from "../model/videoSchema.js";
 
 dotenv.config();
 const ADMIN_SECRET_KEY = process.env.ADMIN_SECRET_KEY;
@@ -642,7 +644,7 @@ export const updateBlogController = async (request, response) => {
 export const adminDeleteBlogController = async (request, response) => {
     try {
         const blogId = request.body.blogId;
-        const resultNew = await blogSchema.deleteOne({blogId});
+        const resultNew = await blogSchema.deleteOne({ blogId });
         const blogData = await blogSchema.find();
         response.render("blogPage.ejs", { blogData: blogData, message: message.BLOG_DELETED, status: status.SUCCESS });
     } catch (error) {
@@ -652,57 +654,143 @@ export const adminDeleteBlogController = async (request, response) => {
     }
 }
 
-export const adminDeleteInterviewQuestionController = async(request,response)=>{
-    try{        
+export const adminDeleteInterviewQuestionController = async (request, response) => {
+    try {
         // console.log(request.body.interviewQuestionsId);
         // console.log(request.body.interviewQuestionIndex);
         const iqId = request.body.interviewQuestionsId;
         const index = request.body.interviewQuestionIndex;
-        const interviewObj = await interviewQuestionsSchema.findOne({interviewQuestionsId:iqId});
+        const interviewObj = await interviewQuestionsSchema.findOne({ interviewQuestionsId: iqId });
         //console.log(interviewObj);
-        interviewObj.question.splice(index,1);
-        interviewObj.description.splice(index,1);
-        interviewObj.company.splice(index,1);
-        interviewObj.frequency.splice(index,1);
+        interviewObj.question.splice(index, 1);
+        interviewObj.description.splice(index, 1);
+        interviewObj.company.splice(index, 1);
+        interviewObj.frequency.splice(index, 1);
         //console.log(interviewObj);
-        
-        const result = await interviewQuestionsSchema.updateOne({interviewQuestionsId:iqId},{$set:interviewObj});
+
+        const result = await interviewQuestionsSchema.updateOne({ interviewQuestionsId: iqId }, { $set: interviewObj });
         //console.log(result);
-        if(result.modifiedCount>0){
+        if (result.modifiedCount > 0) {
             const domainResult = await domainSchema.find({ status: true });
             response.render("domainPage.ejs", { message: message.INTERVIEW_QUESTIONS_DELETED, status: status.SUCCESS, domainResult: domainResult.reverse() });
-        } else{
+        } else {
             const domainResult = await domainSchema.find({ status: true });
             response.render("domainPage.ejs", { message: message.INTERVIEW_QUESTIONS_NOT_DELETED, status: status.SUCCESS, domainResult: domainResult.reverse() });
         }
-    }catch(error){
-        console.log("inside catch of adminDeleteInterviewQuestionController : ",error);
+    } catch (error) {
+        console.log("inside catch of adminDeleteInterviewQuestionController : ", error);
         const domainResult = await domainSchema.find({ status: true });
         response.render("domainPage.ejs", { message: message.INTERVIEW_QUESTIONS_NOT_DELETED, status: status.SUCCESS, domainResult: domainResult.reverse() });
     }
 }
 
-export const glimphsFileUploadController = async(request,response)=>{
+export const glimphsFileUploadController = async (request, response) => {
     try {
         const filename = request.files.glimphsImage;
         const fileName = new Date().getTime() + filename.name;
         const filePath = path.join(__dirname.replace("\\controller", "/public/glimphsImages/") + fileName);
         filename.mv(filePath, async (error) => {
-            if(error){
-                console.log("Error while glimphsfile upload : ",error);
-                const glimphsData = await glimphsSchema.find();
-                response.render("glimphsGallery.ejs", {glimphsData:glimphsData.reverse(),message: message.FILE_NOT_UPLOADED, status: status.SUCCESS });
-            }else{
+            if (error) {
+                console.log("Error while glimphsfile upload : ", error);
+                const glimphsData = await glimphsSchema.find({ status: true });
+                response.render("glimphsGallery.ejs", { glimphsData: glimphsData.reverse(), message: message.FILE_NOT_UPLOADED, status: status.SUCCESS });
+            } else {
                 request.body.glimphsId = uuid4();
                 request.body.glimphsImage = fileName;
                 const resultNew = await glimphsSchema.create(request.body);
-                const glimphsData = await glimphsSchema.find();
-                response.render("glimphsGallery.ejs", {glimphsData:glimphsData.reverse(),message: message.UPLOAD_STATUS, status: status.SUCCESS });
+                const glimphsData = await glimphsSchema.find({ status: true });
+                response.render("glimphsGallery.ejs", { glimphsData: glimphsData.reverse(), message: message.UPLOAD_STATUS, status: status.SUCCESS });
             }
         })
     } catch (error) {
-        console.log("Error in glimphsFileUploadController : ",error);
+        console.log("Error in glimphsFileUploadController : ", error);
         response.render("adminHome.ejs", { message: message.SERVER_ERROR, status: status.SERVER_ERROR });
     }
 }
+
+export const existingStudentListController = async (request, response) => {
+    try {
+        const studentData = await studentSchema.find();
+        //console.log(studentData);
+        response.render('adminViewStudentList.ejs', { studentData: studentData,message: "", status: status.SUCCESS });
+    } catch (error) {
+        console.log("error in existingStudentListController : ", error);
+        response.render('adminHome.ejs', {message: message.SOMETHING_WENT_WRONG, status: status.SERVER_ERROR });
+    }
+}
+
+export const adminVerifyStudentController = async(request,response)=>{
+    try{
+        const studentEnrollId = request.query.studentEnrollId;
+        const res = await studentSchema.updateOne({enrollId:studentEnrollId},{$set:{adminVerify:"Verified"}});
+        if(res){
+            const studentData = await studentSchema.find();
+            response.render("adminViewStudentList.ejs",{studentData,message:message.ADMIN_VERIFY_STUDENT,status:status.SUCCESS});
+        }else{
+            const studentData = await studentSchema.find();
+            response.render("adminViewStudentList.ejs",{studentData,message:message.ADMIN_NOT_VERIFY_STUDENT,status:status.SUCCESS});
+        }
+    }catch(error){
+        console.log("error in adminVerifyStudentController : ", error);
+        response.render('adminHome.ejs', {message: message.SOMETHING_WENT_WRONG, status: status.SERVER_ERROR });
+    }
+}
+
+export const adminAddVideoLinkController = async (request, response) => {
+    try {
+        //console.log(request.body);
+        request.body.videoId = uuid4();
+        request.body.uploadDate = moment().format('DD-MM-YYYY');
+        request.body.uploadTime = moment().format('hh:mm:ss A');
+        const resultNew = await videoSchema.create(request.body);
+        const videoData = await videoSchema.find({status:true});
+        response.render("videoGallery.ejs", { videoData:videoData.reverse(),message: message.LINK_UPLOADED, status: status.SUCCESS });
+    } catch (error) {
+        console.log("Error in adminAddVideoLinkController : ", error);
+        const videoData = await videoSchema.find({status:true});
+        response.render("videoGallery.ejs", { videoData:videoData.reverse(),message: message.LINK_NOT_UPLOADED, status: status.SERVER_ERROR });
+    }
+}
+
+export const adminDeleteVideoLinkController = async (request, response) => {
+    try {
+        const videoId = request.body.videoId;
+        const resultNew = await videoSchema.updateOne({ videoId },{$set:{status:false}});
+        const videoData = await videoSchema.find({status:true});
+        response.render("videoGallery.ejs", { videoData: videoData.reverse(), message: message.LINK_DELETED, status: status.SUCCESS });
+    } catch (error) {
+        console.log("Error in adminDeleteVideoLinkController : ", error);
+        const videoData = await videoSchema.find({status:true});
+        response.render("videoGallery.ejs", { videoData: videoData.reverse(), message: message.LINK_NOT_DELETED, status: status.SERVER_ERROR });
+    }
+}
+export const adminViewVideoLinkController = async (request, response) => {
+    try {
+        const videoData = JSON.parse(request.body.videoData);
+        response.render("viewUpdateVideoGallery.ejs", { videoData: videoData, message: "", status: "" });
+    } catch (error) {
+        console.log("Error while admin view video link controller : ", error);
+        const videoData = await videoSchema.find({status:true});
+        response.render("videoGallery.ejs", { videoData: videoData.reverse(), message: message.SERVER_ERROR, status: status.SERVER_ERROR });
+    }
+}
+export const updateVideoGalleryController = async (request, response) => {
+    try {
+            request.body.uploadDate = moment().format('DD-MM-YYYY');
+            request.body.uploadTime = moment().format('hh:mm:ss A');
+            const resultNew = await videoSchema.updateOne({
+                videoId: request.body.videoId
+            }, {
+                $set: request.body
+            });
+            const videoData = await videoSchema.find({status:true});
+            response.render("videoGallery.ejs", { videoData: videoData.reverse(), message: message.LINK_UPDATE, status: status.SUCCESS });
+        } catch (error) {
+            console.log("Error in updateVideoGalleryController : ", error);
+            const videoData = await videoSchema.find({status:true});
+            response.render("videoGallery.ejs", { videoData: videoData.reverse(), message: message.LINK_NOT_UPDATE, status: status.SERVER_ERROR });
+        }
+}
+
+
 // needs to print email id on every page {email:request.payload.email} like this

@@ -53,5 +53,27 @@ employeeRouter.get('/employeeViewBatches',authenticateJWT,employeeViewBatchesCon
 employeeRouter.get('/assignmentForm',authenticateJWT,assignmentFormController);
 employeeRouter.post('/sendEnrollLink',authenticateJWT,sendEnrollLinkController);
 employeeRouter.get('/viewStudentList',authenticateJWT,viewStudentListController);
-employeeRouter.post('/allocateBatch',authenticateJWT,allocateBatchController);
+employeeRouter.get('/allocateBatch',authenticateJWT,allocateBatchController);
+employeeRouter.post('/employeeAllocateBatch',authenticateJWT,(request,response)=>{
+// console.log("-0-0-0-0-0-0-0- : ",request.query.data);
+
+
+    console.log("allocate batch data : ",request.body);
+    var obj={};
+    console.log("------------------",request.body);
+    
+    obj.batchId = request.body.batchId
+    // console.log("batchId : ",request.body.batchId);
+    
+    for(let i=0;i<request.body.studentData.length;i++){
+        if(request.body.studentData[i]){
+            // console.log(JSON.parse(request.body.studentData[i]));
+            obj.enrollId = JSON.parse(request.body.studentData[i]).enrollId;
+            obj.name = JSON.parse(request.body.studentData[i]).name;
+            obj.email = JSON.parse(request.body.studentData[i]).email;
+        }
+    }
+    console.log(obj);
+    
+});
 export default employeeRouter;

@@ -53,4 +53,12 @@ export const message = {
     INTERVIEW_QUESTIONS_DELETED:"Interview Question Deleted Successfully",
     INTERVIEW_QUESTIONS_NOT_DELETED:"Interview Question Not Deleted",
     GLIMPHS_DELETED:"Glimphs Deleted Successfully",
+    ADMIN_VERIFY_STUDENT:"Admin Verified Student",
+    ADMIN_NOT_VERIFY_STUDENT:"Error while Verifying Student",
+    LINK_UPLOADED:"Link Uploaded Successfully",
+    LINK_NOT_UPLOADED : "Link Not Uploaded",
+    LINK_DELETED:"Link Deleted Successfully",
+    LINK_NOT_DELETED:"Link Not Deleted",
+    LINK_UPDATE:"Link Updated Successfully",
+    LINK_NOT_UPDATE:"Link not updated",
 }

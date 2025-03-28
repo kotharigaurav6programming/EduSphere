@@ -37,10 +37,11 @@
           <span class="icon-close2 js-menu-toggle"></span>
         </div>
       </div>
-      <div class="site-mobile-menu-body"></div>
+      <%- include('./adminSideBar.ejs')%>
+
     </div>
    
-    
+
     <header class="site-navbar py-4 js-sticky-header site-navbar-target" role="banner">
       
         <div class="container-fluid">
@@ -48,7 +49,7 @@
             <div class="site-logo mr-auto"><a href="index.html">EduSphere</a></div>
             <div>
               <nav class="site-navigation position-relative text-right" role="navigation">
-                <%-include('./employeeMgmtHomeHeader.js')%>
+                <%-include('./adminHomeHeader.js')%>
               </nav>
              <a href="#" class="d-inline-block d-lg-none site-menu-toggle js-menu-toggle text-black float-right">
               <span class="icon-menu h3"></span></a>
@@ -58,64 +59,57 @@
         </div>
         
       </header>
-  
 
-    <div class="site-section" id="programs-section" style="margin-top: -1px;">
-      <br>
+      <div class="site-section" id="courses-section" style="margin-top: -1px;">
+        <br>
         <div class="container">
-        <div class="row mb-5 justify-content-center">
-          <div class="col-lg-12 text-center"  data-aos="fade-up" data-aos-delay="">
-            <br>
-            <h4 class="text-black">Student List</h4>
-            <br>
-            <span style="color:green"><%=message%></span>
-            <%if(studentData.length==0){%>
-                <span style="color:crimson">No Record Found</span>
-            <%}else{%>
-            <table class="table" style="font-size: 12px; color: black;">
-                <thead>
-                  <tr>
-                    <th scope="col">S.No</th>
-                    <th scope="col" style="width:180px">EnrollId</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Gender</th>
-                    <th scope="col">DOB</th>
-                    <th scope="col">Contact</th>
-                    <th scope="col">Address</th>
-                    <th scope="col">Guardian <br> Name</th>
-                    <th scope="col">Guardian <br> Contact</th>
-                    <th scope="col">AdminVerify</th>
-                   </tr>
-                </thead>
-                <tbody>
-                  <%studentData.forEach((obj,index)=>{%>
-                      <tr>
-                        <td><%=(index+1)%></td>
-                        <td><%=obj.enrollId%></td>
-                        <td><%=obj.name%></td>
-                        <td><%=obj.email%></td>
-                        <td><%=obj.gender%></td>
-                        <td><%=new Date(obj.date).toISOString().split("T")[0]%></td>
-                        <td><%=obj.contact%></td>
-                        <td><%=obj.address%></td>
-                        <td><%=obj.gname%></td>
-                        <td><%=obj.gcontact%></td>
-                        <td><%=obj.adminVerify%></td>
-                        </tr>
-                  <%})%>
-                </tbody>
-              </table>
-            <%}%>  
+          <div class="row mb-0 justify-content-center">
+            <div class="col-lg-7 text-center"  data-aos="fade-up" data-aos-delay="">
+              <br>
+              <!-- <h4 class="text-black">Blog</h4> -->
+              <h3 class="h4 text-black mb-4">Update Video Gallery</h3>
+              <span><%=message%></span>
+            </div>
           </div>
+          <div class="row mb-5 align-items-center">
+            
+            <div class="col-lg-4 mb-5 order-1 order-lg-2" data-aos="fade-up" data-aos-delay="100">
+              <img src="images/undraw_teaching.svg" alt="Image" class="img-fluid">
+            </div>
+  
+            <div class="col-lg-8 mr-auto order-2 order-lg-1" data-aos="fade-up" data-aos-delay="200">
+              <div>
+                <!-- Admin view update Blog -->
+                <form action="/admin/updateVideoGallery" method="post" class="form-box" enctype="multipart/form-data">
+                    <input type="hidden" name="videoId" id="videoId" value="<%=videoData.videoId%>">
+                    <span class="text-black">Video Link</span>
+                    <div class="form-group">
+                      <input type="url" placeholder="Enter Video Link" name="videoLink" id="videoLink" value="<%=videoData.videoLink%>" class="form-control">
+                    </div>
+                    <span class="text-black">Video Title</span>
+                  <div class="form-group">
+                    <input type="text" placeholder="Enter Video Title" name="videoTitle" id="videoTitle" value="<%=videoData.videoTitle%>" class="form-control">
+                  </div>
+                  <span class="text-black">Video Description</span>
+                  <div class="form-group">
+                    <textarea placeholder="Enter video Description" value="<%=videoData.videoDesc%>" name="videoDesc" id="videoDesc" class="form-control"><%=videoData.videoDesc%></textarea>
+                  </div>
+                  <div class="form-group">
+                    <input type="submit" class="btn btn-primary p-2 w-100" value="Update Video Gallery">
+                  </div>
+                </form>
+              </div>
+              
+            </div>
+          </div>
+  
+        
+  
         </div>
-      
-
       </div>
-    </div>
-
     
-     
+
+  
     <footer class="footer-section bg-white">
       <div class="container">
         <div class="row">

@@ -1,5 +1,5 @@
 import express from 'express';
-import { adminLoginController,adminEmployeeListController,adminVerifyEmployeeController,adminEnquiryStudentListController,adminAddStudRemarkController,adminUploadSyllabusController,adminSendSyllabusController,adminAddCourseController,adminViewCoursesController,adminCourseListController,adminAddDetailedSyllabusController,adminDetailedSyllabusController,downloadExcelController,adminViewBatchesController,adminAllocateTrainerController,adminAddBlogController,adminAddDomainController,updateDomainFormController,adminUpdateDomainController,deleteDomainController,domainPageController, createDomainFormController,addInterviewQuestionsController,adminAddInterviewQuestionsController,adminViewInterviewQuestionsController,adminViewBlogController,updateBlogController,adminDeleteBlogController,adminDeleteInterviewQuestionController,glimphsFileUploadController } from '../controller/adminController.js';
+import { adminLoginController,adminEmployeeListController,adminVerifyEmployeeController,adminEnquiryStudentListController,adminAddStudRemarkController,adminUploadSyllabusController,adminSendSyllabusController,adminAddCourseController,adminViewCoursesController,adminCourseListController,adminAddDetailedSyllabusController,adminDetailedSyllabusController,downloadExcelController,adminViewBatchesController,adminAllocateTrainerController,adminAddBlogController,adminAddDomainController,updateDomainFormController,adminUpdateDomainController,deleteDomainController,domainPageController, createDomainFormController,addInterviewQuestionsController,adminAddInterviewQuestionsController,adminViewInterviewQuestionsController,adminViewBlogController,updateBlogController,adminDeleteBlogController,adminDeleteInterviewQuestionController,glimphsFileUploadController,existingStudentListController,adminVerifyStudentController,adminAddVideoLinkController,adminDeleteVideoLinkController,adminViewVideoLinkController,updateVideoGalleryController } from '../controller/adminController.js';
 import {fileURLToPath} from 'url';
 import jwt from 'jsonwebtoken';
 import path from 'path';
@@ -9,6 +9,7 @@ import detailedSyllabusSchema from '../model/detailedSyllabusSchema.js';
 import domainSchema from '../model/domainSchema.js';
 import blogSchema from '../model/blogSchema.js';
 import glimphsSchema from '../model/glimphsSchema.js';
+import videoSchema from '../model/videoSchema.js';
 // import dotenv from 'dotenv';
 // dotenv.config();
 
@@ -114,6 +115,16 @@ adminRouter.post('/deleteGlimphs',authenticateJWT,async(request,response)=>{
     await glimphsSchema.updateOne({glimphsId:request.body.glimphsId},{$set:{status:false}});
     const glimphsData = await glimphsSchema.find({status:true});
     response.render("glimphsGallery.ejs",{glimphsData:glimphsData.reverse(),message:message.GLIMPHS_DELETED,status:status.SUCCESS});
-})
+});
+adminRouter.get('/existingStudentList',authenticateJWT,existingStudentListController);
+adminRouter.get('/adminVerifyStudent',authenticateJWT,adminVerifyStudentController);
+adminRouter.get('/videoGallery',authenticateJWT,async(request,response)=>{
+    const videoData = await videoSchema.find({status:true});
+    response.render("videoGallery.ejs",{videoData:videoData.reverse(),message:"",status:status.SUCCESS});
+});
+adminRouter.post('/adminAddVideoLink',authenticateJWT,adminAddVideoLinkController);
+adminRouter.post('/adminDeleteVideoLink',authenticateJWT,adminDeleteVideoLinkController);
+adminRouter.post('/adminViewVideoLink',authenticateJWT,adminViewVideoLinkController);
+adminRouter.post('/updateVideoGallery',authenticateJWT,updateVideoGalleryController);
 export default adminRouter;
 

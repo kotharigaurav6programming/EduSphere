@@ -48,7 +48,7 @@
             <div class="site-logo mr-auto"><a href="index.html">EduSphere</a></div>
             <div>
               <nav class="site-navigation position-relative text-right" role="navigation">
-                <%-include('./employeeMgmtHomeHeader.js')%>
+                <%-include('./adminHomeHeader.js')%>
               </nav>
              <a href="#" class="d-inline-block d-lg-none site-menu-toggle js-menu-toggle text-black float-right">
               <span class="icon-menu h3"></span></a>
@@ -101,7 +101,13 @@
                         <td><%=obj.address%></td>
                         <td><%=obj.gname%></td>
                         <td><%=obj.gcontact%></td>
-                        <td><%=obj.adminVerify%></td>
+                        <td>
+                            <%if(obj.adminVerify=="Verified"){%>
+                                <strong>Verified</strong>
+                            <%}else{%>
+                            <a href="/admin/adminVerifyStudent?studentEnrollId=<%=obj.enrollId%>"><%=obj.adminVerify%></a>
+                            <%}%>
+                        </td>
                         </tr>
                   <%})%>
                 </tbody>

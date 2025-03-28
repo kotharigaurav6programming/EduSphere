@@ -33,23 +33,11 @@ const studentSchema = mongoose.Schema({
         type:String,
         required:true
     },
-    type:{
-        type:String,
-        required:true
-    },
-    joiningDate:{
-        type:Date,
-        required:true
-    },
     gname:{
         type:String,
         required:true
     },    
     gcontact:{
-        type:String,
-        required:true
-    },
-    gaddress:{
         type:String,
         required:true
     },
@@ -60,12 +48,6 @@ const studentSchema = mongoose.Schema({
     status:{
         type:Boolean,
         default:true
-    },
-    batchId:{
-        type:String
-    },
-    feesStatus:{
-        type:String
     },
     adminVerify:{
         type:String,

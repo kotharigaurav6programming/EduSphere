@@ -159,32 +159,7 @@ export const viewStudentListController = async(request,response)=>{
     try{
         const studentData = await studentSchema.find();
         //console.log(studentData);
-        const batchData = await batchSchema.find();
-        console.log(batchData);
-        
-        var batchNewData = [];
-        if(batchData.length!=0){
-            for(let i=0;i<batchData.length;i++){
-                const batchId = batchData[i].batchId;
-                const courseId = batchData[i].courseId;
-                const enrollId = batchData[i].trainerEnrollId;
-                const courseObj = await courseSchema.findOne({courseId},{courseName:1});
-                const trainerObj = await employeeSchema.findOne({enrollId},{name:1});
-                if(trainerObj){
-                    const obj = {
-                        batchId,
-                        courseId,
-                        enrollId,
-                        courseName:courseObj.courseName,
-                        trainerName:trainerObj.name
-                    }
-                    batchNewData.push(obj);
-                }
-            }
-        }
-        // console.log("batchNewData : ",batchNewData);
-        
-        response.render('viewStudentList.ejs',{batchNewData,studentData:studentData,name:request.employeePayload.name,message:"",status:status.SUCCESS});    
+        response.render('viewStudentList.ejs',{studentData:studentData,name:request.employeePayload.name,message:"",status:status.SUCCESS});    
     }catch(error){
         console.log("error in viewStudentListController : ",error);        
         response.render('employeeHome.ejs',{profile:request.employeePayload.profile,email:request.employeePayload.email,name:request.employeePayload.name,message:message.SOMETHING_WENT_WRONG,status:status.SERVER_ERROR});
@@ -193,11 +168,121 @@ export const viewStudentListController = async(request,response)=>{
 
 export const allocateBatchController = async(request,response)=>{
     try{
-            const studentEnrollId = request.body.studentEnrollId; 
-            const batchAllocationObj = JSON.parse(request.body.batchObj);
-            //await studentSchema.updateOne({enrollId : studentEnrollId},{$set:})
-            
+        const batchData = await batchSchema.find().lean();
+        const studentData = await studentSchema.find({},{enrollId:1,name:1,email:1,_id:0}).lean();
+       
+        const batchArray = [];
+        for(let i=0;i<batchData.length;i++){    
+            let trainerObj = await employeeSchema.findOne({enrollId:batchData[i].trainerEnrollId});
+            if(trainerObj){
+                batchData[i].trainerName = trainerObj.name;
+                let courseObj = await courseSchema.findOne({courseId:batchData[i].courseId});
+                batchData[i].courseName = courseObj.courseName;
+                // console.log("modified : ",batchData[i]);
+                batchData[i].studentData = studentData;
+                batchArray.push(batchData[i]);
+            }   
+        }   
+        //   console.log(batchArray);        
+         response.render("allocateBatch.ejs",{batchArray,profile:request.employeePayload.profile,email:request.employeePayload.email,name:request.employeePayload.name,message:"",status:""});            
     }catch(error){
-
+        console.log("error in allocateBatchController : ",error);        
+        response.render('employeeHome.ejs',{profile:request.employeePayload.profile,email:request.employeePayload.email,name:request.employeePayload.name,message:message.SOMETHING_WENT_WRONG,status:status.SERVER_ERROR});
     }
 }
+
+/*
+whats the difference between  const batchData = await batchSchema.find().lean(); and  const batchData = await batchSchema.find(); as both gives same output
+ChatGPT said:
+Great question! Both
+
+javascript
+Copy
+Edit
+const batchData = await batchSchema.find();
+and
+
+javascript
+Copy
+Edit
+const batchData = await batchSchema.find().lean();
+give the same output initially, but there's a key difference in how they behave when modified.
+
+1. find() Without .lean()
+javascript
+Copy
+Edit
+const batchData = await batchSchema.find();
+Returns: An array of Mongoose model instances (Mongoose documents).
+
+Effects:
+
+These documents have additional functionalities like schema methods, virtuals, and middleware.
+
+They are not plain JavaScript objects, so modifying them doesn't always behave as expected.
+
+When you modify a field (batchData[i].trainerName = "John"), it may not persist unless you explicitly save it (batchData[i].save()).
+
+Example: Unexpected Modification Behavior
+javascript
+Copy
+Edit
+const batchData = await batchSchema.find();
+batchData[0].trainerName = "John";
+console.log(batchData[0].trainerName); // "John" (seems to work)
+
+// BUT:
+console.log(await batchSchema.findOne({ _id: batchData[0]._id })); 
+// trainerName is still undefined in the database unless you call batchData[0].save()
+2. find().lean()
+javascript
+Copy
+Edit
+const batchData = await batchSchema.find().lean();
+Returns: An array of plain JavaScript objects (not Mongoose documents).
+
+Effects:
+
+Modifications persist in the returned array because it's just a normal object.
+
+However, you lose access to Mongoose features like instance methods, virtuals, and middleware.
+
+Better performance: Mongoose skips overhead related to documents and models.
+
+Example: Proper Modification Behavior
+javascript
+Copy
+Edit
+const batchData = await batchSchema.find().lean();
+batchData[0].trainerName = "John";
+console.log(batchData[0].trainerName); // "John" (works as expected)
+
+// No need to call `save()`, but these changes are only in-memory.
+Key Differences:
+Feature	find() (Mongoose Docs)	find().lean() (Plain Objects)
+Returns	Mongoose Documents	Plain JavaScript Objects
+Can Modify Directly?	❌ No (requires .save())	✅ Yes (modifications persist)
+Includes Mongoose Methods?	✅ Yes	❌ No
+Uses Schema Virtuals?	✅ Yes	❌ No
+Faster Performance?	❌ No (extra overhead)	✅ Yes (skips Mongoose processing)
+When to Use Which?
+✅ Use .lean() when:
+
+You just need to fetch and modify data without saving to the database.
+
+You don’t need Mongoose features like instance methods, middleware, or virtuals.
+
+You want better performance (e.g., API responses).
+
+❌ Avoid .lean() when:
+
+You need to use Mongoose methods or middleware.
+
+You plan to modify and save the documents back to the database (since .lean() returns objects, not Mongoose instances, .save() won’t work).
+
+Final Takeaway
+👉 If you're only reading data and making modifications inside memory, use .lean() for better performance.
+👉 If you need to interact with the Mongoose model (e.g., save changes, use instance methods, virtuals, etc.), use find() without .lean().
+
+Let me know if you need further clarification! 🚀
+*/
