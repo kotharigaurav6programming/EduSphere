@@ -233,26 +233,61 @@ export const adminSendSyllabusController = async (request, response) => {
         response.render("adminHome.ejs", { message: message.SOMETHING_WENT_WRONG, status: status.SERVER_ERROR });
     }
 }
+// original code
+// export const adminAddCourseController = async (request, response) => {
+//     try {
+//         request.body.courseId = uuid4();
+//         const result = await courseSchema.create(request.body);
+//         console.log("Add course result : ", result);
+//         if (result) {
+//             response.render("adminCourses.ejs", { message: message.COURSE_ADDED, status: status.SUCCESS });
+//         } else {
+//             response.render("adminCourses.ejs", { message: message.COURSE_NOT_ADDED, status: status.SUCCESS });
+//         }
+//     } catch (error) {
+//         // console.log("--------------",error.code);
+//         if (error.code == 11000) {
+//             response.render("adminCourses.ejs", { message: message.COURSE_ALREADY_EXIST, status: status.SUCCESS });
+//         } else {
+//             response.render("notfound.ejs", { message: message, status: status.SERVER_ERROR });
+//         }
+//     }
+// }
 
+// updated code
 export const adminAddCourseController = async (request, response) => {
     try {
-        request.body.courseId = uuid4();
-        const result = await courseSchema.create(request.body);
-        console.log("Add course result : ", result);
-        if (result) {
-            response.render("adminCourses.ejs", { message: message.COURSE_ADDED, status: status.SUCCESS });
-        } else {
-            response.render("adminCourses.ejs", { message: message.COURSE_NOT_ADDED, status: status.SUCCESS });
+    //console.log(request.body);
+    const filename = request.files.courseFile;
+    // console.log(request.files);
+    const fileName = new Date().getTime() + filename.name;
+    const filePath = path.join(__dirname.replace("\\controller", "/public/courseImages/") + fileName);
+    filename.mv(filePath, async (error) => {
+        try {
+            request.body.courseId = uuid4();
+            request.body.courseFile = fileName;
+            const result = await courseSchema.create(request.body);
+            // console.log("Add course result : ", result);
+            if (result) {
+                response.render("adminCourses.ejs", { message: message.COURSE_ADDED, status: status.SUCCESS });
+            } else {
+                response.render("adminCourses.ejs", { message: message.COURSE_NOT_ADDED, status: status.SUCCESS });
+            }
+        } catch (error) {
+            // console.log("--------------",error.code);
+            if (error.code == 11000) {
+                response.render("adminCourses.ejs", { message: message.COURSE_ALREADY_EXIST, status: status.SUCCESS });
+            } else {
+                response.render("notfound.ejs", { message: message, status: status.SERVER_ERROR });
+            }
         }
-    } catch (error) {
-        // console.log("--------------",error.code);
-        if (error.code == 11000) {
-            response.render("adminCourses.ejs", { message: message.COURSE_ALREADY_EXIST, status: status.SUCCESS });
-        } else {
-            response.render("notfound.ejs", { message: message, status: status.SERVER_ERROR });
-        }
-    }
+    })
+} catch (error) {
+    console.log("Error in adminAddCourseController : ", error);
+    response.render("notfound.ejs", { message: message, status: status.SERVER_ERROR });
 }
+}
+
 
 export const adminViewCoursesController = async (request, response) => {
     try {

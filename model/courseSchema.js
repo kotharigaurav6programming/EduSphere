@@ -20,6 +20,19 @@ const courseSchema = mongoose.Schema({
     courseFees:{
         type:String,
         required:true
+    },
+    // added this two fields extra
+    courseDesc:{
+        type:String,
+        required:true
+    },
+    courseFile:{
+        type:String,
+        required:true
+    },
+    status:{
+        type:Boolean,
+        default:true
     }
 });
 
