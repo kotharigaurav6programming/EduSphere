@@ -24,6 +24,7 @@ import interviewQuestionsSchema from "../model/interviewQuestionsSchema.js";
 import glimphsSchema from "../model/glimphsSchema.js";
 import studentSchema from "../model/studentSchema.js";
 import videoSchema from "../model/videoSchema.js";
+import { response } from "express";
 
 dotenv.config();
 const ADMIN_SECRET_KEY = process.env.ADMIN_SECRET_KEY;
@@ -291,12 +292,12 @@ export const adminAddCourseController = async (request, response) => {
 
 export const adminViewCoursesController = async (request, response) => {
     try {
-        const result = await courseSchema.find();
+        const result = await courseSchema.find({status:true});
         // console.log(result);
         if (result.length != 0) {
-            response.render("adminViewCoursesList.ejs", { courseList: result, message: "", status: status.SUCCESS });
+            response.render("adminViewCoursesList.ejs", { courseList: result.reverse(), message: "", status: status.SUCCESS });
         } else {
-            response.render("adminViewCoursesList.ejs", { courseList: result, message: message.NO_RECORD_FOUND, status: status.SUCCESS });
+            response.render("adminViewCoursesList.ejs", { courseList: result.reverse(), message: message.NO_RECORD_FOUND, status: status.SUCCESS });
         }
     } catch (error) {
         console.log("Error in adminViewCoursesListController : ", error);
@@ -306,12 +307,12 @@ export const adminViewCoursesController = async (request, response) => {
 
 export const adminCourseListController = async (request, response) => {
     try {
-        const result = await courseSchema.find();
+        const result = await courseSchema.find({status:true});
         // console.log(result);
         if (result.length != 0) {
-            response.render("adminCourseList.ejs", { courseList: result, message: "", status: status.SUCCESS });
+            response.render("adminCourseList.ejs", { courseList: result.reverse(), message: "", status: status.SUCCESS });
         } else {
-            response.render("adminCourseList.ejs", { courseList: result, message: message.NO_RECORD_FOUND, status: status.SUCCESS });
+            response.render("adminCourseList.ejs", { courseList: result.reverse(), message: message.NO_RECORD_FOUND, status: status.SUCCESS });
         }
     } catch (error) {
         console.log("Error in adminCourseListController : ", error);
@@ -827,5 +828,92 @@ export const updateVideoGalleryController = async (request, response) => {
         }
 }
 
+export const adminDeleteCourseController = async(request,response)=>{
+    try{
+        const courseList = await courseSchema.find({status:true});
+        const courseId = request.query.courseId;
+        // console.log("courseId : ",courseId);
+        
+        const bresult = await batchSchema.find({courseId});
+        // console.log("batch courseId : ",bresult);
+        
+        const dresult = await detailedSyllabusSchema.find({courseId});
+        // console.log("detailed syllabus courseId : ",dresult);
+        
+        if(bresult.length==0 && dresult.length==0){
+            const result = await courseSchema.deleteOne({courseId});
+            const courseList = await courseSchema.find({status:true});
+            console.log("Result : ",result);
+            response.render("adminCourseList.ejs",{courseList:courseList.reverse(),message:message.COURSE_DELETED,status:status.SUCCESS});
+        }else{
+            response.render("adminCourseList.ejs",{courseList:courseList.reverse(),message:message.COURSE_NOT_DELETED,status:status.SUCCESS});
+        }
+    }catch(error){
+        const courseList = await courseSchema.find({status:true});
+        console.log("Error in admin delete course controller : ",error);
+        response.render("adminCourseList.ejs",{courseList:courseList.reverse(),message:message.SOMETHING_WENT_WRONG,status:status.SERVER_ERROR});
+    }
+}
+export const adminUpdateCourseController = async(request,response)=>{
+    try{
+        const courseId = request.query.courseId;
+        const courseObj = await courseSchema.findOne({courseId});
+        response.render("updateCourseForm.ejs",{courseObj,message:"",status:""});
+    }catch(error){
+        const courseList = await courseSchema.find({status:true});
+        console.log("Error in admin update course controller : ",error);
+        response.render("adminCourseList.ejs",{courseList:courseList.reverse(),message:message.SOMETHING_WENT_WRONG,status:status.SERVER_ERROR});
+    }
+}
+
+export const adminUpdateCourse = async (request, response) => {
+    try {
+        const fileCheck = request.files;
+        console.log("fileCheck : ", fileCheck);
+
+        if (request.files) {
+            console.log("file uploaded while update");
+            // console.log(request.body);
+            // console.log(request.files);
+            const filename = request.files.courseFile;
+            const fileName = new Date().getTime() + filename.name;
+            const filePath = path.join(__dirname.replace("\\controller", "/public/courseImages/") + fileName);
+
+            filename.mv(filePath, async (error) => {
+                try {
+                    request.body.courseFile = fileName;
+                    const resultNew = await courseSchema.updateOne({
+                        courseId: request.body.courseId
+                    }, {
+                        $set: request.body
+                    });
+                    const courseList = await courseSchema.find();
+                    response.render("adminCourseList.ejs", { courseList: courseList.reverse(), message: message.COURSE_UPDATED, status: status.SUCCESS });
+                } catch (error) {
+                    console.log("Error in update Course : ", error);
+                    const courseList = await courseSchema.find();
+                    response.render("adminCourseList.ejs", { courseList: courseList.reverse(), message: message.COURSE_NOT_UPDATED, status: status.SERVER_ERROR });
+                }
+            })
+        } else {
+            console.log("File not uploaded while update");
+            request.body.courseFile = request.body.previousCourseFile;
+            console.log(request.body);
+
+            const resultNew = await courseSchema.updateOne({
+                courseId: request.body.courseId
+            }, {
+                $set: request.body
+            });
+            const courseList = await courseSchema.find();
+            response.render("adminCourseList.ejs", { courseList: courseList.reverse(), message: message.COURSE_UPDATED, status: status.SUCCESS });
+        }
+
+    } catch (error) {
+        console.log("Error in admin update course : ", error);
+        const courseList = await courseSchema.find();
+        response.render("adminCourseList.ejs", { courseList: courseList.reverse(), message: message.COURSE_NOT_UPDATED, status: status.SERVER_ERROR });
+    }
+}
 
 // needs to print email id on every page {email:request.payload.email} like this

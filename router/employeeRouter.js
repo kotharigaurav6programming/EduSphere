@@ -46,8 +46,8 @@ employeeRouter.post("/employeeRegistration",employeeRegistrationController);
 employeeRouter.get("/verifyEmail",employeeVerifyEmailController);
 employeeRouter.post('/employeeLogin',employeeLoginController);
 employeeRouter.get('/addBatch',authenticateJWT,async(request,response)=>{
-    const courseArrObj = await courseSchema.find();
-    response.render("addBatch.ejs",{courseArrObj,email:request.employeePayload.email,name:request.employeePayload.name,message:"",status:status.SUCCESS});
+    const courseArrObj = await courseSchema.find({status:true});
+    response.render("addBatch.ejs",{courseArrObj:courseArrObj.reverse(),email:request.employeePayload.email,name:request.employeePayload.name,message:"",status:status.SUCCESS});
 });
 employeeRouter.get('/employeeViewBatches',authenticateJWT,employeeViewBatchesController);
 employeeRouter.get('/assignmentForm',authenticateJWT,assignmentFormController);

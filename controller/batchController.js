@@ -8,12 +8,12 @@ export const addBatchController = async(request,response)=>{
         // console.log("data : ",request.body);
         request.body.batchId = uuid4();
         const result = await batchSchema.create(request.body); 
-        const courseArrObj = await courseSchema.find();
+        const courseArrObj = await courseSchema.find({status:true});
         // console.log(result);
         if(result){
-            response.render('addBatch.ejs',{courseArrObj,name:request.employeePayload.name,message:message.BATCH_ADDED,status:status.SUCCESS});
+            response.render('addBatch.ejs',{courseArrObj:courseArrObj.reverse(),name:request.employeePayload.name,message:message.BATCH_ADDED,status:status.SUCCESS});
         }else{
-            response.render('addBatch.ejs',{courseArrObj,name:request.employeePayload.name,message:message.BATCH_ADD_ERROR,status:status.SUCCESS});
+            response.render('addBatch.ejs',{courseArrObj:courseArrObj.reverse(),name:request.employeePayload.name,message:message.BATCH_ADD_ERROR,status:status.SUCCESS});
         }
     }catch(error){
         console.log("error in addBatchController : ",error);

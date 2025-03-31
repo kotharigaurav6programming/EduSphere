@@ -61,4 +61,8 @@ export const message = {
     LINK_NOT_DELETED:"Link Not Deleted",
     LINK_UPDATE:"Link Updated Successfully",
     LINK_NOT_UPDATE:"Link not updated",
+    COURSE_DELETED : "Course Deleted Successfully",
+    COURSE_NOT_DELETED:"Course Not Deleted As It is Linked with Other Module",
+    COURSE_UPDATED:"Course Updated Successfully",
+    COURSE_NOT_UPDATED:"Course Not Updated",
 }

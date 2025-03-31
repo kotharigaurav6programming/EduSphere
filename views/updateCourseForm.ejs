@@ -25,12 +25,7 @@
     <link rel="stylesheet" href="css/aos.css">
 
     <link rel="stylesheet" href="css/style.css">
-    <style>
-      .customHover:hover{
-        color:white;
-      }
-    </style>
-
+    
   </head>
   <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
   
@@ -46,7 +41,7 @@
 
     </div>
    
-    
+
     <header class="site-navbar py-4 js-sticky-header site-navbar-target" role="banner">
       
         <div class="container-fluid">
@@ -64,66 +59,82 @@
         </div>
         
       </header>
-  
 
-    <div class="site-section" id="programs-section" style="margin-top: -1px;">
-      <br>
+      <div class="site-section" id="courses-section" style="margin-top: -1px;">
+        <br>
         <div class="container">
-        <div class="row mb-5 justify-content-center">
-          <div class="col-lg-12 text-center"  data-aos="fade-up" data-aos-delay="">
-            <br>
-            <h4 class="text-black">Course List</h4>
-            <br>
-            <span style="color:green"><%=message%></span>
-            <table class="table" style="font-size: 12px;color:black;">
-                <thead>
-                  <tr>
-                    <th scope="col">S.No</th>
-                    <th scope="col">CourseId</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Type</th>
-                    <th scope="col">Duration</th>
-                    <th scope="col">Fees</th>
-                    <th scope="col" colspan="2">Action</th>
-                    <th scope="col">Detailed Syllabus</th>
-                </tr>
-                </thead>
-                <tbody>
-                  <%courseList.forEach((course,index)=>{%>
-                      <tr>
-                        <td><%=(index+1)%></td>
-                        <td><%=course.courseId%></td>
-                        <td><%=course.courseName%></td>
-                        <td><%=course.courseType%></td>
-                        <td><%=course.courseDuration%></td>
-                        <td><%=course.courseFees%></td>
-                        <td>
-                          <form action="/admin/adminUpdateCourse">
-                            <input type="hidden" value="<%=course.courseId%>" name="courseId" id="courseId">
-                            <button class="btn btn-outline-primary p-1">Update</button>
-                          </form>
-                        </td>
-                        <td>
-                          <form action="/admin/adminDeleteCourse">
-                            <input type="hidden" value="<%=course.courseId%>" name="courseId" id="courseId">
-                            <button class="btn btn-outline-primary p-1">Delete</button>
-                          </form>
-                        </td>
-                        <td><a class="btn btn-outline-success py-1 px-2 customHover" href="/admin/adminAddDetailedSyllabus?course=<%=JSON.stringify(course)%>">Add</a></td>
-                      </tr>
-                  <%})%>
-                </tbody>
-              </table>
-
+          <div class="row mb-0 justify-content-center">
+            <div class="col-lg-7 text-center"  data-aos="fade-up" data-aos-delay="">
+              <br>
+              <!-- <h4 class="text-black">Blog</h4> -->
+              <h3 class="h4 text-black mb-4">Update Course</h3>
+              <span><%=message%></span>
+            </div>
           </div>
+          <div class="row mb-5 align-items-center">
+            
+            <div class="col-lg-6 mb-5 order-1 order-lg-2" data-aos="fade-up" data-aos-delay="100">
+              <img src="images/undraw_teaching.svg" alt="Image" class="img-fluid">
+            </div>
+  
+            <div class="col-lg-6 mr-auto order-2 order-lg-1" data-aos="fade-up" data-aos-delay="200">
+                    <div>
+                      <!-- Admin Update Course -->
+                      <form action="/admin/adminUpdateCourse" method="post" enctype="multipart/form-data" class="form-box">
+                        <h3 class="h4 text-black mb-4">Update Course</h3>
+                        <input type="hidden" name="courseId" id="courseId" value="<%=courseObj.courseId%>">
+                        <div class="form-group">
+                          <input type="text" placeholder="Course Name" value="<%=courseObj.courseName%>" name="courseName" id="courseName" class="form-control">
+                        </div>
+                        <div class="form-group mb-4">
+                          <select name="courseType" id="courseType" class="form-control">
+                            <option value="<%=courseObj.courseType%>"><%=courseObj.courseType%></option>
+                            <option value="Short Term Course">Short Term Course</option>
+                            <option value="Placement Oriented Course">Placement Oriented Course</option>
+                          </select>
+                        </div>
+                        <div class="form-group mb-4">
+                          <select name="courseDuration" id="courseDuration" class="form-control">
+                            <option value="<%=courseObj.courseDuration%>"><%=courseObj.courseDuration%></option>
+                            <option value="1 Month">1 Month</option>
+                            <option value="2 Months">2 Months</option>
+                            <option value="3 Months">3 Months</option>
+                            <option value="6 Months">6 Months</option>
+                            <option value="1 Year">1 Year</option>
+                          </select>
+                        </div>
+                        <div class="form-group">
+                          <input type="text" placeholder="Course Fees in INR" value="<%=courseObj.courseFees%>" name="courseFees" id="courseFees" class="form-control">
+                        </div>
+                        <div class="form-group">
+                          <textarea placeholder="Course Description" value="<%=courseObj.courseDesc%>" name="courseDesc" id="courseDesc" class="form-control"><%=courseObj.courseDesc%></textarea>
+                        </div>
+                        Course Banner : 
+                        <img src="/courseImages/<%=courseObj.courseFile%>" height="50%" width="100%"  alt="">
+                        <input type="hidden" name="previousCourseFile" id="previousCourseFile" value="<%=courseObj.courseFile%>"> <br><br>
+                        Or Upload New Course Banner : 
+                        <div class="form-group">
+                          <input type="file" name="courseFile" id="courseFile" class="form-control">
+                        </div>
+                        
+                        <div class="form-group">
+                          <input type="submit" class="btn btn-primary btn-pill" value="Update Course">
+                        </div>
+                      </form>
+                    </div>
+                    
+                  
+              
+            </div>
+          </div>
+  
+        
+  
         </div>
-      
-
       </div>
-    </div>
-
     
-     
+
+  
     <footer class="footer-section bg-white">
       <div class="container">
         <div class="row">
