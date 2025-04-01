@@ -65,4 +65,6 @@ export const message = {
     COURSE_NOT_DELETED:"Course Not Deleted As It is Linked with Other Module",
     COURSE_UPDATED:"Course Updated Successfully",
     COURSE_NOT_UPDATED:"Course Not Updated",
+    BATCH_ALLOCATED:"Batch Allocated Successfully",
+    BATCH_ALREADY_ALLOCATED:"Batch Already Allocated",
 }

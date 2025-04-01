@@ -8,5 +8,8 @@ studentRouter.get('/studentRegistration',(request,response)=>{
 })
 
 studentRouter.post('/studentRegistration',studentRegistrationController);
+studentRouter.get("/studentLogin",(request,response)=>{
+    response.render("studentLogin.ejs",{message:""});
+});
 
 export default studentRouter;

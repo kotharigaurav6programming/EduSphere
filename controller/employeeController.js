@@ -177,7 +177,9 @@ export const allocateBatchController = async(request,response)=>{
             if(trainerObj){
                 batchData[i].trainerName = trainerObj.name;
                 let courseObj = await courseSchema.findOne({courseId:batchData[i].courseId});
+                // console.log("------------> "+courseObj+"-=-=-=-=-=>"+batchData[i].batchId);
                 batchData[i].courseName = courseObj.courseName;
+                batchData[i].courseId = courseObj.courseId;
                 // console.log("modified : ",batchData[i]);
                 batchData[i].studentData = studentData;
                 batchArray.push(batchData[i]);

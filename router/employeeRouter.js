@@ -5,6 +5,8 @@ import jwt from 'jsonwebtoken';
 import { employeeRegistrationController,employeeVerifyEmailController,employeeLoginController,employeeViewBatchesController,assignmentFormController,sendEnrollLinkController,viewStudentListController,allocateBatchController } from '../controller/employeeController.js';
 import { message, status } from '../utils/statusMessage.js';
 import courseSchema from '../model/courseSchema.js';
+import allocateBatchSchema from '../model/allocateBatchSchema.js';
+import uuid4 from 'uuid4';
 
 var employeeRouter = express.Router();
 
@@ -54,26 +56,38 @@ employeeRouter.get('/assignmentForm',authenticateJWT,assignmentFormController);
 employeeRouter.post('/sendEnrollLink',authenticateJWT,sendEnrollLinkController);
 employeeRouter.get('/viewStudentList',authenticateJWT,viewStudentListController);
 employeeRouter.get('/allocateBatch',authenticateJWT,allocateBatchController);
-employeeRouter.post('/employeeAllocateBatch',authenticateJWT,(request,response)=>{
-// console.log("-0-0-0-0-0-0-0- : ",request.query.data);
-
-
-    console.log("allocate batch data : ",request.body);
-    var obj={};
-    console.log("------------------",request.body);
+employeeRouter.post('/employeeAllocateBatch',authenticateJWT,async (request,response)=>{
+    try{
+        const studentObj = JSON.parse(request.body.studentData);
+        studentObj.batchId = request.body.batchId;
+        studentObj.courseId = request.body.courseId;
+        studentObj.courseName = request.body.courseName;
+        studentObj.trainerName = request.body.trainerName;
     
-    obj.batchId = request.body.batchId
-    // console.log("batchId : ",request.body.batchId);
-    
-    for(let i=0;i<request.body.studentData.length;i++){
-        if(request.body.studentData[i]){
-            // console.log(JSON.parse(request.body.studentData[i]));
-            obj.enrollId = JSON.parse(request.body.studentData[i]).enrollId;
-            obj.name = JSON.parse(request.body.studentData[i]).name;
-            obj.email = JSON.parse(request.body.studentData[i]).email;
+        const check = {
+            $and:[
+                {
+                    batchId: studentObj.batchId,
+                    enrollId : studentObj.enrollId
+                }
+            ]
         }
+        const result = await allocateBatchSchema.findOne(check);
+        // console.log("--------> ",result);
+        
+        if(!result){
+            // console.log("combination doesnot exist");
+            studentObj.allocateBatchId = uuid4();
+            const result = await allocateBatchSchema.create(studentObj);
+            console.log("allocateBatch result : ",result);         
+            response.render('employeeHome.ejs',{profile:request.employeePayload.profile,email:request.employeePayload.email,name:request.employeePayload.name,message:message.BATCH_ALLOCATED,status:status.SUCCESS});            
+        }else{
+            // console.log("combination exist");
+            response.render('employeeHome.ejs',{profile:request.employeePayload.profile,email:request.employeePayload.email,name:request.employeePayload.name,message:message.BATCH_ALREADY_ALLOCATED,status:status.SUCCESS});
+        }
+    }catch(error){
+        console.log("Error in employee allocate batch : ",error);
+        response.render('employeeHome.ejs',{profile:request.employeePayload.profile,email:request.employeePayload.email,name:request.employeePayload.name,message:message.SOMETHING_WENT_WRONG,status:status.SERVER_ERROR});        
     }
-    console.log(obj);
-    
 });
 export default employeeRouter;
