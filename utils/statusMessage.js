@@ -67,4 +67,6 @@ export const message = {
     COURSE_NOT_UPDATED:"Course Not Updated",
     BATCH_ALLOCATED:"Batch Allocated Successfully",
     BATCH_ALREADY_ALLOCATED:"Batch Already Allocated",
+    CONTACT_ADMIN:"Contact Admin to Verify Account or Re-Activate Account",
+    TESTIMONIAL_ALREADY_SUBMITTED:"Testimonial already submitted",
 }

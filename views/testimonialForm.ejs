@@ -54,13 +54,7 @@
                 <li><a href="#courses-section" class="nav-link">Courses</a></li>
                 <li><a href="#programs-section" class="nav-link">Programs</a></li>
                 <!-- <li><a href="/employee/employeeLogin" class="nav-link">Employee</a></li> -->
-                <li class="nav-item dropdown">
-                  <a href="#" class="nav-link dropdown-toggle" id="settingsDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Section</a>
-                  <ul class="dropdown-menu" aria-labelledby="settingsDropdown">
-                      <li><a class="dropdown-item" href="/employee/employeeLogin">Employee</a></li>
-                      <li><a class="dropdown-item" href="/student/studentLogin">Student</a></li>
-                  </ul>
-              </li>
+               
               </ul>
             </nav>
           </div>
@@ -84,18 +78,20 @@
         <div class="container">
           <div class="row align-items-center">
             <div class="col-12" style="height:500px;">
-              <div class="row align-items-center">
+              <div class="row align-items-center" style="margin-top: -90px;">
                 <div class="col-lg-6 mb-4">
-                  <h1  data-aos="fade-up" data-aos-delay="100">EduSphere | Student Panel</h1>
-                  <p class="mb-4"  data-aos="fade-up" data-aos-delay="200">Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime ipsa nulla sed quis rerum amet natus quas necessitatibus.</p>
+                  <h2 class="text-white" data-aos="fade-up" data-aos-delay="100">EduSphere | Testimonial</h2>
+                  <p class="mb-4"  data-aos="fade-up" data-aos-delay="200">
+                    “Your feedback helps us to improve!” <br>
+                    “We’d love to hear your thoughts!”
+                  </p>
                   <p data-aos="fade-up" data-aos-delay="300">
-                    <a href="" class="btn btn-primary py-3 px-5 btn-pill">You are at Right Place to learn Coding</a></p>
 
                 </div>
 
                 <div class="col-lg-5 ml-auto" data-aos="fade-up" data-aos-delay="500">
-                  <form action="/student/studentLogin" method="post" class="form-box">
-                    <h3 class="h4 text-black mb-4">Student Login Form</h3>
+                  <form action="/student/addTestimonial" method="post" enctype="multipart/form-data" class="form-box">
+                    <h3 class="h4 text-black mb-4">Testimonial Form</h3>
                     <span style="color:green"><%=message%></span>
                     <div class="form-group">
                       <input 
@@ -104,19 +100,42 @@
                         placeholder="Email Addresss"
                         name="email"
                         id="email"
+                        value="<%=email%>"
+                        readonly
                         required
                       />
                     </div>
                     <div class="form-group">
                         <input 
-                        type="password" 
+                        type="text" 
                         class="form-control" 
-                        placeholder="Enter Password"
-                        name="password"
-                        id="password"
+                        placeholder="Enter Full Name"
+                        name="name"
+                        id="name"
                         required
                       />
                     </div>
+                    <div class="form-group">
+                        Enter Your Valuable Comment : 
+                        <textarea 
+                        class="form-control" 
+                        placeholder="Enter Comment"
+                        name="comment"
+                        id="comment"
+                        required
+                      /></textarea>
+                    </div>
+                    <div class="form-group">
+                        Upload Photo:
+                        <input 
+                        type="file" 
+                        class="form-control" 
+                        name="profilePic"
+                        id="profilePic"
+                        required
+                      />
+                    </div>
+
                     <div class="form-group">
                       <input 
                         type="submit" 
@@ -136,54 +155,6 @@
     </div>
 
     
-     
-    <footer class="footer-section bg-white">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-4">
-            <h3>About OneSchool</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro consectetur ut hic ipsum et veritatis corrupti. Itaque eius soluta optio dolorum temporibus in, atque, quos fugit sunt sit quaerat dicta.</p>
-          </div>
-
-          <div class="col-md-3 ml-auto">
-            <h3>Links</h3>
-            <ul class="list-unstyled footer-links">
-              <li><a href="#">Home</a></li>
-              <li><a href="#">Courses</a></li>
-              <li><a href="#">Programs</a></li>
-              <li><a href="#">Teachers</a></li>
-            </ul>
-          </div>
-
-          <div class="col-md-4">
-            <h3>Subscribe</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt incidunt iure iusto architecto? Numquam, natus?</p>
-            <form action="#" class="footer-subscribe">
-              <div class="d-flex mb-5">
-                <input type="text" class="form-control rounded-0" placeholder="Email">
-                <input type="submit" class="btn btn-primary rounded-0" value="Subscribe">
-              </div>
-            </form>
-          </div>
-
-        </div>
-
-        <div class="row pt-5 mt-5 text-center">
-          <div class="col-md-12">
-            <div class="border-top pt-5">
-            <p>
-        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-        Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank" >Colorlib</a>
-        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-      </p>
-            </div>
-          </div>
-          
-        </div>
-      </div>
-    </footer>
-
-  
     
   </div> <!-- .site-wrap -->
 

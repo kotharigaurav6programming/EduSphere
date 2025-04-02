@@ -25,6 +25,7 @@ import glimphsSchema from "../model/glimphsSchema.js";
 import studentSchema from "../model/studentSchema.js";
 import videoSchema from "../model/videoSchema.js";
 import { response } from "express";
+import mailer_testimonialLink from "./mailer_testimonialLink.js";
 
 dotenv.config();
 const ADMIN_SECRET_KEY = process.env.ADMIN_SECRET_KEY;
@@ -279,7 +280,7 @@ export const adminAddCourseController = async (request, response) => {
             if (error.code == 11000) {
                 response.render("adminCourses.ejs", { message: message.COURSE_ALREADY_EXIST, status: status.SUCCESS });
             } else {
-                response.render("notfound.ejs", { message: message, status: status.SERVER_ERROR });
+                response.render("notfound.ejs", { message: message.SOMETHING_WENT_WRONG, status: status.SERVER_ERROR });
             }
         }
     })
@@ -915,5 +916,22 @@ export const adminUpdateCourse = async (request, response) => {
         response.render("adminCourseList.ejs", { courseList: courseList.reverse(), message: message.COURSE_NOT_UPDATED, status: status.SERVER_ERROR });
     }
 }
+
+export const sendTestimonialLinkController = async(request,response)=>{
+    try{
+        mailer_testimonialLink.mailer(request.body.email,async(result)=>{
+            if(result){
+                console.log("info in sendTestimonialLinkcontroller : ",result);
+                response.render("adminHome.ejs",{message:message.MAIL_SENT_FOR_ENROLL,status:status.SUCCESS});                
+            }else{
+                response.render("adminHome.ejs",{message:message.LOW_INTERNET,status:""}); 
+            }                    
+        });
+    }catch(error){
+        console.log("Error in send testimonial link controller : ",error);
+        response.render("adminHome.ejs",{message:message.SOMETHING_WENT_WRONG,status:status.SERVER_ERROR});
+    }
+}
+
 
 // needs to print email id on every page {email:request.payload.email} like this
