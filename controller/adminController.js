@@ -26,6 +26,7 @@ import studentSchema from "../model/studentSchema.js";
 import videoSchema from "../model/videoSchema.js";
 import { response } from "express";
 import mailer_testimonialLink from "./mailer_testimonialLink.js";
+import testimonialSchema from "../model/testimonialSchema.js";
 
 dotenv.config();
 const ADMIN_SECRET_KEY = process.env.ADMIN_SECRET_KEY;
@@ -933,5 +934,50 @@ export const sendTestimonialLinkController = async(request,response)=>{
     }
 }
 
+export const testimonialListController = async(request,response)=>{
+    try{
+        const testimonialData = await testimonialSchema.find();
+        response.render("adminViewTestimonialList.ejs",{testimonialData:testimonialData.reverse(),message:"",status:status.SUCCESS});
+    }catch(error){
+        console.log("Error : ",error);
+        response.render("adminHome.ejs",{adminEmail:request.adminPayload.email,message:"",status:status.SUCCESS});
+    }
+}
+
+export const adminVerifyTestimonialController = async(request,response)=>{
+    try{
+        const testimonialId = request.body.testimonialId;
+        const status = {
+            $set :{
+                adminVerify : 'Verified'
+            }
+        }
+        const result = await testimonialSchema.updateOne({testimonialId},status);
+        const testimonialData = await testimonialSchema.find();
+        response.render("adminViewTestimonialList.ejs",{testimonialData:testimonialData.reverse(),message:message.TESTIMONIAL_VERIFIED,status:status.SUCCESS});
+    }catch(error){
+        console.log("Error in adminVerifyTestimonialController : ",error);
+        const testimonialData = await testimonialSchema.find();
+        response.render("adminViewTestimonialList.ejs",{testimonialData:testimonialData.reverse(),message:"",status:status.SUCCESS});
+    }
+}
+
+export const adminRemoveTestimonialController = async(request,response)=>{
+    try{
+        const testimonialId = request.body.testimonialId;
+        const status = {
+            $set :{
+                status : false
+            }
+        }
+        const result = await testimonialSchema.updateOne({testimonialId},status);
+        const testimonialData = await testimonialSchema.find();
+        response.render("adminViewTestimonialList.ejs",{testimonialData:testimonialData.reverse(),message:message.TESTIMONIAL_REMOVED,status:status.SUCCESS});
+    }catch(error){
+        console.log("Error in adminVerifyTestimonialController : ",error);
+        const testimonialData = await testimonialSchema.find();
+        response.render("adminViewTestimonialList.ejs",{testimonialData:testimonialData.reverse(),message:"",status:status.SUCCESS});
+    }
+}
 
 // needs to print email id on every page {email:request.payload.email} like this

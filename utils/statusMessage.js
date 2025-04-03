@@ -69,4 +69,6 @@ export const message = {
     BATCH_ALREADY_ALLOCATED:"Batch Already Allocated",
     CONTACT_ADMIN:"Contact Admin to Verify Account or Re-Activate Account",
     TESTIMONIAL_ALREADY_SUBMITTED:"Testimonial already submitted",
+    TESTIMONIAL_VERIFIED :"Testimonial Verified",
+    TESTIMONIAL_REMOVED:"Testimonial Removed Successfully",
 }

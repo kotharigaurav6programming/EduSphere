@@ -14,6 +14,7 @@
             <li><a class="dropdown-item" href="/admin/domainPage">Domain</a></li>
             <li><a class="dropdown-item" href="/admin/glimphsGallery">GlimpseGallery</a></li>
             <li><a class="dropdown-item" href="/admin/videoGallery">VideoGallery</a></li>
+            <li><a class="dropdown-item" href="/admin/testimonialList">Testimonial</a></li>
         </ul>
     </li>
 
