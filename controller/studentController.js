@@ -13,6 +13,7 @@ import uploadSyllabusSchema from "../model/uploadSyllabusSchema.js";
 import glimphsSchema from "../model/glimphsSchema.js";
 import videoSchema from "../model/videoSchema.js";
 import courseSchema from "../model/courseSchema.js";
+import assignmentSchema from "../model/assignmentSchema.js";
 const STUDENT_SECRET_KEY = process.env.STUDENT_SECRET_KEY;
 
 export const studentRegistrationController = async(request,response)=>{
@@ -78,19 +79,21 @@ export const studentLoginController = async(request,response)=>{
         response.render("studentLogin.ejs",{message:message.SOMETHING_WENT_WRONG,status:status.SERVER_ERROR});        
     }
 }
-// needs to do proper
+
 export const viewBatchesController = async(request,response)=>{
     try{
         const email = request.studentPayload.email;
-        const allocatedBatchData = await allocateBatchSchema.find({email});
-        console.log("allocatedBatchData : ",allocatedBatchData);
+        const allocatedBatchData = await allocateBatchSchema.find({email}).lean();
+        // console.log("allocatedBatchData : ",allocatedBatchData);
         for(let i=0;i<allocatedBatchData.length;i++){
             const batchData = await batchSchema.findOne({batchId:allocatedBatchData[i].batchId});
-            allocatedBatchData[i].batchDuration = batchData.batchDuration;
+            allocatedBatchData[i].startDate = batchData.startDate;
+            allocatedBatchData[i].startTime = batchData.startTime;
+            allocatedBatchData[i].endTime = batchData.endTime;
+            allocatedBatchData[i].batchDuration = batchData.batchDuration; 
         }
-        console.log("allocatedBatchData : ",allocatedBatchData);
         
-//        response.render("studentViewBatches.ejs",{allocatedBatchData,email:request.studentPayload.email,name:request.studentPayload.name,status : status.SUCCESS,message:""});
+        response.render("studentViewBatches.ejs",{allocatedBatchData,email:request.studentPayload.email,name:request.studentPayload.name,status : status.SUCCESS,message:""});
     }catch(error){
         console.log("Error in view Batch Controller : ",error); 
         response.render("studentHome.ejs",{email:request.studentPayload.email,name:request.studentPayload.name,status : status.SERVER_ERROR,message:message.SOMETHING_WENT_WRONG});  
@@ -136,5 +139,16 @@ export const addTestimonialController = async (request,response)=>{
         });               
     }catch(error){
       response.render("notfound.ejs", { message: message.SOMETHING_WENT_WRONG, status: status.SERVER_ERROR });
+    }
+}
+
+export const studentViewAssignmentsController = async(request,response)=>{
+    try{
+        const batchId = request.body.batchId;
+        const assignments = await assignmentSchema.find({batchId});
+        response.render("studentViewAssignments.ejs",{assignments,email:request.studentPayload.email,name:request.studentPayload.name,message:"",status:status.SUCCESS});
+    }catch(error){
+        console.log("Error in student view assignment controller : ",error);
+        response.render("studentHome.ejs",{email:request.studentPayload.email,name:request.studentPayload.name,status : status.SERVER_ERROR,message:message.SOMETHING_WENT_WRONG});       
     }
 }

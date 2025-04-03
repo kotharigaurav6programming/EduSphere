@@ -1,5 +1,5 @@
 import express from 'express';
-import { studentRegistrationController,studentLoginController,viewBatchesController,addTestimonialController } from '../controller/studentController.js';
+import { studentRegistrationController,studentLoginController,viewBatchesController,addTestimonialController,studentViewAssignmentsController } from '../controller/studentController.js';
 import jwt from 'jsonwebtoken';
 import { message, status } from '../utils/statusMessage.js';
 const STUDENT_SECRET_KEY = process.env.STUDENT_SECRET_KEY;
@@ -39,5 +39,5 @@ studentRouter.get("/studentLogin",(request,response)=>{
 studentRouter.post("/studentLogin",studentLoginController);
 studentRouter.get("/viewBatches",authenticateJWT,viewBatchesController);
 studentRouter.post('/addTestimonial',addTestimonialController);
-
+studentRouter.post('/studentViewAssignments',authenticateJWT,studentViewAssignmentsController);
 export default studentRouter;
