@@ -12,8 +12,16 @@ export const blogController = async (request, response) => {
         const glimphsData = await glimphsSchema.find({ status: true });
         const videoData = await videoSchema.find({ status: true });
         const courseData = await courseSchema.find({status:true});
-        response.render("home.ejs", { courseData: courseData.reverse(), videoData: videoData.reverse(), glimphsData: glimphsData.reverse(), result: res, message: "", status: "" });
-
+        const testStatus = {
+                    $and:[
+                        {
+                            adminVerify:'Verified',
+                            status:true
+                        }
+                    ]
+                }
+                const testimonialData = await testimonialSchema.find(testStatus);
+                response.render("home.ejs",{testimonialData:testimonialData.reverse(),courseData:courseData.reverse(),videoData:videoData.reverse(),glimphsData:glimphsData.reverse(),result:res,message:"",status:""});
     }
 }
 
@@ -28,7 +36,15 @@ export const detailedBlogController = async (request, response) => {
         const glimphsData = await glimphsSchema.find({ status: true });
         const videoData = await videoSchema.find({ status: true });
         const courseData = await courseSchema.find({status:true});
-        response.render("home.ejs", { courseData: courseData.reverse(), videoData: videoData.reverse(), glimphsData: glimphsData.reverse(), result: res, message: "", status: "" });
-
+        const testStatus = {
+                    $and:[
+                        {
+                            adminVerify:'Verified',
+                            status:true
+                        }
+                    ]
+                }
+                const testimonialData = await testimonialSchema.find(testStatus);
+                response.render("home.ejs",{testimonialData:testimonialData.reverse(),courseData:courseData.reverse(),videoData:videoData.reverse(),glimphsData:glimphsData.reverse(),result:res,message:"",status:""});
     }
 }

@@ -23,6 +23,7 @@ import interviewQuestionsRouter from './router/interviewQuestionsRouter.js';
 import studentRouter from './router/studentRouter.js';
 import glimphsSchema from './model/glimphsSchema.js';
 import videoSchema from './model/videoSchema.js';
+import testimonialSchema from './model/testimonialSchema.js';
 
 mongoose.connect(url,{
     useNewUrlParser:true,
@@ -55,7 +56,16 @@ app.get("/",async (request,response)=>{
         const glimphsData = await glimphsSchema.find({status:true});
         const videoData = await videoSchema.find({status:true});
         const courseData = await courseSchema.find({status:true});
-        response.render("home.ejs",{courseData:courseData.reverse(),videoData:videoData.reverse(),glimphsData:glimphsData.reverse(),result:res,message:"",status:""});
+        const testStatus = {
+            $and:[
+                {
+                    adminVerify:'Verified',
+                    status:true
+                }
+            ]
+        }
+        const testimonialData = await testimonialSchema.find(testStatus);
+        response.render("home.ejs",{testimonialData:testimonialData.reverse(),courseData:courseData.reverse(),videoData:videoData.reverse(),glimphsData:glimphsData.reverse(),result:res,message:"",status:""});
     }catch(error){
         console.log("error in home page: ",error);
         response.render("notfound.ejs",{message:message.SERVER_ERROR,status:status.SERVER_ERROR});

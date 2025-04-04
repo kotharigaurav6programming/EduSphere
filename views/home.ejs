@@ -574,65 +574,21 @@
           <div class="row" style="margin-top: -70px;">
   
             <div class="owl-carousel col-12 nonloop-block-14">
-  
-              <div class="course bg-white h-100 align-self-stretch">
-                <div class="course-inner-text py-4 px-4">
-                  <span class="course-price">Andrew Anderson</span>
-                  <div class="meta"><span class="icon-clock-o"></span>Placement Oriented Batch</div>
-                  <h3><a href="#">JavaScript</a></h3>
-                  <p>The learning experience was empowering—clear, engaging, and incredibly valuable.</p>
+              <%if(testimonialData.length==0){%>
+                <span class="text-white">No Record Found</span>
+              <%}else{testimonialData.forEach((obj)=>{%>
+              <div class="course bg-white h-100 align-self-stretch row col-12">
+                <div class="col-md-5 p-0">
+                    <img src="/testimonial/<%=obj.profilePic%>" alt="Course Image" class="img-fluid w-100 h-100" style="object-fit: cover;">
                 </div>
-              </div>
-  
-              <div class="course bg-white h-100 align-self-stretch">
-                <div class="course-inner-text py-4 px-4">
-                  <span class="course-price">Jackson Jack</span>
-                  <div class="meta"><span class="icon-clock-o"></span>Short Term Batch</div>
-                  <h3><a href="#">Web Technologies</a></h3>
-                  <p>A game-changer in my professional and personal development!</p>
+                <div class="col-md-7 d-flex flex-column justify-content-center p-4">
+                    <span class="course-price"><%=obj.name%></span>
+                    <p><%=obj.comment%></p>
                 </div>
-              </div>
-  
-              <div class="course bg-white h-100 align-self-stretch">
-                <div class="course-inner-text py-4 px-4">
-                  <span class="course-price">Peter Parker</span>
-                  <div class="meta"><span class="icon-clock-o"></span>Placement Oriented Batch</div>
-                  <h3><a href="#">Java Programming</a></h3>
-                  <p>The learning experience was empowering—clear, engaging, and incredibly valuable.</p>
-                </div>
-              </div>
-  
-              <div class="course bg-white h-100 align-self-stretch">
-                <div class="course-inner-text py-4 px-4">
-                  <span class="course-price">Jacob Jack</span>
-                  <div class="meta"><span class="icon-clock-o"></span>Short Term Batch</div>
-                  <h3><a href="#">MERN Stack Web Development</a></h3>
-                  <p>A game-changer in my professional and personal development!</p>
-                </div>
-              </div>
-  
-              <div class="course bg-white h-100 align-self-stretch">
-                <div class="course-inner-text py-4 px-4">
-                  <span class="course-price">Andrew Anderson</span>
-                  <div class="meta"><span class="icon-clock-o"></span>Placement Oriented Batch</div>
-                  <h3><a href="#">Java Programming</a></h3>
-                  <p>The learning experience was empowering—clear, engaging, and incredibly valuable.</p>
-                </div>
-              </div>
-  
-              <div class="course bg-white h-100 align-self-stretch">
-                <div class="course-inner-text py-4 px-4">
-                  <span class="course-price">Jackson Jack</span>
-                  <div class="meta"><span class="icon-clock-o"></span>Short Term Batch</div>
-                  <h3><a href="#">MERN Stack Web Development</a></h3>
-                  <p>A game-changer in my professional and personal development!</p>
-                </div>
-              </div>
-  
+             </div>
+             <%})}%>
+
             </div>
-  
-  
-  
           </div>
           
       </div>
