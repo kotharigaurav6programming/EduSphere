@@ -11,7 +11,6 @@ import bcrypt from 'bcrypt';
 import employeeSchema from "../model/employeeSchema.js";
 import studentEnquirySchema from "../model/studentEnquirySchema.js";
 import { fileURLToPath } from "url";
-import { log } from "console";
 import uploadSyllabusSchema from "../model/uploadSyllabusSchema.js";
 import mailer_syllabus from "./mailer_syllabus.js";
 import courseSchema from '../model/courseSchema.js';
@@ -27,6 +26,7 @@ import videoSchema from "../model/videoSchema.js";
 import { response } from "express";
 import mailer_testimonialLink from "./mailer_testimonialLink.js";
 import testimonialSchema from "../model/testimonialSchema.js";
+import customUpload from "../utils/customUploadFunctionality.js";
 
 dotenv.config();
 const ADMIN_SECRET_KEY = process.env.ADMIN_SECRET_KEY;
@@ -483,31 +483,67 @@ export const adminAllocateTrainerController = async (request, response) => {
     }
 }
 
+// export const adminAddBlogController = async (request, response) => {
+//     try {
+//         //console.log(request.body);
+//         const filename = request.files.blogFile;
+//         // console.log(request.files);
+//         const fileName = new Date().getTime() + filename.name;
+//         const filePath = path.join(__dirname.replace("\\controller", "/public/blogImages/") + fileName);
+//         filename.mv(filePath, async (error) => {
+//             try {
+//                 request.body.blogId = uuid4();
+//                 request.body.blogFile = fileName;
+//                 request.body.uploadDate = moment().format('DD-MM-YYYY');
+//                 request.body.uploadTime = moment().format('hh:mm:ss A');
+//                 const resultNew = await blogSchema.create(request.body);
+//                 response.render("createBlogForm.ejs", { message: message.UPLOAD_STATUS, status: status.SUCCESS });
+//             } catch (error) {
+//                 console.log(error);
+//                 response.render("createBlogForm.ejs", { message: message.FILE_NOT_UPLOADED, status: status.SUCCESS });
+//             }
+//         })
+//     } catch (error) {
+//         console.log("Error in adminAddBlogController : ", error);
+//         response.render("createBlogForm.ejs", { message: message.SOMETHING_WENT_WRONG, status: status.SERVER_ERROR });
+//     }
+// }
+
+//-------------------
+
+
 export const adminAddBlogController = async (request, response) => {
     try {
-        //console.log(request.body);
-        const filename = request.files.blogFile;
-        // console.log(request.files);
-        const fileName = new Date().getTime() + filename.name;
-        const filePath = path.join(__dirname.replace("\\controller", "/public/blogImages/") + fileName);
-        filename.mv(filePath, async (error) => {
-            try {
-                request.body.blogId = uuid4();
-                request.body.blogFile = fileName;
-                request.body.uploadDate = moment().format('DD-MM-YYYY');
-                request.body.uploadTime = moment().format('hh:mm:ss A');
-                const resultNew = await blogSchema.create(request.body);
-                response.render("createBlogForm.ejs", { message: message.UPLOAD_STATUS, status: status.SUCCESS });
-            } catch (error) {
-                console.log(error);
-                response.render("createBlogForm.ejs", { message: message.FILE_NOT_UPLOADED, status: status.SUCCESS });
-            }
-        })
+        const filename = request.files.blogFile; // Get uploaded file
+        const fileName = `${Date.now()}_${filename.name}`; // Unique filename
+
+        const fileUrl = await customUpload('blogImages',filename,fileName);
+        console.log("----------> fileurl : "+fileUrl);
+
+        // Save blog details in the database
+        request.body.blogId = uuid4();
+        request.body.blogFile = fileUrl; // S3 File URL
+        request.body.uploadDate = moment().format("DD-MM-YYYY");
+        request.body.uploadTime = moment().format("hh:mm:ss A");
+
+        await blogSchema.create(request.body);
+
+        response.render("createBlogForm.ejs", { 
+            message: message.UPLOAD_STATUS, 
+            status: status.SUCCESS 
+        });
+
     } catch (error) {
-        console.log("Error in adminAddBlogController : ", error);
-        response.render("createBlogForm.ejs", { message: message.SOMETHING_WENT_WRONG, status: status.SERVER_ERROR });
+        console.error("Error in adminAddBlogController:", error);
+        response.render("createBlogForm.ejs", { 
+            message: message.SOMETHING_WENT_WRONG, 
+            status: status.SERVER_ERROR 
+        });
     }
-}
+};
+
+
+//-------------------
 
 export const adminAddDomainController = async (request, response) => {
     try {
@@ -625,6 +661,60 @@ export const adminViewBlogController = async (request, response) => {
         response.render("blogPage.ejs", { blogData: blogData, message: "", status: status.SUCCESS });
     }
 }
+// export const updateBlogController = async (request, response) => {
+//     try {
+//         const fileCheck = request.files;
+//         console.log("fileCheck : ", fileCheck);
+
+//         if (request.files) {
+//             console.log("file uploaded while update");
+//             // console.log(request.body);
+//             // console.log(request.files);
+//             const filename = request.files.blogFile;
+//             const fileName = new Date().getTime() + filename.name;
+//             const filePath = path.join(__dirname.replace("\\controller", "/public/blogImages/") + fileName);
+
+//             filename.mv(filePath, async (error) => {
+//                 try {
+//                     request.body.blogFile = fileName;
+//                     request.body.uploadDate = moment().format('DD-MM-YYYY');
+//                     request.body.uploadTime = moment().format('hh:mm:ss A');
+//                     const resultNew = await blogSchema.updateOne({
+//                         blogId: request.body.blogId
+//                     }, {
+//                         $set: request.body
+//                     });
+//                     const blogData = await blogSchema.find();
+//                     response.render("blogPage.ejs", { blogData: blogData, message: message.BLOG_UPDATED, status: status.SUCCESS });
+//                 } catch (error) {
+//                     console.log("Error in updateBlogController : ", error);
+//                     const blogData = await blogSchema.find();
+//                     response.render("blogPage.ejs", { blogData: blogData, message: message.BLOG_NOT_UPDATED, status: status.SERVER_ERROR });
+//                 }
+//             })
+//         } else {
+//             console.log("File not uploaded while update");
+//             request.body.blogFile = request.body.previousBlogFile;
+//             console.log(request.body);
+
+//             request.body.uploadDate = moment().format('DD-MM-YYYY');
+//             request.body.uploadTime = moment().format('hh:mm:ss A');
+//             const resultNew = await blogSchema.updateOne({
+//                 blogId: request.body.blogId
+//             }, {
+//                 $set: request.body
+//             });
+//             const blogData = await blogSchema.find();
+//             response.render("blogPage.ejs", { blogData: blogData, message: message.BLOG_UPDATED, status: status.SUCCESS });
+//         }
+
+//     } catch (error) {
+//         console.log("Error in updateBlogController : ", error);
+//         const blogData = await blogSchema.find();
+//         response.render("blogPage.ejs", { blogData: blogData, message: message.BLOG_NOT_UPDATED, status: status.SERVER_ERROR });
+//     }
+// }
+
 export const updateBlogController = async (request, response) => {
     try {
         const fileCheck = request.files;
@@ -636,11 +726,10 @@ export const updateBlogController = async (request, response) => {
             // console.log(request.files);
             const filename = request.files.blogFile;
             const fileName = new Date().getTime() + filename.name;
-            const filePath = path.join(__dirname.replace("\\controller", "/public/blogImages/") + fileName);
 
-            filename.mv(filePath, async (error) => {
-                try {
-                    request.body.blogFile = fileName;
+            const fileUrl = await customUpload('blogImages',filename,fileName);
+
+                    request.body.blogFile = fileUrl;
                     request.body.uploadDate = moment().format('DD-MM-YYYY');
                     request.body.uploadTime = moment().format('hh:mm:ss A');
                     const resultNew = await blogSchema.updateOne({
@@ -650,12 +739,6 @@ export const updateBlogController = async (request, response) => {
                     });
                     const blogData = await blogSchema.find();
                     response.render("blogPage.ejs", { blogData: blogData, message: message.BLOG_UPDATED, status: status.SUCCESS });
-                } catch (error) {
-                    console.log("Error in updateBlogController : ", error);
-                    const blogData = await blogSchema.find();
-                    response.render("blogPage.ejs", { blogData: blogData, message: message.BLOG_NOT_UPDATED, status: status.SERVER_ERROR });
-                }
-            })
         } else {
             console.log("File not uploaded while update");
             request.body.blogFile = request.body.previousBlogFile;
@@ -678,6 +761,7 @@ export const updateBlogController = async (request, response) => {
         response.render("blogPage.ejs", { blogData: blogData, message: message.BLOG_NOT_UPDATED, status: status.SERVER_ERROR });
     }
 }
+
 
 export const adminDeleteBlogController = async (request, response) => {
     try {

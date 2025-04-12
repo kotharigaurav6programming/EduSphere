@@ -130,7 +130,8 @@
                                 <h5><%=blogObject.blogTitle%></h5>
                                 <span class="small"><b>Uploaded On:</b> <%=blogObject.uploadDate%> | <%=blogObject.uploadTime%></span> <br>
                                 <span class="small"><b>Read Time:</b> <%=blogObject.timeToRead%></span> <br>
-                                <img src="/blogImages/<%=blogObject.blogFile%>" class="blog-image w-100 h-auto" alt="Tech Blog">
+                                <!-- <img src="/blogImages/<%=blogObject.blogFile%>" class="blog-image w-100 h-auto" alt="Tech Blog"> -->
+                                <img src="<%=blogObject.blogFile%>" class="blog-image w-100 h-auto" alt="Tech Blog">
                                 <p class="blog-text w-100" style="text-align: justify;">
                                     <span style="white-space: pre-line;">
                                         <%=blogObject.blogContent%>
