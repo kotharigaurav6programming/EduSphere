@@ -298,7 +298,7 @@
             <%courseData.forEach((obj,index)=>{%>
             <div class="course bg-white h-100 align-self-stretch">
               <figure class="m-0">
-                <a href="#"><img src="/courseImages/<%=obj.courseFile%>" alt="Image" class="img-fluid"></a>
+                <a href="#"><img src="<%=obj.courseFile%>"alt="Image" class="img-fluid"></a>
               </figure>
               <div class="course-inner-text py-4 px-4">
                 <span class="course-price">Special Discounts Available</span>
@@ -529,7 +529,7 @@
             %>
             <div class="course bg-white h-100 align-self-stretch">
               <figure class="m-0">
-                <a href="#"><img src="/glimphsImages/<%=obj.glimphsImage%>" alt="Image" class="img-fluid gallery-image"></a>
+                <a href="#"><img src="<%=obj.glimphsImage%>" alt="Image" class="img-fluid gallery-image"></a>
               </figure>
             </div>
         <%})}%>
@@ -577,11 +577,11 @@
               <%if(testimonialData.length==0){%>
                 <span class="text-white">No Record Found</span>
               <%}else{testimonialData.forEach((obj)=>{%>
-              <div class="course bg-white h-100 align-self-stretch row col-12">
+              <div class="course bg-white h-100 align-self-stretch row col-12" >
                 <div class="col-md-5 p-0">
-                    <img src="/testimonial/<%=obj.profilePic%>" alt="Course Image" class="img-fluid w-100 h-100" style="object-fit: cover;">
+                    <img src="<%=obj.profilePic%>" alt="Course Image" class="img-fluid" style="height:100%;object-fit: cover;">
                 </div>
-                <div class="col-md-7 d-flex flex-column justify-content-center p-4">
+                <div class="col-md-7 d-flex flex-column justify-content-center p-4" style="height:40vh">
                     <span class="course-price"><%=obj.name%></span>
                     <p><%=obj.comment%></p>
                 </div>

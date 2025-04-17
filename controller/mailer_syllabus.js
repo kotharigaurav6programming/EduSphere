@@ -13,17 +13,24 @@ function mailer(email,syllabusFileName,callback){
             pass : process.env.PASSWORD        
         }
     });
+    // const mailOption = {
+    //     from : process.env.EMAIL,
+    //     to : email,
+    //     subject:'Verification Mail',
+    //     html:`Hello ${email}<br>Thanks for Enquirying With Us. <br>Here We are attaching a <b>Syllabus for your Reference</b>`,
+    //     attachments: [
+    //         {
+    //           filename: syllabusFileName, // The name of the file in the email
+    //           path: path.join(__dirname.replace("\\controller","/public/syllabus/")+syllabusFileName), // Path to the file
+    //         },
+    //       ],
+    // }
+
     const mailOption = {
         from : process.env.EMAIL,
         to : email,
-        subject:'Verification Mail',
-        html:`Hello ${email}<br>Thanks for Enquirying With Us. <br>Here We are attaching a <b>Syllabus for your Reference</b>`,
-        attachments: [
-            {
-              filename: syllabusFileName, // The name of the file in the email
-              path: path.join(__dirname.replace("\\controller","/public/syllabus/")+syllabusFileName), // Path to the file
-            },
-          ],
+        subject:'Syllabus Regarding your Enquiry',
+        html:`Hello ${email}<br>Thanks for Enquirying With Us. <br>Here We are attaching a <b>Syllabus for your Reference. Please Click on the link below to view the Syllabus</b><br><a href=${syllabusFileName}>Click here to view syllabus</a>`,
     }
 
     transport.sendMail(mailOption,(error,info)=>{

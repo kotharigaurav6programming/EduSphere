@@ -164,6 +164,43 @@ export const adminAddStudRemarkController = async (request, response) => {
 // }
 // code to check whether uploaded syllabus available or not ends
 
+// export const adminUploadSyllabusController = async (request, response) => {
+//     try {
+//         const detailedObj = await detailedSyllabusSchema.find();
+//         const courseNameArray = [];
+//         for (let i = 0; i < detailedObj.length; i++) {
+//             const courseObj = await courseSchema.findOne({ courseId: detailedObj[i].courseId });
+//             courseNameArray.push(courseObj.courseName);
+//         }
+//         // console.log("courseNameArray : ",courseNameArray);
+//         // console.log("-----------------",request.body);
+//         const filename = request.files.syllabus;
+//         // console.log(request.files);
+//         const fileName = new Date().getTime() + filename.name;
+//         // console.log(__dirname.replace("\\controller","/public/syllabus/"));
+//         const filePath = path.join(__dirname.replace("\\controller", "/public/syllabus/") + fileName);
+//         filename.mv(filePath, async (error) => {
+//             try {
+//                 request.body.syllabusId = uuid4();
+//                 request.body.syllabus = fileName;
+//                 const res = await uploadSyllabusSchema.findOne({ subject: request.body.subject });
+//                 if (res) {
+//                     response.render("adminUploadSyllabus.ejs", { result: courseNameArray, message: message.COURSE_AVAILABLE, status: status.SUCCESS });
+//                 } else {
+//                     const resultNew = await uploadSyllabusSchema.create(request.body);
+//                     response.render("adminUploadSyllabus.ejs", { result: courseNameArray, message: message.UPLOAD_STATUS, status: status.SUCCESS });
+//                 }
+//             } catch (error) {
+//                 console.log(error);
+//                 response.render("adminUploadSyllabus.ejs", { result: courseNameArray, message: message.FILE_NOT_UPLOADED, status: status.SUCCESS });
+//             }
+//         })
+//     } catch (error) {
+//         console.log(error);
+//         response.render("adminHome.ejs", { message: message.SERVER_ERROR, status: status.SERVER_ERROR });
+//     }
+// }
+
 export const adminUploadSyllabusController = async (request, response) => {
     try {
         const detailedObj = await detailedSyllabusSchema.find();
@@ -177,24 +214,18 @@ export const adminUploadSyllabusController = async (request, response) => {
         const filename = request.files.syllabus;
         // console.log(request.files);
         const fileName = new Date().getTime() + filename.name;
-        // console.log(__dirname.replace("\\controller","/public/syllabus/"));
-        const filePath = path.join(__dirname.replace("\\controller", "/public/syllabus/") + fileName);
-        filename.mv(filePath, async (error) => {
-            try {
-                request.body.syllabusId = uuid4();
-                request.body.syllabus = fileName;
-                const res = await uploadSyllabusSchema.findOne({ subject: request.body.subject });
-                if (res) {
-                    response.render("adminUploadSyllabus.ejs", { result: courseNameArray, message: message.COURSE_AVAILABLE, status: status.SUCCESS });
-                } else {
-                    const resultNew = await uploadSyllabusSchema.create(request.body);
-                    response.render("adminUploadSyllabus.ejs", { result: courseNameArray, message: message.UPLOAD_STATUS, status: status.SUCCESS });
-                }
-            } catch (error) {
-                console.log(error);
-                response.render("adminUploadSyllabus.ejs", { result: courseNameArray, message: message.FILE_NOT_UPLOADED, status: status.SUCCESS });
-            }
-        })
+        const fileUrl = await customUpload('syllabus', filename, fileName);
+
+        request.body.syllabusId = uuid4();
+        request.body.syllabus = fileUrl;
+        const res = await uploadSyllabusSchema.findOne({ subject: request.body.subject });
+        if (res) {
+            response.render("adminUploadSyllabus.ejs", { result: courseNameArray, message: message.COURSE_AVAILABLE, status: status.SUCCESS });
+        } else {
+            const resultNew = await uploadSyllabusSchema.create(request.body);
+            response.render("adminUploadSyllabus.ejs", { result: courseNameArray, message: message.UPLOAD_STATUS, status: status.SUCCESS });
+        }
+
     } catch (error) {
         console.log(error);
         response.render("adminHome.ejs", { message: message.SERVER_ERROR, status: status.SERVER_ERROR });
@@ -236,65 +267,33 @@ export const adminSendSyllabusController = async (request, response) => {
         response.render("adminHome.ejs", { message: message.SOMETHING_WENT_WRONG, status: status.SERVER_ERROR });
     }
 }
-// original code
-// export const adminAddCourseController = async (request, response) => {
-//     try {
-//         request.body.courseId = uuid4();
-//         const result = await courseSchema.create(request.body);
-//         console.log("Add course result : ", result);
-//         if (result) {
-//             response.render("adminCourses.ejs", { message: message.COURSE_ADDED, status: status.SUCCESS });
-//         } else {
-//             response.render("adminCourses.ejs", { message: message.COURSE_NOT_ADDED, status: status.SUCCESS });
-//         }
-//     } catch (error) {
-//         // console.log("--------------",error.code);
-//         if (error.code == 11000) {
-//             response.render("adminCourses.ejs", { message: message.COURSE_ALREADY_EXIST, status: status.SUCCESS });
-//         } else {
-//             response.render("notfound.ejs", { message: message, status: status.SERVER_ERROR });
-//         }
-//     }
-// }
 
-// updated code
 export const adminAddCourseController = async (request, response) => {
     try {
-    //console.log(request.body);
-    const filename = request.files.courseFile;
-    // console.log(request.files);
-    const fileName = new Date().getTime() + filename.name;
-    const filePath = path.join(__dirname.replace("\\controller", "/public/courseImages/") + fileName);
-    filename.mv(filePath, async (error) => {
-        try {
-            request.body.courseId = uuid4();
-            request.body.courseFile = fileName;
-            const result = await courseSchema.create(request.body);
-            // console.log("Add course result : ", result);
-            if (result) {
-                response.render("adminCourses.ejs", { message: message.COURSE_ADDED, status: status.SUCCESS });
-            } else {
-                response.render("adminCourses.ejs", { message: message.COURSE_NOT_ADDED, status: status.SUCCESS });
-            }
-        } catch (error) {
-            // console.log("--------------",error.code);
-            if (error.code == 11000) {
-                response.render("adminCourses.ejs", { message: message.COURSE_ALREADY_EXIST, status: status.SUCCESS });
-            } else {
-                response.render("notfound.ejs", { message: message.SOMETHING_WENT_WRONG, status: status.SERVER_ERROR });
-            }
-        }
-    })
-} catch (error) {
-    console.log("Error in adminAddCourseController : ", error);
-    response.render("notfound.ejs", { message: message, status: status.SERVER_ERROR });
-}
+        //console.log(request.body);
+        const filename = request.files.courseFile;
+        // console.log(request.files);
+        const fileName = new Date().getTime() + filename.name;
+        const fileUrl = await customUpload('courseImages', filename, fileName);
+
+        request.body.courseId = uuid4();
+        request.body.courseFile = fileUrl;
+        const result = await courseSchema.create(request.body);
+        // console.log("Add course result : ", result);
+        if (result)
+            response.render("adminCourses.ejs", { message: message.COURSE_ADDED, status: status.SUCCESS });
+        else
+            response.render("adminCourses.ejs", { message: message.COURSE_NOT_ADDED, status: status.SUCCESS });
+    } catch (error) {
+        console.log("Error in adminAddCourseController : ", error);
+        response.render("notfound.ejs", { message: message, status: status.SERVER_ERROR });
+    }
 }
 
 
 export const adminViewCoursesController = async (request, response) => {
     try {
-        const result = await courseSchema.find({status:true});
+        const result = await courseSchema.find({ status: true });
         // console.log(result);
         if (result.length != 0) {
             response.render("adminViewCoursesList.ejs", { courseList: result.reverse(), message: "", status: status.SUCCESS });
@@ -309,7 +308,7 @@ export const adminViewCoursesController = async (request, response) => {
 
 export const adminCourseListController = async (request, response) => {
     try {
-        const result = await courseSchema.find({status:true});
+        const result = await courseSchema.find({ status: true });
         // console.log(result);
         if (result.length != 0) {
             response.render("adminCourseList.ejs", { courseList: result.reverse(), message: "", status: status.SUCCESS });
@@ -483,42 +482,13 @@ export const adminAllocateTrainerController = async (request, response) => {
     }
 }
 
-// export const adminAddBlogController = async (request, response) => {
-//     try {
-//         //console.log(request.body);
-//         const filename = request.files.blogFile;
-//         // console.log(request.files);
-//         const fileName = new Date().getTime() + filename.name;
-//         const filePath = path.join(__dirname.replace("\\controller", "/public/blogImages/") + fileName);
-//         filename.mv(filePath, async (error) => {
-//             try {
-//                 request.body.blogId = uuid4();
-//                 request.body.blogFile = fileName;
-//                 request.body.uploadDate = moment().format('DD-MM-YYYY');
-//                 request.body.uploadTime = moment().format('hh:mm:ss A');
-//                 const resultNew = await blogSchema.create(request.body);
-//                 response.render("createBlogForm.ejs", { message: message.UPLOAD_STATUS, status: status.SUCCESS });
-//             } catch (error) {
-//                 console.log(error);
-//                 response.render("createBlogForm.ejs", { message: message.FILE_NOT_UPLOADED, status: status.SUCCESS });
-//             }
-//         })
-//     } catch (error) {
-//         console.log("Error in adminAddBlogController : ", error);
-//         response.render("createBlogForm.ejs", { message: message.SOMETHING_WENT_WRONG, status: status.SERVER_ERROR });
-//     }
-// }
-
-//-------------------
-
-
 export const adminAddBlogController = async (request, response) => {
     try {
         const filename = request.files.blogFile; // Get uploaded file
         const fileName = `${Date.now()}_${filename.name}`; // Unique filename
 
-        const fileUrl = await customUpload('blogImages',filename,fileName);
-        console.log("----------> fileurl : "+fileUrl);
+        const fileUrl = await customUpload('blogImages', filename, fileName);
+        console.log("----------> fileurl : " + fileUrl);
 
         // Save blog details in the database
         request.body.blogId = uuid4();
@@ -528,22 +498,19 @@ export const adminAddBlogController = async (request, response) => {
 
         await blogSchema.create(request.body);
 
-        response.render("createBlogForm.ejs", { 
-            message: message.UPLOAD_STATUS, 
-            status: status.SUCCESS 
+        response.render("createBlogForm.ejs", {
+            message: message.UPLOAD_STATUS,
+            status: status.SUCCESS
         });
 
     } catch (error) {
         console.error("Error in adminAddBlogController:", error);
-        response.render("createBlogForm.ejs", { 
-            message: message.SOMETHING_WENT_WRONG, 
-            status: status.SERVER_ERROR 
+        response.render("createBlogForm.ejs", {
+            message: message.SOMETHING_WENT_WRONG,
+            status: status.SERVER_ERROR
         });
     }
 };
-
-
-//-------------------
 
 export const adminAddDomainController = async (request, response) => {
     try {
@@ -661,59 +628,6 @@ export const adminViewBlogController = async (request, response) => {
         response.render("blogPage.ejs", { blogData: blogData, message: "", status: status.SUCCESS });
     }
 }
-// export const updateBlogController = async (request, response) => {
-//     try {
-//         const fileCheck = request.files;
-//         console.log("fileCheck : ", fileCheck);
-
-//         if (request.files) {
-//             console.log("file uploaded while update");
-//             // console.log(request.body);
-//             // console.log(request.files);
-//             const filename = request.files.blogFile;
-//             const fileName = new Date().getTime() + filename.name;
-//             const filePath = path.join(__dirname.replace("\\controller", "/public/blogImages/") + fileName);
-
-//             filename.mv(filePath, async (error) => {
-//                 try {
-//                     request.body.blogFile = fileName;
-//                     request.body.uploadDate = moment().format('DD-MM-YYYY');
-//                     request.body.uploadTime = moment().format('hh:mm:ss A');
-//                     const resultNew = await blogSchema.updateOne({
-//                         blogId: request.body.blogId
-//                     }, {
-//                         $set: request.body
-//                     });
-//                     const blogData = await blogSchema.find();
-//                     response.render("blogPage.ejs", { blogData: blogData, message: message.BLOG_UPDATED, status: status.SUCCESS });
-//                 } catch (error) {
-//                     console.log("Error in updateBlogController : ", error);
-//                     const blogData = await blogSchema.find();
-//                     response.render("blogPage.ejs", { blogData: blogData, message: message.BLOG_NOT_UPDATED, status: status.SERVER_ERROR });
-//                 }
-//             })
-//         } else {
-//             console.log("File not uploaded while update");
-//             request.body.blogFile = request.body.previousBlogFile;
-//             console.log(request.body);
-
-//             request.body.uploadDate = moment().format('DD-MM-YYYY');
-//             request.body.uploadTime = moment().format('hh:mm:ss A');
-//             const resultNew = await blogSchema.updateOne({
-//                 blogId: request.body.blogId
-//             }, {
-//                 $set: request.body
-//             });
-//             const blogData = await blogSchema.find();
-//             response.render("blogPage.ejs", { blogData: blogData, message: message.BLOG_UPDATED, status: status.SUCCESS });
-//         }
-
-//     } catch (error) {
-//         console.log("Error in updateBlogController : ", error);
-//         const blogData = await blogSchema.find();
-//         response.render("blogPage.ejs", { blogData: blogData, message: message.BLOG_NOT_UPDATED, status: status.SERVER_ERROR });
-//     }
-// }
 
 export const updateBlogController = async (request, response) => {
     try {
@@ -727,18 +641,18 @@ export const updateBlogController = async (request, response) => {
             const filename = request.files.blogFile;
             const fileName = new Date().getTime() + filename.name;
 
-            const fileUrl = await customUpload('blogImages',filename,fileName);
+            const fileUrl = await customUpload('blogImages', filename, fileName);
 
-                    request.body.blogFile = fileUrl;
-                    request.body.uploadDate = moment().format('DD-MM-YYYY');
-                    request.body.uploadTime = moment().format('hh:mm:ss A');
-                    const resultNew = await blogSchema.updateOne({
-                        blogId: request.body.blogId
-                    }, {
-                        $set: request.body
-                    });
-                    const blogData = await blogSchema.find();
-                    response.render("blogPage.ejs", { blogData: blogData, message: message.BLOG_UPDATED, status: status.SUCCESS });
+            request.body.blogFile = fileUrl;
+            request.body.uploadDate = moment().format('DD-MM-YYYY');
+            request.body.uploadTime = moment().format('hh:mm:ss A');
+            const resultNew = await blogSchema.updateOne({
+                blogId: request.body.blogId
+            }, {
+                $set: request.body
+            });
+            const blogData = await blogSchema.find();
+            response.render("blogPage.ejs", { blogData: blogData, message: message.BLOG_UPDATED, status: status.SUCCESS });
         } else {
             console.log("File not uploaded while update");
             request.body.blogFile = request.body.previousBlogFile;
@@ -806,55 +720,51 @@ export const adminDeleteInterviewQuestionController = async (request, response) 
     }
 }
 
+
 export const glimphsFileUploadController = async (request, response) => {
     try {
         const filename = request.files.glimphsImage;
         const fileName = new Date().getTime() + filename.name;
-        const filePath = path.join(__dirname.replace("\\controller", "/public/glimphsImages/") + fileName);
-        filename.mv(filePath, async (error) => {
-            if (error) {
-                console.log("Error while glimphsfile upload : ", error);
-                const glimphsData = await glimphsSchema.find({ status: true });
-                response.render("glimphsGallery.ejs", { glimphsData: glimphsData.reverse(), message: message.FILE_NOT_UPLOADED, status: status.SUCCESS });
-            } else {
-                request.body.glimphsId = uuid4();
-                request.body.glimphsImage = fileName;
-                const resultNew = await glimphsSchema.create(request.body);
-                const glimphsData = await glimphsSchema.find({ status: true });
-                response.render("glimphsGallery.ejs", { glimphsData: glimphsData.reverse(), message: message.UPLOAD_STATUS, status: status.SUCCESS });
-            }
-        })
+
+        const fileUrl = await customUpload('glimphsImages', filename, fileName);
+        request.body.glimphsId = uuid4();
+        request.body.glimphsImage = fileUrl;
+        const resultNew = await glimphsSchema.create(request.body);
+        const glimphsData = await glimphsSchema.find({ status: true });
+        response.render("glimphsGallery.ejs", { glimphsData: glimphsData.reverse(), message: message.UPLOAD_STATUS, status: status.SUCCESS });
+
     } catch (error) {
         console.log("Error in glimphsFileUploadController : ", error);
         response.render("adminHome.ejs", { message: message.SERVER_ERROR, status: status.SERVER_ERROR });
     }
 }
 
+
 export const existingStudentListController = async (request, response) => {
     try {
         const studentData = await studentSchema.find();
         //console.log(studentData);
-        response.render('adminViewStudentList.ejs', { studentData: studentData,message: "", status: status.SUCCESS });
+        response.render('adminViewStudentList.ejs', { studentData: studentData, message: "", status: status.SUCCESS });
     } catch (error) {
         console.log("error in existingStudentListController : ", error);
-        response.render('adminHome.ejs', {message: message.SOMETHING_WENT_WRONG, status: status.SERVER_ERROR });
+        response.render('adminHome.ejs', { message: message.SOMETHING_WENT_WRONG, status: status.SERVER_ERROR });
     }
 }
 
-export const adminVerifyStudentController = async(request,response)=>{
-    try{
+export const adminVerifyStudentController = async (request, response) => {
+    try {
         const studentEnrollId = request.query.studentEnrollId;
-        const res = await studentSchema.updateOne({enrollId:studentEnrollId},{$set:{adminVerify:"Verified"}});
-        if(res){
+        const res = await studentSchema.updateOne({ enrollId: studentEnrollId }, { $set: { adminVerify: "Verified" } });
+        if (res) {
             const studentData = await studentSchema.find();
-            response.render("adminViewStudentList.ejs",{studentData,message:message.ADMIN_VERIFY_STUDENT,status:status.SUCCESS});
-        }else{
+            response.render("adminViewStudentList.ejs", { studentData, message: message.ADMIN_VERIFY_STUDENT, status: status.SUCCESS });
+        } else {
             const studentData = await studentSchema.find();
-            response.render("adminViewStudentList.ejs",{studentData,message:message.ADMIN_NOT_VERIFY_STUDENT,status:status.SUCCESS});
+            response.render("adminViewStudentList.ejs", { studentData, message: message.ADMIN_NOT_VERIFY_STUDENT, status: status.SUCCESS });
         }
-    }catch(error){
+    } catch (error) {
         console.log("error in adminVerifyStudentController : ", error);
-        response.render('adminHome.ejs', {message: message.SOMETHING_WENT_WRONG, status: status.SERVER_ERROR });
+        response.render('adminHome.ejs', { message: message.SOMETHING_WENT_WRONG, status: status.SERVER_ERROR });
     }
 }
 
@@ -865,24 +775,24 @@ export const adminAddVideoLinkController = async (request, response) => {
         request.body.uploadDate = moment().format('DD-MM-YYYY');
         request.body.uploadTime = moment().format('hh:mm:ss A');
         const resultNew = await videoSchema.create(request.body);
-        const videoData = await videoSchema.find({status:true});
-        response.render("videoGallery.ejs", { videoData:videoData.reverse(),message: message.LINK_UPLOADED, status: status.SUCCESS });
+        const videoData = await videoSchema.find({ status: true });
+        response.render("videoGallery.ejs", { videoData: videoData.reverse(), message: message.LINK_UPLOADED, status: status.SUCCESS });
     } catch (error) {
         console.log("Error in adminAddVideoLinkController : ", error);
-        const videoData = await videoSchema.find({status:true});
-        response.render("videoGallery.ejs", { videoData:videoData.reverse(),message: message.LINK_NOT_UPLOADED, status: status.SERVER_ERROR });
+        const videoData = await videoSchema.find({ status: true });
+        response.render("videoGallery.ejs", { videoData: videoData.reverse(), message: message.LINK_NOT_UPLOADED, status: status.SERVER_ERROR });
     }
 }
 
 export const adminDeleteVideoLinkController = async (request, response) => {
     try {
         const videoId = request.body.videoId;
-        const resultNew = await videoSchema.updateOne({ videoId },{$set:{status:false}});
-        const videoData = await videoSchema.find({status:true});
+        const resultNew = await videoSchema.updateOne({ videoId }, { $set: { status: false } });
+        const videoData = await videoSchema.find({ status: true });
         response.render("videoGallery.ejs", { videoData: videoData.reverse(), message: message.LINK_DELETED, status: status.SUCCESS });
     } catch (error) {
         console.log("Error in adminDeleteVideoLinkController : ", error);
-        const videoData = await videoSchema.find({status:true});
+        const videoData = await videoSchema.find({ status: true });
         response.render("videoGallery.ejs", { videoData: videoData.reverse(), message: message.LINK_NOT_DELETED, status: status.SERVER_ERROR });
     }
 }
@@ -892,63 +802,63 @@ export const adminViewVideoLinkController = async (request, response) => {
         response.render("viewUpdateVideoGallery.ejs", { videoData: videoData, message: "", status: "" });
     } catch (error) {
         console.log("Error while admin view video link controller : ", error);
-        const videoData = await videoSchema.find({status:true});
+        const videoData = await videoSchema.find({ status: true });
         response.render("videoGallery.ejs", { videoData: videoData.reverse(), message: message.SERVER_ERROR, status: status.SERVER_ERROR });
     }
 }
 export const updateVideoGalleryController = async (request, response) => {
     try {
-            request.body.uploadDate = moment().format('DD-MM-YYYY');
-            request.body.uploadTime = moment().format('hh:mm:ss A');
-            const resultNew = await videoSchema.updateOne({
-                videoId: request.body.videoId
-            }, {
-                $set: request.body
-            });
-            const videoData = await videoSchema.find({status:true});
-            response.render("videoGallery.ejs", { videoData: videoData.reverse(), message: message.LINK_UPDATE, status: status.SUCCESS });
-        } catch (error) {
-            console.log("Error in updateVideoGalleryController : ", error);
-            const videoData = await videoSchema.find({status:true});
-            response.render("videoGallery.ejs", { videoData: videoData.reverse(), message: message.LINK_NOT_UPDATE, status: status.SERVER_ERROR });
-        }
-}
-
-export const adminDeleteCourseController = async(request,response)=>{
-    try{
-        const courseList = await courseSchema.find({status:true});
-        const courseId = request.query.courseId;
-        // console.log("courseId : ",courseId);
-        
-        const bresult = await batchSchema.find({courseId});
-        // console.log("batch courseId : ",bresult);
-        
-        const dresult = await detailedSyllabusSchema.find({courseId});
-        // console.log("detailed syllabus courseId : ",dresult);
-        
-        if(bresult.length==0 && dresult.length==0){
-            const result = await courseSchema.deleteOne({courseId});
-            const courseList = await courseSchema.find({status:true});
-            console.log("Result : ",result);
-            response.render("adminCourseList.ejs",{courseList:courseList.reverse(),message:message.COURSE_DELETED,status:status.SUCCESS});
-        }else{
-            response.render("adminCourseList.ejs",{courseList:courseList.reverse(),message:message.COURSE_NOT_DELETED,status:status.SUCCESS});
-        }
-    }catch(error){
-        const courseList = await courseSchema.find({status:true});
-        console.log("Error in admin delete course controller : ",error);
-        response.render("adminCourseList.ejs",{courseList:courseList.reverse(),message:message.SOMETHING_WENT_WRONG,status:status.SERVER_ERROR});
+        request.body.uploadDate = moment().format('DD-MM-YYYY');
+        request.body.uploadTime = moment().format('hh:mm:ss A');
+        const resultNew = await videoSchema.updateOne({
+            videoId: request.body.videoId
+        }, {
+            $set: request.body
+        });
+        const videoData = await videoSchema.find({ status: true });
+        response.render("videoGallery.ejs", { videoData: videoData.reverse(), message: message.LINK_UPDATE, status: status.SUCCESS });
+    } catch (error) {
+        console.log("Error in updateVideoGalleryController : ", error);
+        const videoData = await videoSchema.find({ status: true });
+        response.render("videoGallery.ejs", { videoData: videoData.reverse(), message: message.LINK_NOT_UPDATE, status: status.SERVER_ERROR });
     }
 }
-export const adminUpdateCourseController = async(request,response)=>{
-    try{
+
+export const adminDeleteCourseController = async (request, response) => {
+    try {
+        const courseList = await courseSchema.find({ status: true });
         const courseId = request.query.courseId;
-        const courseObj = await courseSchema.findOne({courseId});
-        response.render("updateCourseForm.ejs",{courseObj,message:"",status:""});
-    }catch(error){
-        const courseList = await courseSchema.find({status:true});
-        console.log("Error in admin update course controller : ",error);
-        response.render("adminCourseList.ejs",{courseList:courseList.reverse(),message:message.SOMETHING_WENT_WRONG,status:status.SERVER_ERROR});
+        // console.log("courseId : ",courseId);
+
+        const bresult = await batchSchema.find({ courseId });
+        // console.log("batch courseId : ",bresult);
+
+        const dresult = await detailedSyllabusSchema.find({ courseId });
+        // console.log("detailed syllabus courseId : ",dresult);
+
+        if (bresult.length == 0 && dresult.length == 0) {
+            const result = await courseSchema.deleteOne({ courseId });
+            const courseList = await courseSchema.find({ status: true });
+            console.log("Result : ", result);
+            response.render("adminCourseList.ejs", { courseList: courseList.reverse(), message: message.COURSE_DELETED, status: status.SUCCESS });
+        } else {
+            response.render("adminCourseList.ejs", { courseList: courseList.reverse(), message: message.COURSE_NOT_DELETED, status: status.SUCCESS });
+        }
+    } catch (error) {
+        const courseList = await courseSchema.find({ status: true });
+        console.log("Error in admin delete course controller : ", error);
+        response.render("adminCourseList.ejs", { courseList: courseList.reverse(), message: message.SOMETHING_WENT_WRONG, status: status.SERVER_ERROR });
+    }
+}
+export const adminUpdateCourseController = async (request, response) => {
+    try {
+        const courseId = request.query.courseId;
+        const courseObj = await courseSchema.findOne({ courseId });
+        response.render("updateCourseForm.ejs", { courseObj, message: "", status: "" });
+    } catch (error) {
+        const courseList = await courseSchema.find({ status: true });
+        console.log("Error in admin update course controller : ", error);
+        response.render("adminCourseList.ejs", { courseList: courseList.reverse(), message: message.SOMETHING_WENT_WRONG, status: status.SERVER_ERROR });
     }
 }
 
@@ -963,24 +873,17 @@ export const adminUpdateCourse = async (request, response) => {
             // console.log(request.files);
             const filename = request.files.courseFile;
             const fileName = new Date().getTime() + filename.name;
-            const filePath = path.join(__dirname.replace("\\controller", "/public/courseImages/") + fileName);
+            const fileUrl = await customUpload('courseImages', filename, fileName);
 
-            filename.mv(filePath, async (error) => {
-                try {
-                    request.body.courseFile = fileName;
-                    const resultNew = await courseSchema.updateOne({
-                        courseId: request.body.courseId
-                    }, {
-                        $set: request.body
-                    });
-                    const courseList = await courseSchema.find();
-                    response.render("adminCourseList.ejs", { courseList: courseList.reverse(), message: message.COURSE_UPDATED, status: status.SUCCESS });
-                } catch (error) {
-                    console.log("Error in update Course : ", error);
-                    const courseList = await courseSchema.find();
-                    response.render("adminCourseList.ejs", { courseList: courseList.reverse(), message: message.COURSE_NOT_UPDATED, status: status.SERVER_ERROR });
-                }
-            })
+            request.body.courseFile = fileUrl;
+            const resultNew = await courseSchema.updateOne({
+                courseId: request.body.courseId
+            }, {
+                $set: request.body
+            });
+            const courseList = await courseSchema.find();
+            response.render("adminCourseList.ejs", { courseList: courseList.reverse(), message: message.COURSE_UPDATED, status: status.SUCCESS });
+
         } else {
             console.log("File not uploaded while update");
             request.body.courseFile = request.body.previousCourseFile;
@@ -1002,65 +905,65 @@ export const adminUpdateCourse = async (request, response) => {
     }
 }
 
-export const sendTestimonialLinkController = async(request,response)=>{
-    try{
-        mailer_testimonialLink.mailer(request.body.email,async(result)=>{
-            if(result){
-                console.log("info in sendTestimonialLinkcontroller : ",result);
-                response.render("adminHome.ejs",{message:message.MAIL_SENT_FOR_ENROLL,status:status.SUCCESS});                
-            }else{
-                response.render("adminHome.ejs",{message:message.LOW_INTERNET,status:""}); 
-            }                    
+export const sendTestimonialLinkController = async (request, response) => {
+    try {
+        mailer_testimonialLink.mailer(request.body.email, async (result) => {
+            if (result) {
+                console.log("info in sendTestimonialLinkcontroller : ", result);
+                response.render("adminHome.ejs", { message: message.MAIL_SENT_FOR_ENROLL, status: status.SUCCESS });
+            } else {
+                response.render("adminHome.ejs", { message: message.LOW_INTERNET, status: "" });
+            }
         });
-    }catch(error){
-        console.log("Error in send testimonial link controller : ",error);
-        response.render("adminHome.ejs",{message:message.SOMETHING_WENT_WRONG,status:status.SERVER_ERROR});
+    } catch (error) {
+        console.log("Error in send testimonial link controller : ", error);
+        response.render("adminHome.ejs", { message: message.SOMETHING_WENT_WRONG, status: status.SERVER_ERROR });
     }
 }
 
-export const testimonialListController = async(request,response)=>{
-    try{
+export const testimonialListController = async (request, response) => {
+    try {
         const testimonialData = await testimonialSchema.find();
-        response.render("adminViewTestimonialList.ejs",{testimonialData:testimonialData.reverse(),message:"",status:status.SUCCESS});
-    }catch(error){
-        console.log("Error : ",error);
-        response.render("adminHome.ejs",{adminEmail:request.adminPayload.email,message:"",status:status.SUCCESS});
+        response.render("adminViewTestimonialList.ejs", { testimonialData: testimonialData.reverse(), message: "", status: status.SUCCESS });
+    } catch (error) {
+        console.log("Error : ", error);
+        response.render("adminHome.ejs", { adminEmail: request.adminPayload.email, message: "", status: status.SUCCESS });
     }
 }
 
-export const adminVerifyTestimonialController = async(request,response)=>{
-    try{
+export const adminVerifyTestimonialController = async (request, response) => {
+    try {
         const testimonialId = request.body.testimonialId;
         const status = {
-            $set :{
-                adminVerify : 'Verified'
+            $set: {
+                adminVerify: 'Verified'
             }
         }
-        const result = await testimonialSchema.updateOne({testimonialId},status);
+        const result = await testimonialSchema.updateOne({ testimonialId }, status);
         const testimonialData = await testimonialSchema.find();
-        response.render("adminViewTestimonialList.ejs",{testimonialData:testimonialData.reverse(),message:message.TESTIMONIAL_VERIFIED,status:status.SUCCESS});
-    }catch(error){
-        console.log("Error in adminVerifyTestimonialController : ",error);
+        response.render("adminViewTestimonialList.ejs", { testimonialData: testimonialData.reverse(), message: message.TESTIMONIAL_VERIFIED, status: status.SUCCESS });
+    } catch (error) {
+        console.log("Error in adminVerifyTestimonialController : ", error);
         const testimonialData = await testimonialSchema.find();
-        response.render("adminViewTestimonialList.ejs",{testimonialData:testimonialData.reverse(),message:"",status:status.SUCCESS});
+        response.render("adminViewTestimonialList.ejs", { testimonialData: testimonialData.reverse(), message: "", status: status.SUCCESS });
     }
 }
 
-export const adminRemoveTestimonialController = async(request,response)=>{
-    try{
+export const adminRemoveTestimonialController = async (request, response) => {
+    try {
         const testimonialId = request.body.testimonialId;
         const status = {
-            $set :{
-                status : false
+            $set: {
+                status: false
             }
         }
-        const result = await testimonialSchema.updateOne({testimonialId},status);
+        const result = await testimonialSchema.updateOne({ testimonialId }, status);
         const testimonialData = await testimonialSchema.find();
-        response.render("adminViewTestimonialList.ejs",{testimonialData:testimonialData.reverse(),message:message.TESTIMONIAL_REMOVED,status:status.SUCCESS});
-    }catch(error){
-        console.log("Error in adminVerifyTestimonialController : ",error);
+        response.render("adminViewTestimonialList.ejs", { testimonialData: testimonialData.reverse(), message: message.TESTIMONIAL_REMOVED, status: status.SUCCESS });
+    } catch (error) {
+        console.log("Error in adminVerifyTestimonialController : ", error);
         const testimonialData = await testimonialSchema.find();
-        response.render("adminViewTestimonialList.ejs",{testimonialData:testimonialData.reverse(),message:"",status:status.SUCCESS});
+        response.render("adminViewTestimonialList.ejs", { testimonialData: testimonialData.reverse(), message: "", status: status.SUCCESS });
     }
 }
 
