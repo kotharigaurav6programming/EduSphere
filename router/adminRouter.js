@@ -48,7 +48,7 @@ const authenticateJWT = (request,response,next)=>{
 
 adminRouter.post('/adminLogin',adminLoginController);
 adminRouter.get('/adminHome',authenticateJWT,(request,response)=>{
-    response.render("adminHome.ejs",{adminEmail:request.adminPayload.email,status:status.SUCCESS});
+    response.render("adminHome.ejs",{adminEmail:request.adminPayload.email,status:status.SUCCESS,message:""});
 });
 adminRouter.get('/adminEmployeeList',authenticateJWT,adminEmployeeListController);
 adminRouter.get('/adminVerifyEmployee',authenticateJWT,adminVerifyEmployeeController);

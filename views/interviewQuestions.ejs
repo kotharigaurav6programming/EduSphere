@@ -58,54 +58,17 @@
                     <span class="icon-close2 js-menu-toggle"></span>
                 </div>
             </div>
-            <div class="">
-                <ul class="m-0 p-2">
-                    <li><a href="/" class="nav-link">Home</a></li>
-                    <li><a href="" class="nav-link">Courses</a></li>
-                    <li><a href="/interview/interviewSubject" class="nav-link">InterviewPrep</a></li>
-                    <li><a href="/blog" class="nav-link">Blog</a></li>
-                    <li><a href="/employee/employeeLogin" class="nav-link">Employee</a></li>
-                </ul>
-            </div>
+            <%-include('./homeHeaderSideBar.ejs')%>
         </div>
-
-
         <header class="site-navbar py-4 js-sticky-header site-navbar-target" role="banner">
 
             <div class="container-fluid">
                 <div class="d-flex align-items-center">
-                    <div class="site-logo mr-auto w-25"><a href="index.html">EduSphere</a></div>
-
-                    <div class="mx-auto text-center">
-                        <nav class="site-navigation position-relative text-right" role="navigation">
-                            <ul class="site-menu main-menu js-clone-nav mx-auto d-none d-lg-block  m-0 p-0">
-                                <li><a href="#home-section" class="nav-link">Home</a></li>
-                                <li><a href="#courses-section" class="nav-link">Courses</a></li>
-                                <li><a href="/interview/interviewSubject" class="nav-link">InterviewPrep</a></li>
-                                <li><a href="/blog" class="nav-link">Blog</a></li>
-                                <li><a href="/employee/employeeLogin" class="nav-link">Employee</a></li>
-                            </ul>
-                        </nav>
-                    </div>
-
-                    <div class="ml-auto w-10">
-                        <nav class="site-navigation position-relative text-right" role="navigation">
-                            <ul
-                                class="site-menu main-menu site-menu-dark js-clone-nav mr-auto d-none d-lg-block m-0 p-0">
-                                <li class="cta"><a href="#contact-section" class="nav-link"><span>Contact Us</span></a>
-                                </li>
-                            </ul>
-                        </nav>
-                        <a href="#"
-                            class="d-inline-block d-lg-none site-menu-toggle js-menu-toggle text-black float-right"><span
-                                class="icon-menu h3"></span></a>
-                    </div>
+                    <div class="site-logo mr-auto w-20"><a href="index.html">EduSphere</a></div>
+                    <%-include('./homeHeader.ejs')%>
                 </div>
             </div>
-
         </header>
-
-
         <div class="site-section" id="teachers-section" style="margin-top: -1px;">
             <div class="container">
 
@@ -136,67 +99,13 @@
                                 </div>
                             </div>
                             <hr data-aos="fade-up" data-aos-delay="">
-                          
+
                             <% } %>
-                                <% }) %>
+                  <% }) %>
             </div>
         </div>
-
-        <footer class="footer-section bg-white">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-4">
-                        <h3>About EduSphere</h3>
-                        <p>EduSphere symbolizes a comprehensive and modern educational ecosystem. The name blends "Edu"
-                            (education)
-                            and "Sphere" (a complete environment) to represent inclusive, tech-driven, and global
-                            learning
-                            opportunities.</p>
-                    </div>
-
-                    <div class="col-md-3 ml-auto">
-                        <h3>Links</h3>
-                        <ul class="list-unstyled footer-links">
-                            <li><a href="#">Home</a></li>
-                            <li><a href="#">Courses</a></li>
-                            <li><a href="#">Programs</a></li>
-                            <li><a href="#">Teachers</a></li>
-                        </ul>
-                    </div>
-
-                    <div class="col-md-4">
-                        <h3>Subscribe</h3>
-                        <p>It is catchy, brand-friendly, and ideal for scaling in the education sector.</p>
-                        <form action="#" class="footer-subscribe">
-                            <div class="d-flex mb-5">
-                                <input type="text" class="form-control rounded-0" placeholder="Email">
-                                <input type="submit" class="btn btn-primary rounded-0" value="Subscribe">
-                            </div>
-                        </form>
-                    </div>
-
-                </div>
-
-                <div class="row pt-1 mt-1 text-center">
-                    <div class="col-md-12">
-                        <div class="border-top pt-1">
-                            <p>
-                                Copyright &copy;
-                                <script>document.write(new Date().getFullYear());</script> All rights reserved | Created
-                                By GK &trade;
-                            </p>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </footer>
-
-
-
+        <%- include('./footerSection.ejs')%>
     </div> <!-- .site-wrap -->
-
-
     <!-- Owl Carousel and jQuery Script -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
