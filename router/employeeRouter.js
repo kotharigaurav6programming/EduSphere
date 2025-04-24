@@ -2,7 +2,7 @@ import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import jwt from 'jsonwebtoken';
-import { employeeRegistrationController,employeeVerifyEmailController,employeeLoginController,employeeViewBatchesController,assignmentFormController,sendEnrollLinkController,viewStudentListController,allocateBatchController } from '../controller/employeeController.js';
+import { employeeRegistrationController,employeeVerifyEmailController,employeeLoginController,employeeViewBatchesController,assignmentFormController,sendEnrollLinkController,viewStudentListController,allocateBatchController,employeeLogoutController } from '../controller/employeeController.js';
 import { message, status } from '../utils/statusMessage.js';
 import courseSchema from '../model/courseSchema.js';
 import allocateBatchSchema from '../model/allocateBatchSchema.js';
@@ -37,6 +37,9 @@ const authenticateJWT = (request,response,next)=>{
         response.render("notfound.ejs",{message:message.SOMETHING_WENT_WRONG,status:status.UN_AUTHORIZE});
     }
 }
+employeeRouter.get('/employeeHome',authenticateJWT,(request,response)=>{
+    response.render('employeeHome.ejs',{profile:request.employeePayload.profile,email:request.employeePayload.email,name:request.employeePayload.name,message:"",status:status.SUCCESS}); 
+});
 
 employeeRouter.get("/employeeLogin",(request,response)=>{
     response.render("employeeLogin.ejs",{message:""});
@@ -90,4 +93,6 @@ employeeRouter.post('/employeeAllocateBatch',authenticateJWT,async (request,resp
         response.render('employeeHome.ejs',{profile:request.employeePayload.profile,email:request.employeePayload.email,name:request.employeePayload.name,message:message.SOMETHING_WENT_WRONG,status:status.SERVER_ERROR});        
     }
 });
+employeeRouter.get('/employeeLogout',employeeLogoutController);
+
 export default employeeRouter;

@@ -967,4 +967,20 @@ export const adminRemoveTestimonialController = async (request, response) => {
     }
 }
 
+export const adminLogoutController = async (request, response) => {
+    try {
+        // Clear the admin authentication cookie
+        response.clearCookie('admin_cookie');
+
+        response.render("adminLogin.ejs", { message: "Logout successful", status: status.SUCCESS });
+
+        // OR redirect to login page directly
+        //response.redirect("/adminLogin");
+    } catch (error) {
+        console.log("Error in Logout Controller : ", error);
+        response.render("adminHome.ejs", { message: message.SOMETHING_WENT_WRONG, status: status.SERVER_ERROR });
+    }
+};
+
+
 // needs to print email id on every page {email:request.payload.email} like this

@@ -5,7 +5,12 @@
     <title>EduSphere</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    
+    <script>
+      (()=>{
+        window.history.forward();
+      })();
+    </script>
+
     
     <link href="https://fonts.googleapis.com/css?family=Muli:300,400,700,900" rel="stylesheet">
     <link rel="stylesheet" href="fonts/icomoon/style.css">
@@ -37,7 +42,11 @@
           <span class="icon-close2 js-menu-toggle"></span>
         </div>
       </div>
-      <div class="site-mobile-menu-body"></div>
+      <%if(profile=="Management Staff"){%> 
+        <%-include('./employeeMgmtHomeHeaderSideBar.js')%>
+      <%}else{%>
+        <%-include('./employeeTrainerHomeHeaderSideBar.js')%>
+        <%}%>
     </div>
    
 
@@ -47,18 +56,13 @@
       <div class="container-fluid">
         <div class="d-flex align-items-center">
           <div class="site-logo mr-auto"><a href="index.html">EduSphere</a></div>
-          <div>
-            <nav class="site-navigation position-relative text-right" role="navigation">
-              <%if(profile=="Management Staff"){%> 
+          
+          <%if(profile=="Management Staff"){%> 
                 <%-include('./employeeMgmtHomeHeader.js')%>
               <%}else{%>
                 <%-include('./employeeTrainerHomeHeader.js')%>
               <%}%>
-            </nav>
-           <a href="#" class="d-inline-block d-lg-none site-menu-toggle js-menu-toggle text-black float-right">
-            <span class="icon-menu h3"></span></a>
-
-          </div>
+            
         </div>
       </div>
       

@@ -17,7 +17,7 @@
             <li><a class="dropdown-item" href="/admin/testimonialList">Testimonial</a></li>
         </ul>
     </li>
-    <li><a href="" class="nav-link">Logout</a></li>
+    <li><a href="/admin/adminLogout" class="nav-link">Logout</a></li>
 </ul>
 </nav>
 <a href="#" class="d-inline-block d-lg-none site-menu-toggle js-menu-toggle text-primary float-right">

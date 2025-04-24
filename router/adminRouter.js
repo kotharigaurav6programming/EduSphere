@@ -1,5 +1,5 @@
 import express from 'express';
-import { adminLoginController,adminEmployeeListController,adminVerifyEmployeeController,adminEnquiryStudentListController,adminAddStudRemarkController,adminUploadSyllabusController,adminSendSyllabusController,adminAddCourseController,adminViewCoursesController,adminCourseListController,adminAddDetailedSyllabusController,adminDetailedSyllabusController,downloadExcelController,adminViewBatchesController,adminAllocateTrainerController,adminAddBlogController,adminAddDomainController,updateDomainFormController,adminUpdateDomainController,deleteDomainController,domainPageController, createDomainFormController,addInterviewQuestionsController,adminAddInterviewQuestionsController,adminViewInterviewQuestionsController,adminViewBlogController,updateBlogController,adminDeleteBlogController,adminDeleteInterviewQuestionController,glimphsFileUploadController,existingStudentListController,adminVerifyStudentController,adminAddVideoLinkController,adminDeleteVideoLinkController,adminViewVideoLinkController,updateVideoGalleryController,adminDeleteCourseController,adminUpdateCourseController,adminUpdateCourse,sendTestimonialLinkController,testimonialListController,adminVerifyTestimonialController,adminRemoveTestimonialController } from '../controller/adminController.js';
+import { adminLoginController,adminEmployeeListController,adminVerifyEmployeeController,adminEnquiryStudentListController,adminAddStudRemarkController,adminUploadSyllabusController,adminSendSyllabusController,adminAddCourseController,adminViewCoursesController,adminCourseListController,adminAddDetailedSyllabusController,adminDetailedSyllabusController,downloadExcelController,adminViewBatchesController,adminAllocateTrainerController,adminAddBlogController,adminAddDomainController,updateDomainFormController,adminUpdateDomainController,deleteDomainController,domainPageController, createDomainFormController,addInterviewQuestionsController,adminAddInterviewQuestionsController,adminViewInterviewQuestionsController,adminViewBlogController,updateBlogController,adminDeleteBlogController,adminDeleteInterviewQuestionController,glimphsFileUploadController,existingStudentListController,adminVerifyStudentController,adminAddVideoLinkController,adminDeleteVideoLinkController,adminViewVideoLinkController,updateVideoGalleryController,adminDeleteCourseController,adminUpdateCourseController,adminUpdateCourse,sendTestimonialLinkController,testimonialListController,adminVerifyTestimonialController,adminRemoveTestimonialController,adminLogoutController } from '../controller/adminController.js';
 import {fileURLToPath} from 'url';
 import jwt from 'jsonwebtoken';
 import path from 'path';
@@ -29,7 +29,8 @@ const authenticateJWT = (request,response,next)=>{
     try{
         const token = request.cookies.admin_cookie;
         if(!token)
-            response.render("notfound.ejs",{message:message.SOMETHING_WENT_WRONG,status:status.UN_AUTHORIZE});
+            // response.render("notfound.ejs",{message:message.SOMETHING_WENT_WRONG,status:status.UN_AUTHORIZE});
+            response.render("adminLogin.ejs",{message:"",status:""});
         else{
             jwt.verify(token,ADMIN_SECRET_KEY,(error,adminPayload)=>{
                 if(error){
@@ -139,5 +140,6 @@ adminRouter.post('/testimonial',(request,response)=>{
 adminRouter.get('/testimonialList',authenticateJWT,testimonialListController);
 adminRouter.post('/adminVerifyTestimonial',authenticateJWT,adminVerifyTestimonialController);
 adminRouter.post('/adminRemoveTestimonial',authenticateJWT,adminRemoveTestimonialController);
+adminRouter.get('/adminLogout',adminLogoutController);
 export default adminRouter;
 

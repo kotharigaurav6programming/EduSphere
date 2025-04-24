@@ -176,3 +176,16 @@ export const studentViewAssignmentsController = async (request, response) => {
         response.render("studentHome.ejs", { email: request.studentPayload.email, name: request.studentPayload.name, status: status.SERVER_ERROR, message: message.SOMETHING_WENT_WRONG });
     }
 }
+
+export const studentLogoutController = async (request, response) => {
+    try {
+        // Clear the student authentication cookie
+        response.clearCookie('student_cookie');
+
+        response.render("studentLogin.ejs", { message: "Logout successful", status: status.SUCCESS });
+
+    } catch (error) {
+        console.log("Error in student Logout Controller : ", error);
+        response.render("home.ejs", { message: message.SOMETHING_WENT_WRONG, status: status.SERVER_ERROR });
+    }
+};

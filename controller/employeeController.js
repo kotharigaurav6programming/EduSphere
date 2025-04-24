@@ -190,6 +190,20 @@ export const allocateBatchController = async (request, response) => {
     }
 }
 
+export const employeeLogoutController = async (request, response) => {
+    try {
+        // Clear the employee authentication cookie
+        response.clearCookie('employee_cookie');
+
+        response.render("employeeLogin.ejs", { message: "Logout successful", status: status.SUCCESS });
+
+    } catch (error) {
+        console.log("Error in employee Logout Controller : ", error);
+        response.render("home.ejs", { message: message.SOMETHING_WENT_WRONG, status: status.SERVER_ERROR });
+    }
+};
+
+
 /*
 whats the difference between  const batchData = await batchSchema.find().lean(); and  const batchData = await batchSchema.find(); as both gives same output
 ChatGPT said:

@@ -1,5 +1,5 @@
 import express from 'express';
-import { studentRegistrationController,studentLoginController,viewBatchesController,addTestimonialController,studentViewAssignmentsController } from '../controller/studentController.js';
+import { studentRegistrationController,studentLoginController,viewBatchesController,addTestimonialController,studentViewAssignmentsController,studentLogoutController } from '../controller/studentController.js';
 import jwt from 'jsonwebtoken';
 import { message, status } from '../utils/statusMessage.js';
 const STUDENT_SECRET_KEY = process.env.STUDENT_SECRET_KEY;
@@ -27,6 +27,11 @@ const authenticateJWT = (request,response,next)=>{
     }
 }
 
+studentRouter.get('/studentHome',authenticateJWT,(request,response)=>{
+    response.render("studentHome.ejs", { email: request.studentPayload.email, name: request.studentPayload.name, status: status.SUCCESS, message:"" }); 
+});
+
+
 studentRouter.get('/studentRegistration',(request,response)=>{
     var email = request.query.email;
     response.render("studentRegistration.ejs",{email:email,message:"",status:""});
@@ -40,4 +45,7 @@ studentRouter.post("/studentLogin",studentLoginController);
 studentRouter.get("/viewBatches",authenticateJWT,viewBatchesController);
 studentRouter.post('/addTestimonial',addTestimonialController);
 studentRouter.post('/studentViewAssignments',authenticateJWT,studentViewAssignmentsController);
+studentRouter.get('/studentLogout',studentLogoutController);
+
+
 export default studentRouter;
