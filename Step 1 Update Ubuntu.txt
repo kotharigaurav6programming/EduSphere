@@ -1,0 +1,83 @@
+ Step 1: Update Ubuntu
+
+sudo apt update && sudo apt upgrade -y
+
+ Step 2: Install Node.js and npm
+
+curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash -
+sudo apt install -y nodejs
+
+Check versions:
+
+node -v
+npm -v
+
+Step 3: Install Git
+
+sudo apt install git -y
+
+Step 4: Clone Your Project
+
+git clone https://github.com/kotharigaurav6programming/EduSphere.git
+cd EduSphere
+
+Step 5: Install Node.js Dependencies
+
+npm install
+
+Step 6: Start Your App
+Temporarily:
+sudo node app.js
+
+--------------------------------
+
+Yes, if you want to create and edit the .env file on your AWS EC2 instance, you'll need to SSH into the EC2 instance first. Once you're logged into the instance, you can create or modify the .env file.
+
+Here's a step-by-step breakdown of the process:
+SSH into your EC2 instance: Open a terminal on your local machine and run the following command to log into your EC2 instance:
+
+ssh -i /path/to/your/key.pem ubuntu@<your-ec2-public-ip>
+
+ssh -i "D:\\Programming Stairs\\FullStackBatch_Evening\\Project\\Express_Mongoose_EJS\\pem file aws\\edusphere_key_value_pair.pem" ubuntu@23.22.33.19
+
+Replace /path/to/your/key.pem with the path to your private key file.
+
+Replace <your-ec2-public-ip> with the public IP address of your EC2 instance. You can find this in the AWS console under Instances.
+
+Navigate to your project directory: Once you're logged in, navigate to the directory where your project is located. For example:
+
+cd /home/ubuntu/EduSphere
+Create the .env file: You can use a text editor like nano to create or edit the .env file:
+
+nano .env
+Add your environment variables: In the .env file, add the necessary variables, such as your MongoDB URI:
+
+MONGO_URI=mongodb://username:password@host:port/database
+Replace username, password, host, port, and database with your actual MongoDB connection details.
+
+Save and exit: After editing the .env file, save your changes.
+
+If you're using nano, press CTRL + X to exit, then press Y to confirm saving, and press Enter to finalize.
+
+Install dotenv (if not done already): Ensure you have the dotenv package installed in your project. If it's not installed, run:
+
+npm install dotenv
+Configure dotenv in your Node.js app: In your app.js (or main file), add the following at the top to load the environment variables:
+
+require('dotenv').config();
+After completing these steps, your .env file should be properly set up on your EC2 instance, and your Node.js application should be able to read the environment variables defined inside it.
+
+Let me know if you need further assistance!
+
+--------------------------
+https://chatgpt.com/c/680a16ac-a638-8001-a1ad-41e423527228
+
+https://chatgpt.com/c/680a1d29-6ae0-8001-b0d6-97b3a6e56caa
+
+https://chatgpt.com/c/680a1f6f-716c-8001-881f-e159873ed89e
+
+https://chatgpt.com/c/680a1f6f-716c-8001-881f-e159873ed89e
+
+https://chatgpt.com/c/680b4421-ab4c-8001-84c7-c9e2c157b9e3
+
+

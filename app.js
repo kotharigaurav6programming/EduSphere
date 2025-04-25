@@ -77,6 +77,16 @@ app.get("/",async (request,response)=>{
     }
 });
 
+app.get("/course",async (request,response)=>{
+    try{
+        const courseData = await courseSchema.find({status:true});
+        response.render("courseList.ejs",{courseData:courseData.reverse(),message:"",status:""});
+    }catch(error){
+        console.log("error in course page: ",error);
+        response.render("notfound.ejs",{message:message.SERVER_ERROR,status:status.SERVER_ERROR});
+    }
+});
+
 app.get("/adminLogin",(request,response)=>{
     response.render("adminLogin.ejs",{message:"",status:""});
 });
