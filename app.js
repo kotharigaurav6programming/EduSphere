@@ -127,6 +127,8 @@ app.get("/",async (request,response)=>{
     }
 });
 
+
+
 app.get("/course",async (request,response)=>{
     try{
         const courseData = await courseSchema.find({status:true});
