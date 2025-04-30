@@ -174,6 +174,6 @@ app.get('/sitemap.xml', async (req, res) => {
 
 
 
-app.listen(process.env.PORT,()=>{
+app.listen(process.env.PORT,'0.0.0.0',()=>{
     console.log("Connection established Successfully");
 });
