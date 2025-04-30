@@ -56,28 +56,6 @@ app.use((req, res, next) => {
     next();
   });
   
-  app.get('/sitemap.xml', async (req, res) => {
-    try {
-      // List of URLs (you can dynamically fetch from MongoDB)
-      const links = [
-        { url: '/', changefreq: 'daily', priority: 1.0 },
-        { url: '/course', changefreq: 'monthly', priority: 0.7 },
-        { url: '/course', changefreq: 'weekly', priority: 0.8 },
-        { url: '/blog', changefreq: 'monthly', priority: 0.5 }
-        // You can add dynamic slugs for blog posts or courses from MongoDB here
-      ];
-  
-      const stream = new SitemapStream({ hostname: 'http://23.22.33.19:5000' });
-  
-      res.header('Content-Type', 'application/xml');
-      streamToPromise(Readable.from(links).pipe(stream)).then((data) =>
-        res.send(data.toString())
-      );
-    } catch (err) {
-      console.error(err);
-      res.status(500).end();
-    }
-  });
 
 app.get("/",async (request,response)=>{
     try{
@@ -170,6 +148,33 @@ app.use('/assignment',assignmentRouter);
 app.use('/blog',blogRouter);
 app.use('/interview',interviewQuestionsRouter);
 app.use('/student',studentRouter);
+
+// for seo
+app.get('/sitemap.xml', async (req, res) => {
+    try {
+      // List of URLs (you can dynamically fetch from MongoDB)
+      const links = [
+        { url: '/', changefreq: 'daily', priority: 1.0 },
+        { url: '/course', changefreq: 'monthly', priority: 0.7 },
+        { url: '/course', changefreq: 'weekly', priority: 0.8 },
+        { url: '/blog', changefreq: 'monthly', priority: 0.5 }
+        // You can add dynamic slugs for blog posts or courses from MongoDB here
+      ];
+  
+      const stream = new SitemapStream({ hostname: 'http://23.22.33.19:5000' });
+  
+      res.header('Content-Type', 'application/xml');
+      streamToPromise(Readable.from(links).pipe(stream)).then((data) =>
+        res.send(data.toString())
+      );
+    } catch (err) {
+      console.error(err);
+      res.status(500).end();
+    }
+  });
+
+
+
 app.listen(process.env.PORT,()=>{
     console.log("Connection established Successfully");
 });
