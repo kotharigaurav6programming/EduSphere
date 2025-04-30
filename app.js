@@ -155,7 +155,6 @@ app.get('/sitemap.xml', async (req, res) => {
       // List of URLs (you can dynamically fetch from MongoDB)
       const links = [
         { url: '/', changefreq: 'daily', priority: 1.0 },
-        { url: '/course', changefreq: 'monthly', priority: 0.7 },
         { url: '/course', changefreq: 'weekly', priority: 0.8 },
         { url: '/blog', changefreq: 'monthly', priority: 0.5 }
         // You can add dynamic slugs for blog posts or courses from MongoDB here
