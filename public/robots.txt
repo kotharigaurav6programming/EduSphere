@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: http://23.22.33.19:5000/sitemap.xml

@@ -23,7 +23,54 @@ export const interviewSubjectController = async (request, response) => {
                     ]
                 }
                 const testimonialData = await testimonialSchema.find(testStatus);
-                response.render("home.ejs",{testimonialData:testimonialData.reverse(),courseData:courseData.reverse(),videoData:videoData.reverse(),glimphsData:glimphsData.reverse(),result:res,message:"",status:""});
+                //response.render("home.ejs",{testimonialData:testimonialData.reverse(),courseData:courseData.reverse(),videoData:videoData.reverse(),glimphsData:glimphsData.reverse(),result:res,message:"",status:""});
+
+                        res.render("home.ejs", {
+                            testimonialData: testimonialData.reverse(),
+                            courseData: courseData.reverse(),
+                            videoData: videoData.reverse(),
+                            glimphsData: glimphsData.reverse(),
+                            result: res,
+                            message: "",
+                            status: "",
+                          
+                            // SEO metadata
+                            pageTitle: "EduSphere | Best Programming & IT Courses in India",
+                            metaDescription: "Join EduSphere – the leading coaching institute for C, C++, Java, Python, Full Stack Development, Data Analytics,MERN STACK, node, express, mongodb and mysql and more. Get certified and career-ready.",
+                            metaKeywords: "EduSphere, programming coaching, Java training, Python, C++, IT courses, computer classes, Mern Stack, git github, deployment, cloud, aws",
+                            canonicalUrl: "http://23.22.33.19:5000/",
+                          
+                            // Social sharing
+                            ogImage: "http://23.22.33.19:5000/images/og-image.jpg",
+                            twitterCard: "summary_large_image",
+                          
+                            // Structured Data
+                            structuredData: JSON.stringify({
+                              "@context": "https://schema.org",
+                              "@type": "EducationalOrganization",
+                              "name": "EduSphere",
+                              "url": "http://23.22.33.19:5000",
+                              "logo": "http://23.22.33.19:5000/images/logo.png",
+                              "sameAs": [
+                                "https://www.facebook.com/Codingthinker/",
+                                "https://www.instagram.com/codingthinker/"
+                              ],
+                              "address": {
+                                "@type": "PostalAddress",
+                                "streetAddress": "207, Indraprastha Tower, M G Road, Inddore",
+                                "addressLocality": "Indore",
+                                "addressRegion": "Madhya Pradesh",
+                                "postalCode": "452001",
+                                "addressCountry": "IN"
+                              },
+                              "contactPoint": {
+                                "@type": "ContactPoint",
+                                "telephone": "+91-7415155301",
+                                "contactType": "Customer Service"
+                              }
+                            })
+                          });
+                
     }
 }
 

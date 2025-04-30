@@ -32,6 +32,26 @@
 
   <link rel="stylesheet" href="css/style.css">
 
+  <!-- seo implementation starts -->
+  <title><%= pageTitle %></title>
+  <meta name="description" content="<%= metaDescription %>">
+  <meta name="keywords" content="<%= metaKeywords %>">
+  <link rel="canonical" href="<%= canonicalUrl %>">
+  <meta name="robots" content="index, follow">
+  
+  <!-- Social Meta Tags -->
+  <meta property="og:title" content="<%= pageTitle %>">
+  <meta property="og:description" content="<%= metaDescription %>">
+  <meta property="og:url" content="<%= canonicalUrl %>">
+  <meta property="og:image" content="<%= ogImage %>">
+  <meta name="twitter:card" content="<%= twitterCard %>">
+  
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  <%= structuredData %>
+  </script>
+  
+  <!-- seo implementation ends -->
   <style>
     #output {
       font-family: Arial, Helvetica, sans-serif;

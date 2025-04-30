@@ -24,6 +24,8 @@ import studentRouter from './router/studentRouter.js';
 import glimphsSchema from './model/glimphsSchema.js';
 import videoSchema from './model/videoSchema.js';
 import testimonialSchema from './model/testimonialSchema.js';
+import { SitemapStream, streamToPromise } from 'sitemap';
+import { Readable } from 'stream';
 
 mongoose.connect(url,{
     useNewUrlParser:true,
@@ -53,6 +55,29 @@ app.use((req, res, next) => {
     res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, private');
     next();
   });
+  
+  app.get('/sitemap.xml', async (req, res) => {
+    try {
+      // List of URLs (you can dynamically fetch from MongoDB)
+      const links = [
+        { url: '/', changefreq: 'daily', priority: 1.0 },
+        { url: '/course', changefreq: 'monthly', priority: 0.7 },
+        { url: '/course', changefreq: 'weekly', priority: 0.8 },
+        { url: '/blog', changefreq: 'monthly', priority: 0.5 }
+        // You can add dynamic slugs for blog posts or courses from MongoDB here
+      ];
+  
+      const stream = new SitemapStream({ hostname: 'http://23.22.33.19:5000' });
+  
+      res.header('Content-Type', 'application/xml');
+      streamToPromise(Readable.from(links).pipe(stream)).then((data) =>
+        res.send(data.toString())
+      );
+    } catch (err) {
+      console.error(err);
+      res.status(500).end();
+    }
+  });
 
 app.get("/",async (request,response)=>{
     try{
@@ -70,7 +95,54 @@ app.get("/",async (request,response)=>{
             ]
         }
         const testimonialData = await testimonialSchema.find(testStatus);
-        response.render("home.ejs",{testimonialData:testimonialData.reverse(),courseData:courseData.reverse(),videoData:videoData.reverse(),glimphsData:glimphsData.reverse(),result:res,message:"",status:""});
+        //response.render("home.ejs",{testimonialData:testimonialData.reverse(),courseData:courseData.reverse(),videoData:videoData.reverse(),glimphsData:glimphsData.reverse(),result:res,message:"",status:""});
+
+        res.render("home.ejs", {
+            testimonialData: testimonialData.reverse(),
+            courseData: courseData.reverse(),
+            videoData: videoData.reverse(),
+            glimphsData: glimphsData.reverse(),
+            result: res,
+            message: "",
+            status: "",
+          
+            // SEO metadata
+            pageTitle: "EduSphere | Best Programming & IT Courses in India",
+            metaDescription: "Join EduSphere – the leading coaching institute for C, C++, Java, Python, Full Stack Development, Data Analytics,MERN STACK, node, express, mongodb and mysql and more. Get certified and career-ready.",
+            metaKeywords: "EduSphere, programming coaching, Java training, Python, C++, IT courses, computer classes, Mern Stack, git github, deployment, cloud, aws",
+            canonicalUrl: "http://23.22.33.19:5000/",
+          
+            // Social sharing
+            ogImage: "http://23.22.33.19:5000/images/og-image.jpg",
+            twitterCard: "summary_large_image",
+          
+            // Structured Data
+            structuredData: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "EducationalOrganization",
+              "name": "EduSphere",
+              "url": "http://23.22.33.19:5000",
+              "logo": "http://23.22.33.19:5000/images/logo.png",
+              "sameAs": [
+                "https://www.facebook.com/Codingthinker/",
+                "https://www.instagram.com/codingthinker/"
+              ],
+              "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "207, Indraprastha Tower, M G Road, Inddore",
+                "addressLocality": "Indore",
+                "addressRegion": "Madhya Pradesh",
+                "postalCode": "452001",
+                "addressCountry": "IN"
+              },
+              "contactPoint": {
+                "@type": "ContactPoint",
+                "telephone": "+91-7415155301",
+                "contactType": "Customer Service"
+              }
+            })
+          });
+          
     }catch(error){
         console.log("error in home page: ",error);
         response.render("notfound.ejs",{message:message.SERVER_ERROR,status:status.SERVER_ERROR});
