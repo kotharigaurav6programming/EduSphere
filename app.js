@@ -150,7 +150,7 @@ app.use('/interview',interviewQuestionsRouter);
 app.use('/student',studentRouter);
 
 // for seo
-app.get('/sitemap', async (req, res) => {
+app.get('/sitemap.xml', async (req, res) => {
     try {
       // List of URLs (you can dynamically fetch from MongoDB)
       const links = [
