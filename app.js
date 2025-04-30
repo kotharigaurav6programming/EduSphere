@@ -75,7 +75,7 @@ app.get("/",async (request,response)=>{
         const testimonialData = await testimonialSchema.find(testStatus);
         //response.render("home.ejs",{testimonialData:testimonialData.reverse(),courseData:courseData.reverse(),videoData:videoData.reverse(),glimphsData:glimphsData.reverse(),result:res,message:"",status:""});
 
-        res.render("home.ejs", {
+        response.render("home.ejs", {
             testimonialData: testimonialData.reverse(),
             courseData: courseData.reverse(),
             videoData: videoData.reverse(),
